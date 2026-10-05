@@ -1,26 +1,1247 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Design System Palette */
+  --background: #F8E9D6; /* Warm cream, matches why.webp backdrop */
+  --foreground: #381216; /* Deep maroon */
+
+  --primary: #381216;    /* Deep maroon / dark burgundy */
+  --primary-foreground: #F6E8C8;
+
+  --secondary: #6E5343;  /* Muted warm brown */
+  --secondary-foreground: #FAF8F5;
+
+  --accent: #B23A22;     /* Warm heritage red */
+  --accent-foreground: #FFFFFF;
+
+  --muted: #EAE3D2;      /* Soft beige / natural paper */
+  --muted-foreground: #7D6B5D;
+
+  --cream: #F6E8C8;      /* Warm parchment cream */
+  --maroon: #381216;     /* Deep dark maroon */
+  --brown: #5C4336;      /* Earthy warm brown */
+  --gold: #D4A373;       /* Grain/golden tones */
+  --sand: #EFE9DC;       /* Natural paper tone */
+
+  --border: #E5DCCF;
+  --ring: #381216;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-cream: var(--cream);
+  --color-maroon: var(--maroon);
+  --color-brown: var(--brown);
+  --color-gold: var(--gold);
+  --color-sand: var(--sand);
+  --color-border: var(--border);
+
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-serif), Georgia, serif;
+  --font-script: var(--font-script), cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
-  background: var(--background);
+  /* Decorative layers (foliage, slides) may poke out: never scroll sideways. `clip` keeps sticky working. */
+  overflow-x: clip;
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-serif);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Editorial selection highlight */
+::selection {
+  background-color: var(--maroon);
+  color: var(--cream);
+}
+
+/* Organic curved section dividers */
+.organic-curve-top {
+  clip-path: ellipse(120% 100% at 50% 100%);
+}
+
+.organic-curve-bottom {
+  clip-path: ellipse(120% 100% at 50% 0%);
+}
+
+.organic-shape-pill {
+  border-radius: 9999px 9999px 9999px 9999px;
+}
+
+.organic-shape-arch {
+  border-radius: 200px 200px 0 0;
+}
+
+.organic-shape-leaf {
+  border-radius: 60% 40% 70% 30% / 40% 60% 40% 60%;
+}
+
+/* Why artwork: window opens, jowar rises and sways, decorations settle in */
+.why-window {
+  clip-path: url(#why-window-clip);
+  -webkit-clip-path: url(#why-window-clip);
+}
+
+.why-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--background);
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: 50% 0%;
+}
+
+.why-art[data-revealed="true"] .why-window::before {
+  transform: scaleY(0);
+}
+
+.why-field {
+  transform: scale(1.05);
+}
+
+.why-art[data-revealed="true"] .why-field {
+  animation: why-field-drift 18s ease-in-out 1.5s infinite alternate;
+}
+
+@keyframes why-field-drift {
+  from {
+    transform: scale(1.05) translateX(0);
+  }
+  to {
+    transform: scale(1.13) translateX(-2%);
+  }
+}
+
+.why-jowar {
+  opacity: 0;
+  transform: translateY(14%) scale(0.82);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.9s ease-out 0.5s,
+    transform 1.7s cubic-bezier(0.34, 1.4, 0.5, 1) 0.5s;
+}
+
+.why-art[data-revealed="true"] .why-jowar {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.why-jowar-sway {
+  transform-origin: 50% 96%;
+}
+
+.why-art[data-revealed="true"] .why-jowar-sway {
+  animation: why-sway 6s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes why-sway {
+  from {
+    transform: rotate(-1.1deg);
+  }
+  to {
+    transform: rotate(1.3deg);
+  }
+}
+
+.why-deco {
+  opacity: 0;
+  transition:
+    opacity 1.2s ease-out 1s,
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 1s;
+}
+
+.why-deco-leaves {
+  transform: translate(-6%, -4%) rotate(-4deg);
+  transform-origin: 80% 90%;
+}
+
+.why-deco-branch {
+  transform: translate(-6%, 4%) rotate(3deg);
+  transform-origin: 90% 95%;
+}
+
+.why-art[data-revealed="true"] .why-deco {
+  opacity: 1;
+  transform: none;
+}
+
+/* Process: grain flow glides in, copy and steps follow */
+.process-flow {
+  opacity: 0;
+  transform: translate(-5%, -6%);
+  transition:
+    opacity 1.1s ease-out,
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-copy,
+.process-step {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s ease-out 0.4s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.process-step {
+  transition-delay: var(--step-delay, 0.9s);
+}
+
+.process-art[data-in-view="true"] .process-flow,
+.process-art[data-in-view="true"] .process-copy,
+.process-art[data-in-view="true"] .process-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Process ground: glow fades up, the stream flows in, vessels cast real shadows */
+.process-contact {
+  opacity: 0;
+  transition: opacity 1.4s ease-out 0.4s;
+}
+
+.process-stream-reveal {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 2.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-art[data-in-view="true"] .process-contact {
+  opacity: 1;
+}
+
+.process-art[data-in-view="true"] .process-stream-reveal {
+  stroke-dashoffset: 0;
+}
+
+/* A black copy of the vessel, softened and placed where its shadow would fall */
+.process-cast {
+  filter: brightness(0) blur(6px);
+  opacity: 0.3;
+}
+
+/* Vessels standing on the surface: shadow squashed flat and thrown to one side */
+.process-cast-floor {
+  transform-origin: 50% 95%;
+  transform: translate(7%, 2%) skewX(-38deg) scaleY(0.2);
+  opacity: 0.38;
+}
+
+/* The scoop is held higher up: a larger, fainter shadow falls further away */
+.process-cast-air {
+  transform: translate(11%, 15%) scale(1.02);
+  filter: brightness(0) blur(12px);
+  opacity: 0.2;
+}
+
+/* Leaves around the bowl sway gently from their base */
+.bowl-leaf {
+  transform: rotate(var(--r));
+}
+
+.process-art[data-in-view="true"] .bowl-leaf {
+  animation: bowl-leaf-sway 5.5s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes bowl-leaf-sway {
+  from {
+    transform: rotate(calc(var(--r) - 3deg));
+  }
+  to {
+    transform: rotate(calc(var(--r) + 3.5deg));
+  }
+}
+
+/* ---------- Hero ---------- */
+/* Hero is pinned and recedes as the page slides up over it */
+.hero-content {
+  transform: translateY(calc(var(--hs, 0) * -70px)) scale(calc(1 - var(--hs, 0) * 0.07));
+  opacity: calc(1 - var(--hs, 0) * 1.25);
+  will-change: transform, opacity;
+}
+
+.hero-cover {
+  opacity: calc(var(--hs, 0) * 0.8);
+}
+
+
+.nav-enter {
+  animation: nav-drop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+/* Background: settles in, then breathes; follows the pointer and scroll */
+.hero-bg {
+  transform: translate3d(
+      calc(var(--hx, 0) * -16px),
+      calc(var(--hy, 0) * -10px + var(--hs, 0) * 70px),
+      0
+    )
+    scale(1.07);
+  will-change: transform;
+}
+
+.hero-kenburns {
+  animation:
+    hero-settle 2.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    hero-breathe 22s ease-in-out 2.8s infinite alternate;
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.22);
+    filter: brightness(0.55) blur(5px);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1) blur(0);
+  }
+}
+
+@keyframes hero-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05) translateX(-1%);
+  }
+}
+
+.hero-glow {
+  right: -6%;
+  bottom: -12%;
+  width: 72%;
+  height: 92%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 170, 70, 0.34),
+    rgba(255, 120, 30, 0.12) 55%,
+    transparent
+  );
+  mix-blend-mode: screen;
+  animation: hero-glow-pulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes hero-glow-pulse {
+  from {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* Headline lines rise out of a mask */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.hero-line-inner {
+  display: inline-block;
+  transform: translateY(115%);
+  animation: hero-line-up 1.1s cubic-bezier(0.22, 1, 0.36, 1)
+    calc(0.45s + var(--i, 0) * 0.16s) forwards;
+}
+
+@keyframes hero-line-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Everything else fades up in sequence */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: hero-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1)
+    calc(0.5s + var(--i, 0) * 0.14s) forwards;
+}
+
+@keyframes hero-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-star {
+  opacity: 0;
+  transform: scale(0.3) rotate(-40deg);
+  animation: hero-star-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)
+    calc(1.3s + var(--s, 0) * 0.1s) forwards;
+}
+
+@keyframes hero-star-pop {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* A glint sweeps across the primary button now and then */
+.hero-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+  transform: translateX(-120%);
+  animation: hero-shine 4.5s ease-in-out 2.6s infinite;
+}
+
+@keyframes hero-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* The script tagline is written on, then floats */
+.hero-script {
+  clip-path: inset(0 100% 0 0);
+  translate: calc(var(--hx, 0) * 12px) calc(var(--hy, 0) * 9px);
+  animation:
+    hero-script-write 1.8s cubic-bezier(0.6, 0, 0.2, 1) 2s forwards,
+    hero-script-float 6s ease-in-out 3.8s infinite alternate;
+}
+
+@keyframes hero-script-write {
+  to {
+    clip-path: inset(-20% -20% -20% -20%);
+  }
+}
+
+@keyframes hero-script-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+
+/* Pop jowar bursts out of the bowl, then drifts at its own depth */
+.hero-float {
+  translate: calc(var(--hx, 0) * var(--d, 0.5) * -34px)
+    calc(var(--hy, 0) * var(--d, 0.5) * -24px + var(--hs, 0) * var(--d, 0.5) * -90px);
+}
+
+.hero-float-img {
+  opacity: 0;
+  transform: translate(var(--bx), var(--by)) scale(0.15) rotate(-120deg);
+  animation:
+    hero-burst 1.5s cubic-bezier(0.2, 0.9, 0.25, 1.15) var(--delay, 1s) forwards,
+    hero-drift var(--drift, 8s) ease-in-out calc(var(--delay, 1s) + 1.5s) infinite
+      alternate;
+}
+
+@keyframes hero-burst {
+  0% {
+    opacity: 0;
+    transform: translate(var(--bx), var(--by)) scale(0.15) rotate(-120deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(var(--rot, 0deg));
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) rotate(var(--rot, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translate(6px, -18px) rotate(calc(var(--rot, 0deg) + 9deg));
+  }
+}
+
+/* Masala shaker tilts over the bowl and shakes */
+.masala-shaker {
+  transform: rotate(125deg);
+  transform-origin: 50% 50%;
+}
+
+.masala-shaker-right {
+  transform: rotate(-125deg);
+}
+
+.process-art[data-in-view="true"] .masala-shaker {
+  animation: masala-shake 0.5s ease-in-out 3s infinite alternate;
+}
+
+.process-art[data-in-view="true"] .masala-shaker-right {
+  animation-name: masala-shake-right;
+}
+
+@keyframes masala-shake-right {
+  from {
+    transform: rotate(-121deg) translate(2px, -2px);
+  }
+  to {
+    transform: rotate(-129deg) translate(-2px, 3px);
+  }
+}
+
+@keyframes masala-shake {
+  from {
+    transform: rotate(121deg) translate(-2px, -2px);
+  }
+  to {
+    transform: rotate(129deg) translate(2px, 3px);
+  }
+}
+
+/* Out-of-focus foliage at the left edge sways ever so slightly */
+.blurred-foliage {
+  transform-origin: 8% 100%;
+  animation: foliage-sway 9s ease-in-out infinite alternate;
+}
+
+@keyframes foliage-sway {
+  from {
+    transform: rotate(-1.6deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+/* Flavours: heading and cards rise in, one after another */
+.flavours-head,
+.flavour-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s ease-out calc(var(--i, 0) * 0.14s + 0.1s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.14s + 0.1s);
+}
+
+.flavours-art[data-in-view="true"] .flavours-head,
+.flavours-art[data-in-view="true"] .flavour-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reviews: heading rises in, cards slide in one after another (and on every arrow click) */
+.reviews-head {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s ease-out 0.1s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.reviews-art[data-in-view="true"] .reviews-head {
+  opacity: 1;
+  transform: none;
+}
+
+.review-slide {
+  opacity: 0;
+  animation: review-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.12s + 0.15s)
+    forwards;
+  animation-play-state: paused;
+}
+
+.reviews-art[data-in-view="true"] .review-slide {
+  animation-play-state: running;
+}
+
+@keyframes review-in {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Why Taptah: scroll-linked depth and staged text reveals ---------- */
+/* --ws is the section's scroll progress (0 entering, 1 leaving), set by WhyMotion */
+.why-section {
+  --ws: 0.5;
+}
+
+/* Parallax: each layer drifts at its own speed as you scroll */
+.why-mountain {
+  transform: translateY(calc((0.5 - var(--ws)) * 90px));
+  opacity: calc(0.25 + var(--ws, 0.5) * 0.9);
+  will-change: transform;
+}
+
+.why-window {
+  translate: 0 calc((0.5 - var(--ws, 0.5)) * -22px);
+}
+
+.why-jowar {
+  translate: 0 calc((0.5 - var(--ws, 0.5)) * 56px);
+}
+
+.why-deco-leaves {
+  translate: calc((0.5 - var(--ws, 0.5)) * -26px) calc((0.5 - var(--ws, 0.5)) * 34px);
+}
+
+.why-deco-branch {
+  translate: calc((0.5 - var(--ws, 0.5)) * -16px) calc((0.5 - var(--ws, 0.5)) * 18px);
+}
+
+/* Heading lines rise out of a mask, one after the other */
+.why-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.why-line-inner {
+  display: inline-block;
+  transform: translateY(112%);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) calc(0.2s + var(--i, 0) * 0.15s);
+}
+
+.why-section[data-in-view="true"] .why-line-inner {
+  transform: none;
+}
+
+/* The leaf icon unfurls beside the heading */
+.why-leaf-icon {
+  opacity: 0;
+  transform: scale(0.2) rotate(-70deg);
+  transform-origin: 20% 90%;
+  transition:
+    opacity 0.6s ease-out 0.7s,
+    transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s;
+}
+
+.why-section[data-in-view="true"] .why-leaf-icon {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+/* Button and quote follow once the paragraph is under way */
+.why-cta,
+.why-quote {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.9s ease-out 0.9s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.9s,
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.why-quote {
+  transition-delay: 1.1s;
+}
+
+.why-section[data-in-view="true"] .why-cta,
+.why-section[data-in-view="true"] .why-quote {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Loader (light) ---------- */
+/* Hero entrance animations wait behind the loader */
+html[data-loading="true"] {
+  overflow: hidden;
+}
+
+html[data-loading="true"] .nav-enter,
+html[data-loading="true"] .hero-kenburns,
+html[data-loading="true"] .hero-fade,
+html[data-loading="true"] .hero-line-inner,
+html[data-loading="true"] .hero-star,
+html[data-loading="true"] .hero-script,
+html[data-loading="true"] .hero-float-img,
+html[data-loading="true"] .hero-shine::after {
+  animation-play-state: paused;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: all;
+  color: #f8e9d6;
+}
+
+.loader-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8e9d6;
+  color: #6b1022;
+  transition: transform 1.15s cubic-bezier(0.76, 0, 0.18, 1);
+}
+
+.loader-lifting .loader-panel {
+  transform: translateY(calc(-100% - 90px));
+}
+
+.loader-wave {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 90px;
+  color: #f8e9d6;
+  margin-top: -1px;
+}
+
+/* Deep maroon layer behind the cream curtain: a second wave follows the first up */
+.loader-back {
+  position: absolute;
+  inset: 0;
+  background: #6b1022;
+  color: #6b1022;
+  transition: transform 1.15s cubic-bezier(0.76, 0, 0.18, 1) 0.14s;
+}
+
+.loader-lifting .loader-back {
+  transform: translateY(calc(-100% - 90px));
+}
+
+.loader-wave-back {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 90px;
+  margin-top: -1px;
+}
+
+.loader-lifting .loader-stage,
+.loader-lifting .loader-word,
+.loader-lifting .loader-tag,
+.loader-lifting .loader-meter,
+.loader-lifting .loader-fountain {
+  opacity: 0;
+  transition: opacity 0.45s ease-out;
+}
+
+.loader-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 42%, transparent 35%, rgba(180, 110, 60, 0.16) 100%);
+  pointer-events: none;
+}
+
+.loader-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 166, 58, 0.75), rgba(240, 166, 58, 0));
+  opacity: 0;
+  animation: loader-mote 6s ease-in-out infinite;
+}
+
+@keyframes loader-mote {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, -150px);
+  }
+}
+
+.loader-stage {
+  position: relative;
+  width: 260px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-ringsvg {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 260px;
+  height: 260px;
+  margin: -130px 0 0 -130px;
+  overflow: visible;
+  opacity: 0;
+  animation: loader-fade 0.6s ease-out 0.2s forwards;
+}
+
+.loader-ringsvg circle:last-child {
+  transition: stroke-dashoffset 0.25s linear;
+  filter: drop-shadow(0 0 5px rgba(240, 166, 58, 0.55));
+}
+
+.loader-glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 170, 70, 0.55),
+    rgba(255, 140, 50, 0.18) 60%,
+    transparent
+  );
+  opacity: 0;
+  animation: loader-glow 3.2s ease-in-out forwards;
+}
+
+@keyframes loader-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  55% {
+    opacity: 0.9;
+    transform: scale(0.9);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+/* Heat rings pulse outward, faster and faster until the pop */
+.loader-ring {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196, 80, 30, 0.55);
+  opacity: 0;
+  animation: loader-ring 1.5s ease-out infinite;
+}
+
+.loader-ring-2 {
+  animation-delay: 0.5s;
+}
+
+.loader-ring-3 {
+  animation-delay: 1s;
+}
+
+@keyframes loader-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.45);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+.loader-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  width: 92px;
+  height: 14px;
+  margin-left: -46px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(60, 30, 10, 0.4), transparent);
+  animation: loader-shadow 3.2s ease-in-out forwards;
+}
+
+@keyframes loader-shadow {
+  0%,
+  46% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  56% {
+    transform: scale(0.55);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.55;
+  }
+}
+
+/* The kernel: a gentle wobble that grows into violent shaking, then it pops */
+.loader-kernel {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 62px;
+  height: auto;
+  margin: -29px 0 0 -31px;
+  filter: drop-shadow(0 8px 6px rgba(60, 30, 10, 0.3));
+  animation: loader-kernel 1.6s ease-in forwards;
+}
+
+@keyframes loader-kernel {
+  0% {
+    transform: translateY(14px) rotate(0) scale(0.6);
+    opacity: 0;
+  }
+  14% {
+    transform: translateY(0) rotate(0) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-1.5px, 0) rotate(-4deg) scale(1);
+  }
+  40% {
+    transform: translate(2px, -1px) rotate(5deg) scale(1.02);
+  }
+  50% {
+    transform: translate(-2.5px, 1px) rotate(-8deg) scale(1.06);
+  }
+  60% {
+    transform: translate(3px, -2px) rotate(10deg) scale(1.1);
+    filter: drop-shadow(0 8px 6px rgba(60, 30, 10, 0.3)) saturate(1.6) brightness(1.08);
+  }
+  72% {
+    transform: translate(-4px, 1px) rotate(-12deg) scale(1.16);
+  }
+  84% {
+    transform: translate(4px, -2px) rotate(12deg) scale(1.22);
+  }
+  94% {
+    transform: translate(0, -6px) rotate(0) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -14px) rotate(0) scale(1.7);
+    opacity: 0;
+  }
+}
+
+/* The pop: puffs out of nothing with a squash-and-stretch overshoot, then bobs */
+.loader-pop-wrap {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 150px;
+  margin: -68px 0 0 -75px;
+  opacity: 0;
+  transform: scale(0.1);
+  animation: loader-pop 0.9s cubic-bezier(0.2, 1.1, 0.3, 1) 1.5s forwards;
+}
+
+.loader-pop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 10px rgba(60, 30, 10, 0.28));
+  animation: loader-bob 2.4s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes loader-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(-40deg);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.32, 0.86) rotate(6deg);
+  }
+  60% {
+    transform: scale(0.92, 1.1) rotate(-3deg);
+  }
+  80% {
+    transform: scale(1.05, 0.97) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes loader-bob {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-8px) rotate(2.5deg);
+  }
+}
+
+/* Golden sparks fly out of the pop */
+.loader-spark {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff3c4, #f0a63a 60%, #d4691a);
+  opacity: 0;
+  animation: loader-spark 0.9s cubic-bezier(0.16, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes loader-spark {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), calc(var(--y) + 26px)) scale(1);
+  }
+}
+
+/* Popped jowar fountain: flies out in an arc (x linear, y up then down), spinning */
+.loader-fountain {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -92px;
+  pointer-events: none;
+}
+
+.loader-piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  margin: -12px 0 0 -12px;
+  opacity: 0;
+  animation: loader-piece-x 1.55s linear forwards;
+}
+
+.loader-piece img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 4px rgba(60, 30, 10, 0.28));
+  animation: loader-piece-y 1.55s linear forwards;
+}
+
+@keyframes loader-piece-x {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  4% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--dx));
+  }
+}
+
+@keyframes loader-piece-y {
+  0% {
+    transform: translateY(0) rotate(0) scale(0.3);
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+  }
+  38% {
+    transform: translateY(calc(var(--up) * -1)) rotate(calc(var(--rot) * 0.4)) scale(1);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.5);
+  }
+  100% {
+    transform: translateY(calc(var(--fall) * 0.4)) rotate(var(--rot)) scale(1);
+  }
+}
+
+/* Wordmark: first only the outline, drawn letter by letter... */
+.loader-word {
+  position: relative;
+  margin-top: 6px;
+  font-size: clamp(3.2rem, 7vw, 5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.loader-word-outline,
+.loader-word-fill {
+  display: flex;
+}
+
+.loader-word-outline span {
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke: 1.4px #6b1022;
+  opacity: 0;
+  transform: translateY(40%);
+  animation: loader-letter 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(0.35s + var(--i) * 0.09s)
+    forwards;
+}
+
+@keyframes loader-letter {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ...then the solid colour fills it from the bottom up, tracking the progress count */
+.loader-word-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #8a1830, #6b1022 60%, #4e0a18);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: clip-path 0.25s linear;
+}
+
+.loader-word-fill span {
+  display: inline-block;
+  color: transparent;
+}
+
+.loader-tag {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(107, 16, 34, 0.7);
+  opacity: 0;
+  animation: loader-fade 0.8s ease-out 2.3s forwards;
+}
+
+@keyframes loader-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+.loader-meter {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  display: flex;
+  min-width: 240px;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.loader-stage-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(107, 16, 34, 0.72);
+  animation: loader-label 0.5s ease-out both;
+}
+
+@keyframes loader-label {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.loader-count {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: #6b1022;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-kernel,
+  .loader-ring,
+  .loader-spark,
+  .loader-piece {
+    display: none;
+  }
+
+  .loader-pop-wrap {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Lenis: recommended base styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

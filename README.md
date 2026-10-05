@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Taptah — Wholesome Traditions, Modern Bites
+
+A premium Indian snack brand website built with Next.js App Router, React, Tailwind CSS, TypeScript, and motion foundations for editorial storytelling.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, Server Components by default)
+- **Language**: TypeScript (Strict mode)
+- **Styling**: Tailwind CSS v4 with custom design tokens
+- **Typography**: Next/Font (`Playfair Display` for Display Serif, `Plus Jakarta Sans` for Sans/Body)
+- **Motion & Storytelling**: GSAP & ScrollTrigger (scroll-based storytelling, pinned sections), Framer Motion (micro-interactions)
+- **Smooth Scroll**: Lenis (integrated with GSAP ticker & reduced-motion aware)
+- **Icons**: Lucide React
+- **Linter**: ESLint with next/core-web-vitals
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- **Node.js**: v20.x or v22.x (Recommended: v22.13+)
+- **npm**: v10.x+
+
+### Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local`:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Description | Default |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Canonical production site URL | `http://localhost:3000` |
+
+### Development Server
+
+Start the local development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the initial development shell.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create an optimized production build:
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run code linting:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Folder Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+├── app/                  # Next.js App Router root
+│   ├── layout.tsx        # Root layout, fonts, and global metadata
+│   ├── page.tsx          # Initial development shell
+│   ├── globals.css       # Design tokens & organic shape utilities
+│   ├── loading.tsx       # Loading shell
+│   ├── not-found.tsx     # 404 page
+│   └── error.tsx         # Error boundary
+├── components/
+│   ├── layout/           # Global layout (Navbar, Footer)
+│   ├── sections/         # Landing page modular sections
+│   │   ├── Hero/         # Hero foundation
+│   │   ├── Story/        # Brand story foundation
+│   │   ├── Process/      # Handcrafted process steps
+│   │   ├── Flavours/     # Flavours showcase
+│   │   ├── Testimonials/ # Community reviews
+│   │   └── CTA/          # Call to action
+│   ├── ui/               # Reusable UI primitives (Button, etc.)
+│   └── common/           # Shared components (ImagePlaceholder)
+├── hooks/                # Custom React hooks (useLenis, useGsap, useMediaQuery, useScrollAnimation)
+├── lib/                  # Library utilities (gsap.ts, utils.ts)
+├── utils/                # Utility exports
+├── constants/            # Structured content constants (navigation, flavours, process, testimonials)
+├── types/                # Domain TypeScript definitions
+└── config/               # App configuration (fonts, site metadata)
+
+public/
+├── images/
+│   ├── hero/             # Hero photography
+│   ├── story/            # Origin & harvest imagery
+│   ├── process/          # Step-by-step imagery
+│   ├── flavours/         # Product packaging renders
+│   ├── testimonials/     # Community avatars
+│   └── common/           # Shared logos & OG imagery
+├── icons/                # Brand icons & SVGs
+├── illustrations/        # Hand-drawn botanical elements
+└── fonts/                # Local font fallbacks
+```
+
+---
+
+## Design System
+
+The visual identity embodies an editorial luxury Indian food brand:
+
+- **Background**: Warm cream (`#F9F6F0`) & Soft sand (`#FAF7F2`)
+- **Primary / Typography**: Deep maroon (`#381216`)
+- **Secondary**: Muted brown (`#6E5343`)
+- **Accent**: Warm heritage red (`#B23A22`) & Grain gold (`#D4A373`)
+- **Dividers & Shapes**: Organic curved edges (`.organic-curve-top`, `.organic-shape-leaf`, etc.)
+
+---
+
+## Image & Photography Guidelines
+
+1. Always use `next/image` with optimized sizes, priorities, and descriptive alt texts.
+2. Store photography exclusively in designated folders under `public/images/`.
+3. If real assets are pending, use the included `<ImagePlaceholder />` component instead of external placeholder URLs.
+
+---
+
+## Animation Architecture
+
+- **GSAP + ScrollTrigger**: Dedicated to scroll-based storytelling, pinned sequences, and parallax timeline manipulation via `@/lib/gsap` and `useGsap` / `useScrollAnimation`.
+- **Framer Motion**: Reserved for discrete UI transitions (menus, mobile drawer, micro-interactions).
+- **Reduced Motion**: Automatically respected globally and in `useLenis`.
