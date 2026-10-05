@@ -89,7 +89,7 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
     let embers: Ember[] = [];
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       const w = canvas.clientWidth;
       canvas.width = Math.max(1, Math.round(w * dpr));
       canvas.height = Math.max(1, Math.round(((w * CANVAS_H) / IMG_W) * dpr));
@@ -147,7 +147,7 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
       flameTimer -= dt;
       while (flameTimer <= 0) {
         emitFlame();
-        flameTimer += 0.012;
+        flameTimer += 0.02;
       }
       smokeTimer -= dt;
       while (smokeTimer <= 0) {
@@ -183,18 +183,50 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
       embers = embers.filter((e) => e.life < e.max);
     };
 
-    const blob = (
-      x: number,
-      y: number,
-      r: number,
-      stops: Array<[number, string]>,
-    ) => {
-      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      stops.forEach(([o, c]) => g.addColorStop(o, c));
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
+    // Pre-rendered soft sprites: drawing one is far cheaper than building a
+    // fresh radial gradient for every flame, puff and ember on every frame.
+    const makeSprite = (stops: Array<[number, string]>) => {
+      const size = 96;
+      const c = document.createElement("canvas");
+      c.width = c.height = size;
+      const g = c.getContext("2d");
+      if (g) {
+        const gr = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        stops.forEach(([o, col]) => gr.addColorStop(o, col));
+        g.fillStyle = gr;
+        g.fillRect(0, 0, size, size);
+      }
+      return c;
+    };
+    const SP = {
+      smokeWhite: makeSprite([
+        [0, "rgba(255, 255, 255, 1)"],
+        [0.6, "rgba(255, 252, 246, 0.6)"],
+        [1, "rgba(255, 252, 246, 0)"],
+      ]),
+      smokeShadow: makeSprite([
+        [0, "rgba(120, 92, 76, 1)"],
+        [1, "rgba(120, 92, 76, 0)"],
+      ]),
+      fireLight: makeSprite([
+        [0, "rgba(255, 140, 40, 1)"],
+        [1, "rgba(255, 90, 20, 0)"],
+      ]),
+      flame: makeSprite([
+        [0, "rgba(255, 245, 190, 0.75)"],
+        [0.35, "rgba(255, 190, 70, 0.55)"],
+        [0.7, "rgba(255, 90, 20, 0.28)"],
+        [1, "rgba(200, 30, 0, 0)"],
+      ]),
+      ember: makeSprite([
+        [0, "rgba(255, 220, 130, 1)"],
+        [1, "rgba(255, 120, 30, 0)"],
+      ]),
+    };
+
+    const blob = (sp: HTMLCanvasElement, x: number, y: number, r: number, alpha: number) => {
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(sp, x - r, y - r, r * 2, r * 2);
     };
 
     const draw = () => {
@@ -214,17 +246,10 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
           const r = s.r * 0.72;
           if (white) {
             const a = Math.min(0.8, s.alpha * 3) * fade;
-            blob(s.x + ox, s.y + oy, r, [
-              [0, "rgba(255, 255, 255, " + a + ")"],
-              [0.6, "rgba(255, 252, 246, " + a * 0.6 + ")"],
-              [1, "rgba(255, 252, 246, 0)"],
-            ]);
+            blob(SP.smokeWhite, s.x + ox, s.y + oy, r, a);
           } else {
             const a = s.alpha * 0.9 * fade;
-            blob(s.x + ox, s.y + oy, r * 1.05, [
-              [0, "rgba(120, 92, 76, " + a + ")"],
-              [1, "rgba(120, 92, 76, 0)"],
-            ]);
+            blob(SP.smokeShadow, s.x + ox, s.y + oy, r * 1.05, a);
           }
         }
       };
@@ -235,10 +260,7 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
       const flicker = 0.7 + Math.sin(t * 9) * 0.12 + Math.sin(t * 23) * 0.08;
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
-      blob(700, 600, 300, [
-        [0, "rgba(255, 140, 40, " + 0.28 * flicker + ")"],
-        [1, "rgba(255, 90, 20, 0)"],
-      ]);
+      blob(SP.fireLight, 700, 600, 300, 0.28 * flicker);
       ctx.restore();
 
       // Flames, clipped to the stove openings and blended additively
@@ -251,12 +273,7 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
         const k = f.life / f.max;
         const r = f.size * (1 - k * 0.85);
         const a = (1 - k) ** 1.3;
-        blob(f.x, f.y, r, [
-          [0, "rgba(255, 245, 190, " + 0.75 * a + ")"],
-          [0.35, "rgba(255, 190, 70, " + 0.55 * a + ")"],
-          [0.7, "rgba(255, 90, 20, " + 0.28 * a + ")"],
-          [1, "rgba(200, 30, 0, 0)"],
-        ]);
+        blob(SP.flame, f.x, f.y, r, a);
       }
       ctx.restore();
 
@@ -265,12 +282,10 @@ export const KadayiFire: React.FC<{ className?: string }> = ({
       ctx.globalCompositeOperation = "lighter";
       for (const e of embers) {
         const k = e.life / e.max;
-        blob(e.x, e.y, 7 * (1 - k * 0.6), [
-          [0, "rgba(255, 220, 130, " + 0.9 * (1 - k) + ")"],
-          [1, "rgba(255, 120, 30, 0)"],
-        ]);
+        blob(SP.ember, e.x, e.y, 7 * (1 - k * 0.6), 0.9 * (1 - k));
       }
       ctx.restore();
+      ctx.globalAlpha = 1;
     };
 
     const frame = (now: number) => {

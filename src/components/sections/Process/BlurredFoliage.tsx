@@ -66,6 +66,7 @@ export const BlurredFoliage: React.FC = () => (
   <svg
     aria-hidden="true"
     viewBox="0 0 520 640"
+    data-parallax="-0.12"
     className="blurred-foliage pointer-events-none absolute -left-[2%] top-[18%] z-[1] hidden h-[56%] w-[31%] overflow-visible lg:block"
   >
     <defs>

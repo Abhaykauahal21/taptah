@@ -282,7 +282,7 @@ export const GrainFlow: React.FC = () => {
 
     let scale = 1;
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
       canvas.width = Math.max(1, Math.round(w * dpr));
@@ -675,13 +675,15 @@ export const GrainFlow: React.FC = () => {
       if (!sp) return;
       const w = g.size * grow;
       const h = w * (sp.height / sp.width);
-      ctx.globalAlpha = alpha;
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rot);
+      if (ctx.globalAlpha !== alpha) ctx.globalAlpha = alpha;
+      // One setTransform is much cheaper than save/translate/rotate/restore,
+      // and this runs for every grain in every heap on every frame.
+      const c = Math.cos(rot) * scale;
+      const s = Math.sin(rot) * scale;
+      ctx.setTransform(c, s, -s, c, x * scale, y * scale);
       ctx.drawImage(sp, -w / 2, -h / 2, w, h);
-      ctx.restore();
     };
+    const resetTransform = () => ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
     const draw = () => {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -695,6 +697,7 @@ export const GrainFlow: React.FC = () => {
           );
         }
       }
+      resetTransform();
       rolling.forEach((r) => {
         const v = r.vessel;
         const toX = v.colX(r.toCol) + r.dx;
@@ -707,6 +710,7 @@ export const GrainFlow: React.FC = () => {
           r.rot + r.t * 2,
         );
       });
+      resetTransform();
       falling.forEach((f) => {
         // Pop: squash-and-stretch burst, then settle at full size
         let grow = 1;
@@ -716,6 +720,7 @@ export const GrainFlow: React.FC = () => {
         }
         drawGrain(f, f.x, f.y, f.rot, f.fade, grow);
       });
+      resetTransform();
       for (const m of masala) {
         ctx.globalAlpha = Math.min(1, (0.9 - m.life) * 2);
         ctx.fillStyle = m.pudina

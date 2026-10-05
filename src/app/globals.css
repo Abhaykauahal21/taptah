@@ -338,7 +338,6 @@ body {
     rgba(255, 120, 30, 0.12) 55%,
     transparent
   );
-  mix-blend-mode: screen;
   animation: hero-glow-pulse 5s ease-in-out infinite alternate;
 }
 
@@ -598,32 +597,10 @@ body {
 }
 
 /* ---------- Why Taptah: scroll-linked depth and staged text reveals ---------- */
-/* --ws is the section's scroll progress (0 entering, 1 leaving), set by WhyMotion */
-.why-section {
-  --ws: 0.5;
-}
-
-/* Parallax: each layer drifts at its own speed as you scroll */
-.why-mountain {
-  transform: translateY(calc((0.5 - var(--ws)) * 90px));
-  opacity: calc(0.25 + var(--ws, 0.5) * 0.9);
-  will-change: transform;
-}
-
-.why-window {
-  translate: 0 calc((0.5 - var(--ws, 0.5)) * -22px);
-}
-
-.why-jowar {
-  translate: 0 calc((0.5 - var(--ws, 0.5)) * 56px);
-}
-
-.why-deco-leaves {
-  translate: calc((0.5 - var(--ws, 0.5)) * -26px) calc((0.5 - var(--ws, 0.5)) * 34px);
-}
-
-.why-deco-branch {
-  translate: calc((0.5 - var(--ws, 0.5)) * -16px) calc((0.5 - var(--ws, 0.5)) * 18px);
+/* Parallax layers are moved by ParallaxManager through the `translate` property */
+[data-parallax],
+[data-parallax-x] {
+  will-change: translate;
 }
 
 /* Heading lines rise out of a mask, one after the other */

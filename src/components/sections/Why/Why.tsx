@@ -15,20 +15,28 @@ export const Why: React.FC = () => {
     >
       <WhyMotion />
       {/* Mountain & farmhouse illustration (transparent) */}
-      <Image
-        src="/images/why/mointain.webp"
-        alt=""
-        aria-hidden="true"
-        width={1774}
-        height={887}
-        sizes="(min-width: 768px) 44vw, 0px"
-        className="why-mountain pointer-events-none absolute bottom-0 right-0 hidden h-auto origin-bottom translate-x-[4vw] -translate-y-[1vw] scale-y-[1.2] w-[44vw] max-w-[800px] opacity-80 md:block"
-      />
+      <div
+        data-parallax="0.14"
+        className="pointer-events-none absolute bottom-0 right-0 hidden w-[44vw] max-w-[800px] md:block"
+      >
+        <Image
+          src="/images/why/mointain.webp"
+          alt=""
+          aria-hidden="true"
+          width={1774}
+          height={887}
+          sizes="(min-width: 768px) 44vw, 0px"
+          className="why-mountain h-auto w-full origin-bottom translate-x-[4vw] -translate-y-[1vw] scale-y-[1.2] opacity-80"
+        />
+      </div>
 
       <div className="relative mx-auto grid max-w-[1500px] items-start gap-y-10 lg:grid-cols-[38%_minmax(0,1fr)]">
         {/* Artwork (cream backdrop is baked in and matches the section) */}
         <div className="mx-auto w-full max-w-md px-5 sm:px-8 lg:mx-0 lg:max-w-none lg:translate-x-[8vw] lg:px-0">
-          <WhyArtwork />
+          {/* The artwork moves as ONE piece, so jowar, window and leaves stay in register */}
+          <div data-parallax="0.05">
+            <WhyArtwork />
+          </div>
         </div>
 
         <div className="px-5 sm:px-8 lg:pl-[11vw] lg:pr-[2vw] lg:pt-[clamp(1rem,4vw,4rem)]">

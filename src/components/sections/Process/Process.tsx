@@ -190,7 +190,7 @@ export const Process: React.FC = () => {
         <GrainFlow />
 
         {/* Copy */}
-        <div className="process-copy mt-10 lg:absolute lg:left-[5.3%] lg:top-[3%] lg:mt-0 lg:w-[36%]">
+        <div data-parallax="0.05" className="process-copy mt-10 lg:absolute lg:left-[5.3%] lg:top-[3%] lg:mt-0 lg:w-[36%]">
           <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-xs">
             The Taptah Process
           </p>

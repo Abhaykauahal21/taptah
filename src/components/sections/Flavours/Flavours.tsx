@@ -9,6 +9,7 @@ import { FlavourItem } from "@/types";
 function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: number }) {
   return (
     <article
+      data-parallax={["0.05", "-0.04", "0.07"][index % 3]}
       className="flavour-card group relative flex flex-col overflow-hidden rounded-[22px] text-cream shadow-[0_22px_40px_-18px_rgba(40,10,10,0.55)]"
       style={{ background: flavour.theme.to, "--i": index } as React.CSSProperties}
     >
@@ -46,7 +47,7 @@ export const Flavours: React.FC = () => {
       className="relative overflow-hidden bg-background px-5 py-16 text-maroon sm:px-8 lg:px-12 lg:py-24"
     >
       <InView className="flavours-art mx-auto max-w-[1280px]">
-        <div className="flavours-head flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div data-parallax="0.06" className="flavours-head flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-xs">
               Our Flavours

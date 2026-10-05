@@ -94,6 +94,7 @@ export const ProcessGround: React.FC = () => (
     aria-hidden="true"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="none"
+    data-parallax="0.06"
     className="process-ground pointer-events-none absolute inset-0 hidden h-full w-full overflow-visible lg:block"
   >
     <defs>

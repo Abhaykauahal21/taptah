@@ -39,7 +39,7 @@ function Avatar({ item }: { item: TestimonialItem }) {
 
 function ReviewCard({ item }: { item: TestimonialItem }) {
   return (
-    <figure className="review-card flex h-full flex-col rounded-[20px] bg-white/45 p-5 shadow-[0_8px_30px_-12px_rgba(120,70,30,0.25)] ring-1 ring-white/60 backdrop-blur-sm">
+    <figure className="review-card flex h-full flex-col rounded-[20px] bg-white/45 p-5 shadow-[0_8px_30px_-12px_rgba(120,70,30,0.25)] ring-1 ring-white/60">
       <span
         aria-hidden="true"
         className="text-[2.6rem] font-bold leading-[0.7] text-[#7a1020]"
@@ -86,10 +86,10 @@ export const Testimonials: React.FC = () => {
       className="relative overflow-hidden bg-background px-5 py-16 text-maroon sm:px-8 lg:px-12 lg:pb-20 lg:pt-6"
     >
       {/* Soft warm light behind the cards */}
-      <div className="pointer-events-none absolute right-[-8%] top-1/2 h-[120%] w-[70%] -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(255,236,208,0.9),transparent)]" />
+      <div data-parallax="0.1" className="pointer-events-none absolute right-[-8%] top-1/2 h-[120%] w-[70%] -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(255,236,208,0.9),transparent)]" />
 
       <InView className="reviews-art relative mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.5fr)] lg:gap-12">
-        <div className="reviews-head">
+        <div data-parallax="0.04" className="reviews-head">
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-xs">
             Real Stories
           </p>

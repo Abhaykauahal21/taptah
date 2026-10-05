@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
       className={cn(
         "nav-enter fixed inset-x-0 top-0 z-50 transition-all duration-300",
         isScrolled || isMobileMenuOpen
-          ? "bg-[#2a1209]/85 backdrop-blur-md shadow-lg shadow-black/10"
+          ? "bg-[#2a1209]/95 shadow-lg shadow-black/10"
           : "bg-transparent",
       )}
     >

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { fontSerif, fontScript } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
 import { Loader } from "@/components/layout/Loader";
+import { ParallaxManager } from "@/components/layout/ParallaxManager";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
@@ -71,6 +72,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col font-serif bg-background text-foreground antialiased selection:bg-maroon selection:text-cream">
         <Loader />
         <SmoothScroll />
+        <ParallaxManager />
         <noscript>
           <style>{`.loader{display:none}html[data-loading]{overflow:auto!important}`}</style>
         </noscript>
