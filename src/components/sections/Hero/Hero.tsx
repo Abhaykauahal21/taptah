@@ -1,14 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Play, Star } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { HeroEffects } from "./HeroEffects";
-
-const AVATARS = [
-  "from-amber-200 to-orange-400",
-  "from-rose-200 to-rose-400",
-  "from-stone-200 to-amber-500",
-];
 
 export const Hero: React.FC = () => {
   return (
@@ -79,28 +73,6 @@ export const Hero: React.FC = () => {
               </span>
               Our Story
             </Link>
-          </div>
-
-          <div style={{ "--i": 5 } as React.CSSProperties} className="hero-fade mt-9 flex items-center gap-3">
-            <div className="flex -space-x-3" aria-hidden="true">
-              {AVATARS.map((gradient) => (
-                <span
-                  key={gradient}
-                  className={`h-9 w-9 rounded-full border-2 border-cream/90 bg-gradient-to-br ${gradient}`}
-                />
-              ))}
-            </div>
-            <div>
-              <div className="flex gap-0.5" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    style={{ "--s": i } as React.CSSProperties}
-                    className="hero-star h-3.5 w-3.5 fill-amber-400 text-amber-400"
-                  />
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
