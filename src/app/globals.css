@@ -229,6 +229,15 @@ body {
   }
 }
 
+/* Phones: the drifting pop jowar is decoration. Each one is a looping animation that has
+   to be restyled whenever its section scrolls into view, so they hold still (in their
+   resting pose) on small screens to keep scrolling smooth. */
+@media (max-width: 767px) {
+  .proc-float {
+    animation: none;
+  }
+}
+
 /* Process ground: glow fades up, the stream flows in, vessels cast real shadows */
 .process-contact {
   opacity: 0;
@@ -2230,8 +2239,7 @@ html.lenis body {
   }
 }
 
-/* Footer credit: Angaar Labs. A gold wordmark that glints on hover, a flickering ember
-   and a few sparks that lift off it. */
+/* Footer credit: Angaar Labs. A gold wordmark that glints on hover, a flickering ember. */
 .angaar-name {
   background-image:
     linear-gradient(105deg, transparent 40%, rgba(255, 252, 240, 0.95) 50%, transparent 60%),
@@ -2268,37 +2276,6 @@ html.lenis body {
   }
   100% {
     transform: scale(1.03, 0.97) rotate(-0.5deg);
-  }
-}
-
-.angaar-spark {
-  position: absolute;
-  bottom: 55%;
-  left: 50%;
-  width: 2px;
-  height: 2px;
-  margin-left: var(--x, 0);
-  border-radius: 9999px;
-  background: #ffd07a;
-  box-shadow: 0 0 4px 1px rgba(255, 170, 70, 0.9);
-  opacity: 0;
-}
-
-.angaar-credit:hover .angaar-spark {
-  animation: angaar-spark 1.4s ease-out var(--d, 0s) infinite;
-}
-
-@keyframes angaar-spark {
-  0% {
-    opacity: 0;
-    transform: translateY(0) scale(1);
-  }
-  15% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-16px) scale(0.3);
   }
 }
 

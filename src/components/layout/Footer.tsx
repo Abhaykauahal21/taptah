@@ -340,7 +340,7 @@ export const Footer: React.FC = () => {
             </sup>
           </p>
           <p
-            className="footer-rise -mt-[1vw] font-[family-name:var(--font-script)] text-[8.6vw] leading-none text-[#a8642e]"
+            className="footer-rise mt-[5.4vw] font-[family-name:var(--font-script)] text-[8.6vw] leading-none text-[#a8642e]"
             style={rise(7)}
           >
             Crunch · Clean · Repeat
@@ -498,35 +498,22 @@ export const Footer: React.FC = () => {
                 </React.Fragment>
               ))}
             </ul>
-            <p className="angaar-credit group flex items-center justify-center gap-3 sm:justify-end">
+            <p className="angaar-credit group flex items-center justify-center gap-2 whitespace-nowrap sm:justify-end">
               <span className="font-medium text-cream/70">Crafted by</span>
-              <span className="angaar-pill relative inline-flex items-center gap-2 rounded-full border border-[#f6c46c]/45 bg-gradient-to-b from-black/35 to-black/15 py-1.5 pl-2.5 pr-4 shadow-[inset_0_1px_0_rgba(255,240,215,0.16),0_6px_18px_-8px_rgba(0,0,0,0.7)] backdrop-blur-sm transition-[border-color,box-shadow] duration-500 hover:border-[#f6c46c]/80 hover:shadow-[inset_0_1px_0_rgba(255,240,215,0.2),0_8px_24px_-6px_rgba(242,164,62,0.55)]">
-                {/* ember: the flame flickers, sparks lift off it on hover */}
-                <span className="relative flex h-5 w-4 items-end justify-center" aria-hidden="true">
-                  <i className="angaar-spark" style={{ "--x": "-3px", "--d": "0s" } as React.CSSProperties} />
-                  <i className="angaar-spark" style={{ "--x": "3px", "--d": "0.35s" } as React.CSSProperties} />
-                  <i className="angaar-spark" style={{ "--x": "0px", "--d": "0.7s" } as React.CSSProperties} />
-                  <svg viewBox="0 0 24 32" className="angaar-flame h-5 w-4 drop-shadow-[0_0_6px_rgba(242,140,50,0.75)]" fill="none">
-                    <defs>
-                      <linearGradient id="angaar-ember" x1="12" y1="2" x2="12" y2="30" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#fff1c9" />
-                        <stop offset="0.45" stopColor="#f6b043" />
-                        <stop offset="1" stopColor="#d9442a" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M12 1c1 5 7.500 8.500 7.500 16.500C19.500 24.500 16.200 30 12 30S4.500 24.500 4.500 18.500c0-3.600 1.800-6 3.500-8 .2 2.200 1 3.600 2.200 4.400C9.800 10 10 5.500 12 1Z"
-                      fill="url(#angaar-ember)"
-                    />
-                    <path
-                      d="M12 17c.8 2.200 3 3.500 3 6.200 0 2.200-1.400 3.800-3 3.800s-3-1.600-3-3.800c0-1.700 1-2.600 1.800-3.600.3 1 .8 1.500 1.200 1.700.1-1.300 0-2.800 0-4.300Z"
-                      fill="#fff6dc"
-                      fillOpacity="0.85"
-                    />
-                  </svg>
-                </span>
-                <span className="angaar-name font-serif text-[1.02rem] font-semibold tracking-[0.18em]">Angaar Labs</span>
-              </span>
+              <svg viewBox="0 0 24 32" className="angaar-flame h-[1.15em] w-auto" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="angaar-ember" x1="12" y1="2" x2="12" y2="30" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#fff1c9" />
+                    <stop offset="0.45" stopColor="#f6b043" />
+                    <stop offset="1" stopColor="#d9442a" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M12 1c1 5 7.500 8.500 7.500 16.500C19.500 24.500 16.200 30 12 30S4.500 24.500 4.500 18.500c0-3.600 1.800-6 3.500-8 .2 2.200 1 3.600 2.200 4.400C9.800 10 10 5.500 12 1Z"
+                  fill="url(#angaar-ember)"
+                />
+              </svg>
+              <span className="angaar-name font-bold">Angaar Labs</span>
             </p>
           </div>
         </div>
