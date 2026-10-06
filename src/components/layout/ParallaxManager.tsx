@@ -42,6 +42,8 @@ export function ParallaxManager() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (typeof Element.prototype.animate !== "function") return;
+    // Phones and tablets: dozens of scroll-driven layers cost more than the depth is worth.
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const items = new Map<HTMLElement, Item>();
     let vh = window.innerHeight;

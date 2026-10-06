@@ -32,10 +32,27 @@ export const Why: React.FC = () => {
 
       <div className="relative mx-auto grid max-w-[1500px] items-start gap-y-10 lg:grid-cols-[38%_minmax(0,1fr)]">
         {/* Artwork (cream backdrop is baked in and matches the section) */}
-        <div className="mx-auto w-full max-w-md px-5 sm:px-8 lg:mx-0 lg:max-w-none lg:translate-x-[8vw] lg:px-0">
-          {/* The artwork moves as ONE piece, so jowar, window and leaves stay in register */}
-          <div data-parallax="0.05">
-            <WhyArtwork />
+        <div className="mx-auto -mb-[22%] w-full max-w-md px-5 sm:px-8 lg:mx-0 lg:mb-0 lg:max-w-none lg:translate-x-[8vw] lg:px-0">
+          <div className="relative">
+            {/* Mountains and a farmhouse sketched far behind the window, for depth */}
+            <div
+              data-parallax="0.12"
+              aria-hidden="true"
+              className="pointer-events-none absolute right-[-14%] top-[66%] w-[95%] lg:hidden"
+            >
+              <Image
+                src="/images/why/mointain.webp"
+                alt=""
+                width={1774}
+                height={887}
+                sizes="(min-width: 1024px) 40vw, 150vw"
+                className="why-depth-mountain h-auto w-full opacity-70 [mask-image:radial-gradient(ellipse_at_50%_50%,#000_45%,transparent_75%)]"
+              />
+            </div>
+            {/* The artwork moves as ONE piece, so jowar, window and leaves stay in register */}
+            <div data-parallax="0.05" className="relative">
+              <WhyArtwork />
+            </div>
           </div>
         </div>
 

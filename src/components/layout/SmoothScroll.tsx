@@ -16,6 +16,28 @@ export function SmoothScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const root = document.documentElement;
+
+    // Touch screens already scroll with native inertia on the compositor;
+    // running Lenis there only adds a per-frame JS loop and scroll handlers.
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      const onTouchClick = (e: MouseEvent) => {
+        if (e.defaultPrevented || e.button !== 0) return;
+        const a = (e.target as Element | null)?.closest<HTMLAnchorElement>("a[href*='#']");
+        if (!a) return;
+        const url = new URL(a.href, window.location.href);
+        if (url.pathname !== window.location.pathname || url.origin !== window.location.origin) return;
+        const target = url.hash ? document.querySelector<HTMLElement>(url.hash) : null;
+        if (!target && url.hash) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const top = target ? target.getBoundingClientRect().top + window.scrollY - 64 : 0;
+        window.scrollTo({ top, behavior: "smooth" });
+        history.replaceState(null, "", url.hash || window.location.pathname);
+      };
+      document.addEventListener("click", onTouchClick, true);
+      return () => document.removeEventListener("click", onTouchClick, true);
+    }
+
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import * as ML from "./mobileLayout";
 
 /**
  * Grain physics for the process flow.
@@ -191,6 +192,57 @@ const KADAYI_CFG: VesselConfig = {
   fadeBelow: 0.45,
 };
 
+interface Layout {
+  W: number;
+  H: number;
+  spawn: { x0: number; x1: number; y0: number; y1: number };
+  shakers: Array<{ x: number; y: number; dir: number }>;
+  pudinaShakers: Array<{ x: number; y: number; dir: number }>;
+  bowl: VesselConfig;
+  kadayi: VesselConfig;
+  bowl2: VesselConfig;
+  bowl3: VesselConfig;
+}
+
+const DESKTOP: Layout = {
+  W: WORLD_W,
+  H: WORLD_H,
+  spawn: SPAWN,
+  shakers: SHAKERS,
+  pudinaShakers: PUDINA_SHAKERS,
+  bowl: BOWL_CFG,
+  kadayi: KADAYI_CFG,
+  bowl2: BOWL2_CFG,
+  bowl3: BOWL3_CFG,
+};
+
+/** Phones and tablets: the same vessels, stacked in a zig-zag (see mobileLayout.ts). */
+const kadayiH = (ML.KADAYI.w * 1108) / 1419;
+const bowlH = (ML.BOWL1.w * 1054) / 1492;
+const MOBILE: Layout = {
+  W: ML.M_W,
+  H: ML.M_H,
+  // The scoop mouth sits at ~(0.69-0.90, 0.65-0.86) of the cut-out image
+  spawn: {
+    x0: ML.STALKS.x + ML.STALKS.w * 0.69,
+    x1: ML.STALKS.x + ML.STALKS.w * 0.9,
+    y0: ML.STALKS.y + ((ML.STALKS.w * 1127) / 1396) * 0.65,
+    y1: ML.STALKS.y + ((ML.STALKS.w * 1127) / 1396) * 0.86,
+  },
+  shakers: [
+    { x: ML.BOWL2.x + 72, y: ML.BOWL2.y + 32, dir: 1 },
+    { x: ML.BOWL2.x + 158, y: ML.BOWL2.y + 32, dir: -1 },
+  ],
+  pudinaShakers: [
+    { x: ML.BOWL3.x + 72, y: ML.BOWL3.y + 32, dir: 1 },
+    { x: ML.BOWL3.x + 158, y: ML.BOWL3.y + 32, dir: -1 },
+  ],
+  bowl: { ...BOWL_CFG, x: ML.BOWL1.x, y: ML.BOWL1.y, w: ML.BOWL1.w, h: bowlH },
+  kadayi: { ...KADAYI_CFG, x: ML.KADAYI.x, y: ML.KADAYI.y, w: ML.KADAYI.w, h: kadayiH },
+  bowl2: { ...BOWL2_CFG, x: ML.BOWL2.x, y: ML.BOWL2.y, w: ML.BOWL2.w, h: bowlH },
+  bowl3: { ...BOWL3_CFG, x: ML.BOWL3.x, y: ML.BOWL3.y, w: ML.BOWL3.w, h: bowlH },
+};
+
 interface Falling extends Grain {
   x: number;
   y: number;
@@ -228,7 +280,12 @@ interface Rolling extends Grain {
 
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
-export const GrainFlow: React.FC = () => {
+export const GrainFlow: React.FC<{
+  layout?: "desktop" | "mobile";
+  /** Closest ancestor whose visibility starts the animation. */
+  watch?: string;
+  className?: string;
+}> = ({ layout = "desktop", watch = ".process-art", className = "hidden lg:block" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -238,6 +295,7 @@ export const GrainFlow: React.FC = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const L = layout === "mobile" ? MOBILE : DESKTOP;
     let disposed = false;
     let raf = 0;
     let started = false;
@@ -248,10 +306,10 @@ export const GrainFlow: React.FC = () => {
     let tossTimer = 0;
     let startAt = 0;
 
-    const bowl = makeVessel(BOWL_CFG);
-    const kadayi = makeVessel(KADAYI_CFG);
-    const bowl2 = makeVessel(BOWL2_CFG);
-    const bowl3 = makeVessel(BOWL3_CFG);
+    const bowl = makeVessel(L.bowl);
+    const kadayi = makeVessel(L.kadayi);
+    const bowl2 = makeVessel(L.bowl2);
+    const bowl3 = makeVessel(L.bowl3);
     const vessels = [bowl, kadayi, bowl2, bowl3];
 
     const sprites: HTMLCanvasElement[] = [];
@@ -287,7 +345,7 @@ export const GrainFlow: React.FC = () => {
       const h = canvas.clientHeight;
       canvas.width = Math.max(1, Math.round(w * dpr));
       canvas.height = Math.max(1, Math.round(h * dpr));
-      scale = (w / WORLD_W) * dpr;
+      scale = (w / L.W) * dpr;
     };
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
@@ -369,8 +427,8 @@ export const GrainFlow: React.FC = () => {
           rot: rnd(0, Math.PI * 2),
           dx: rnd(-1.2, 1.2),
         },
-        rnd(SPAWN.x0, SPAWN.x1),
-        rnd(SPAWN.y0, SPAWN.y1),
+        rnd(L.spawn.x0, L.spawn.x1),
+        rnd(L.spawn.y0, L.spawn.y1),
         bowl,
         col,
         rnd(0, 20),
@@ -520,7 +578,7 @@ export const GrainFlow: React.FC = () => {
 
     const shake = () => {
       if (Math.random() < 0.34) {
-        const sh = PUDINA_SHAKERS[Math.random() < 0.5 ? 0 : 1];
+        const sh = L.pudinaShakers[Math.random() < 0.5 ? 0 : 1];
         masala.push({
           x: sh.x + rnd(-3, 3),
           y: sh.y + rnd(-2, 2),
@@ -532,7 +590,7 @@ export const GrainFlow: React.FC = () => {
         if (Math.random() < 0.3) season(bowl3, PUDINA_SPRITE, 1);
         return;
       }
-      const sh = SHAKERS[Math.random() < 0.5 ? 0 : 1];
+      const sh = L.shakers[Math.random() < 0.5 ? 0 : 1];
       masala.push({
         x: sh.x + rnd(-3, 3),
         y: sh.y + rnd(-2, 2),
@@ -640,7 +698,7 @@ export const GrainFlow: React.FC = () => {
             }
           }
         }
-        if (f.y < WORLD_H + 40) stillFalling.push(f);
+        if (f.y < L.H + 40) stillFalling.push(f);
       }
       falling = stillFalling;
 
@@ -765,7 +823,7 @@ export const GrainFlow: React.FC = () => {
     };
 
     // Start once the artboard is in view (plus a beat for the images to land).
-    const art = canvas.closest(".process-art");
+    const art = canvas.closest(watch);
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -790,13 +848,13 @@ export const GrainFlow: React.FC = () => {
       io.disconnect();
       ro.disconnect();
     };
-  }, []);
+  }, [layout, watch]);
 
   return (
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+      className={"pointer-events-none absolute inset-0 h-full w-full " + className}
     />
   );
 };

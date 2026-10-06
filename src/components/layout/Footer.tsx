@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { InView } from "@/components/common/InView";
 import { FooterMotion } from "./FooterMotion";
 
@@ -106,6 +106,7 @@ const BIRDS = [
 const CLOUD_LAYERS = [
   {
     id: "far",
+    phone: false,
     z: "-z-[15]",
     parallax: "0.12",
     opacity: 0.8,
@@ -116,6 +117,7 @@ const CLOUD_LAYERS = [
   },
   {
     id: "mid",
+    phone: true,
     z: "-z-[14]",
     parallax: "0.07",
     opacity: 0.95,
@@ -126,6 +128,7 @@ const CLOUD_LAYERS = [
   },
   {
     id: "near",
+    phone: false,
     z: "-z-[13]",
     parallax: "0.03",
     opacity: 0.9,
@@ -135,6 +138,7 @@ const CLOUD_LAYERS = [
     // In front of the mountains: a couple of small, slightly see-through clouds
     // drifting across the slopes, so the ridge sits between cloud layers.
     id: "front",
+    phone: true,
     z: "z-[2]",
     parallax: "-0.04",
     opacity: 0.78,
@@ -143,6 +147,14 @@ const CLOUD_LAYERS = [
       [4, 44, 9, 0.7, 88],
     ],
   },
+] as const;
+
+/** Leaves along the sky edges on phones: [edge, top %, width vw, rotation deg, drift s, delay s]. */
+const LEAVES = [
+  ["left", 6, 16, 150, 9, 0],
+  ["right", 11, 15, 30, 11, 1.5],
+  ["left", 29, 14, 120, 10, 0.8],
+  ["right", 40, 12, 60, 12, 2.4],
 ] as const;
 
 const rise = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -172,7 +184,7 @@ export const Footer: React.FC = () => {
           key={layer.id}
           data-parallax={layer.parallax}
           aria-hidden="true"
-          className={"pointer-events-none absolute inset-0 " + layer.z}
+          className={"pointer-events-none absolute inset-0 " + layer.z + (layer.phone ? "" : " hidden sm:block")}
         >
           {layer.clouds.map(([sprite, top, width, start, dur], i) => (
             <div
@@ -190,13 +202,11 @@ export const Footer: React.FC = () => {
             >
               <Image
                 src={`/images/footer/cloud-${sprite}.webp`}
-        loading="eager"
-        fetchPriority="low"
                 alt=""
                 width={1000}
                 height={380}
                 sizes="40vw"
-                className="h-auto w-full select-none drop-shadow-[0_8px_16px_rgba(160,85,40,0.28)]"
+                className="h-auto w-full select-none sm:drop-shadow-[0_8px_16px_rgba(160,85,40,0.28)]"
               />
             </div>
           ))}
@@ -209,7 +219,7 @@ export const Footer: React.FC = () => {
           <svg
             key={i}
             viewBox="0 0 40 20"
-            className="footer-bird absolute left-0"
+            className={"footer-bird absolute left-0" + (i >= 2 ? " hidden sm:block" : "")}
             style={{
               top: `${top}%`,
               width: size,
@@ -229,20 +239,18 @@ export const Footer: React.FC = () => {
       {/* Valley, anchored to the bottom, drifting ever so slightly */}
       <Image
         src="/images/footer/footer-bg.webp"
-        loading="eager"
-        fetchPriority="low"
         alt=""
         aria-hidden="true"
         width={1988}
         height={791}
         sizes="100vw"
-        className="footer-valley pointer-events-none blur-[1.6px] saturate-[0.88] absolute inset-x-0 bottom-0 -z-10 h-auto w-full select-none"
+        className="footer-valley pointer-events-none sm:blur-[1.6px] sm:saturate-[0.88] absolute inset-x-0 bottom-0 -z-10 h-[44%] w-full select-none object-cover object-[50%_70%] sm:h-auto"
       />
 
       {/* Depth: atmospheric haze over the distant mountains, and a soft shade in
           the field behind the wordmark, so the content reads clearly */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[41vw] bg-[linear-gradient(180deg,rgba(248,233,214,0.78)_0%,rgba(246,224,190,0.5)_30%,rgba(240,205,150,0.16)_62%,transparent_85%)]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[30vw] bg-[radial-gradient(ellipse_at_50%_62%,rgba(70,28,8,0.5),transparent_66%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[41vw] sm:block bg-[linear-gradient(180deg,rgba(248,233,214,0.78)_0%,rgba(246,224,190,0.5)_30%,rgba(240,205,150,0.16)_62%,transparent_85%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] hidden h-[30vw] sm:block bg-[radial-gradient(ellipse_at_50%_62%,rgba(70,28,8,0.5),transparent_66%)]" />
 
       {/* Pollen */}
       <InView
@@ -251,7 +259,7 @@ export const Footer: React.FC = () => {
         className="footer-pollen-layer pointer-events-none absolute inset-0 z-[3]"
       >
         {POLLEN.map((p, i) => (
-          <span key={i} className="footer-pollen" style={p as React.CSSProperties} />
+          <span key={i} className={"footer-pollen" + (i >= 7 ? " hidden sm:block" : "")} style={p as React.CSSProperties} />
         ))}
       </InView>
 
@@ -259,7 +267,7 @@ export const Footer: React.FC = () => {
       <InView
         threshold={0.2}
         aria-hidden="true"
-        className="footer-word-layer pointer-events-none absolute inset-x-0 bottom-[calc(min(5vw,72px)+3.4vw)] z-[4] flex flex-col items-center"
+        className="footer-word-layer pointer-events-none absolute inset-x-0 bottom-[calc(min(5vw,72px)+3.4vw)] z-[4] hidden flex-col items-center sm:flex"
       >
         <div className="footer-word flex font-semibold leading-[0.8] tracking-[-0.01em]">
           {WORD.map((c, i) => (
@@ -282,21 +290,19 @@ export const Footer: React.FC = () => {
             key={side}
             data-parallax={side === "left" ? "-0.05" : "-0.07"}
             className={
-              "absolute bottom-[-3%] w-[30vw] max-w-[560px] " +
-              (side === "left" ? "left-[-7vw]" : "right-[-7vw]")
+              "absolute bottom-[-2%] w-[72vw] max-w-[560px] sm:bottom-[-3%] sm:w-[30vw] " +
+              (side === "left" ? "left-[-15vw] sm:left-[-7vw]" : "right-[-15vw] sm:right-[-7vw]")
             }
           >
             <div className={"footer-jowar footer-jowar-" + side}>
               <Image
                 src="/images/footer/footer-jwaar.webp"
-        loading="eager"
-        fetchPriority="low"
                 alt=""
                 width={1477}
                 height={1065}
                 sizes="(min-width: 1024px) 30vw, 60vw"
                 className={
-                  "h-auto w-full select-none drop-shadow-[0_14px_16px_rgba(60,30,8,0.35)] " +
+                  "h-auto w-full select-none sm:drop-shadow-[0_14px_16px_rgba(60,30,8,0.35)] " +
                   (side === "right" ? "-scale-x-100" : "")
                 }
               />
@@ -308,9 +314,86 @@ export const Footer: React.FC = () => {
       {/* Sky content: nav between hairlines, tagline, blurb and socials */}
       <InView
         threshold={0.15}
-        className="footer-sky relative z-[6] mx-auto flex max-w-[1280px] flex-col items-center px-5 pb-[34vw] pt-24 text-center sm:px-8 lg:px-12 lg:pb-[calc(30vw-3.5rem)] lg:pt-[6.5rem]"
+        className="footer-sky relative z-[6] mx-auto flex max-w-[1280px] flex-col items-center px-5 pb-[76vw] pt-28 text-center sm:pb-[34vw] sm:px-8 lg:px-12 lg:pb-[calc(30vw-3.5rem)] lg:pt-[6.5rem]"
       >
-        <nav aria-label="Footer" className="flex w-full items-center gap-5 sm:gap-8">
+        {/* Phones: tagline, wordmark, intro, socials and a Shop Now button */}
+        <div className="flex w-full flex-col items-center sm:hidden">
+          <div className="footer-rise flex w-full items-center gap-3" style={rise(0)}>
+            <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]">
+              Ancient Grain, Modern Crunch
+            </p>
+            <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
+          </div>
+
+          <p
+            aria-label="Taptah"
+            className="relative mt-7 flex text-[23.5vw] font-semibold leading-[0.85] tracking-[-0.01em] text-[#6B1022] drop-shadow-[0_6px_10px_rgba(107,16,34,0.18)]"
+          >
+            {WORD.map((c, i) => (
+              <span key={i} aria-hidden="true" className="footer-rise inline-block" style={rise(i + 1)}>
+                {c}
+              </span>
+            ))}
+            <sup aria-hidden="true" className="absolute -right-[1.6vw] top-[1vw] text-[2.6vw] font-medium tracking-normal">
+              TM
+            </sup>
+          </p>
+          <p
+            className="footer-rise -mt-[1vw] font-[family-name:var(--font-script)] text-[8.6vw] leading-none text-[#a8642e]"
+            style={rise(7)}
+          >
+            Crunch · Clean · Repeat
+          </p>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 140 8"
+            className="footer-rise mt-1 h-2 w-[34vw] text-[#a8642e]"
+            style={rise(8)}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
+            <path d="M3 5C30 2 60 6 90 3s34-1 47 1" />
+          </svg>
+
+          <p
+            className="footer-rise mt-7 max-w-[19rem] text-[1.05rem] font-medium leading-[1.5] text-[#4a3a33]"
+            style={rise(9)}
+          >
+            Light, crunchy snacks crafted from ancient grains, for a healthier,
+            happier you.
+          </p>
+
+          <ul className="mt-6 flex items-center gap-3">
+            {SOCIALS.map((s, i) => (
+              <li key={s.label} className="footer-pop" style={rise(i + 10)}>
+                <a
+                  href={s.href}
+                  aria-label={s.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f3dcb9]/85 text-[#6B1022] shadow-[0_6px_14px_-8px_rgba(120,70,30,0.6)] transition-transform active:scale-90"
+                  {...(s.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {s.icon}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="#flavours"
+            className="footer-rise mt-7 inline-flex items-center gap-3 rounded-full bg-[#5a0f1e] px-9 py-4 text-lg font-semibold text-[#fbe9cf] shadow-[0_14px_24px_-10px_rgba(60,8,18,0.7)] transition-transform active:scale-95"
+            style={rise(14)}
+          >
+            Shop Now
+            <ArrowRight className="h-5 w-5" />
+          </Link>
+        </div>
+
+        <nav aria-label="Footer" className="hidden w-full items-center gap-5 sm:flex sm:gap-8">
           <span
             className="footer-line hidden h-px flex-1 origin-right bg-[#6B1022]/25 sm:block"
             style={rise(0)}
@@ -334,20 +417,20 @@ export const Footer: React.FC = () => {
         </nav>
 
         <p
-          className="footer-rise mt-9 text-[0.8rem] font-semibold uppercase tracking-[0.42em] text-[#6B1022]"
+          className="footer-rise mt-9 hidden text-[0.8rem] font-semibold uppercase tracking-[0.42em] text-[#6B1022] sm:block"
           style={rise(5)}
         >
           Ancient Grain, Modern Crunch
         </p>
         <p
-          className="footer-rise mt-3 max-w-[42rem] text-[clamp(1rem,1.3vw,1.2rem)] font-medium leading-[1.5] text-[#4a3a33]"
+          className="footer-rise mt-3 hidden max-w-[42rem] sm:block text-[clamp(1rem,1.3vw,1.2rem)] font-medium leading-[1.5] text-[#4a3a33]"
           style={rise(6)}
         >
           Light, crunchy snacks crafted from ancient grains, for a healthier,
           happier you.
         </p>
 
-        <ul className="mt-6 flex items-center gap-7">
+        <ul className="mt-6 hidden items-center gap-7 sm:flex">
           {SOCIALS.map((s, i) => (
             <li key={s.label} className="footer-pop" style={rise(i + 7)}>
               <a
@@ -364,6 +447,30 @@ export const Footer: React.FC = () => {
           ))}
         </ul>
       </InView>
+
+      {/* Phones: leaves drifting down the sky edges */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[3] overflow-hidden sm:hidden">
+        {LEAVES.map(([side, top, w, rot, dur, delay], i) => (
+          <Image
+            key={i}
+            src="/images/why/leaf-b.png"
+            alt=""
+            width={175}
+            height={126}
+            className="footer-leaf absolute drop-shadow-[2px_6px_5px_rgba(60,35,15,0.25)]"
+            style={
+              {
+                [side]: "-3vw",
+                top: `${top}%`,
+                width: `${w}vw`,
+                "--r": `${rot}deg`,
+                animationDuration: `${dur}s`,
+                animationDelay: `${delay}s`,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
 
       {/* Legal bar */}
       <InView

@@ -5,6 +5,12 @@ import React, { useEffect, useRef, useState } from "react";
 interface InViewProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Fraction of the element that must be visible before it reveals. */
   threshold?: number;
+  /**
+   * Selector of a descendant to watch instead of the wrapper. Used when the
+   * wrapper is much taller than the part that matters (falls back to the
+   * wrapper if the descendant has no box, e.g. `display: contents`).
+   */
+  watch?: string;
 }
 
 /**
@@ -13,6 +19,7 @@ interface InViewProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const InView: React.FC<InViewProps> = ({
   threshold = 0.2,
+  watch,
   children,
   ...props
 }) => {
@@ -31,9 +38,10 @@ export const InView: React.FC<InViewProps> = ({
       },
       { threshold },
     );
-    observer.observe(el);
+    const inner = watch ? el.querySelector(watch) : null;
+    observer.observe(inner && inner.getClientRects().length ? inner : el);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, watch]);
 
   return (
     <div ref={ref} data-in-view={inView} {...props}>

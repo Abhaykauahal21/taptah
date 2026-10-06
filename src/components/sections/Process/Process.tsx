@@ -7,6 +7,7 @@ import { BowlLeavesBehind, BowlLeavesFront } from "./BowlLeaves";
 import { GrainFlow } from "./GrainFlow";
 import { KadayiFire } from "./KadayiFire";
 import { ProcessGround } from "./ProcessGround";
+import { ProcessMobile } from "./ProcessMobile";
 
 export const Process: React.FC = () => {
   return (
@@ -16,7 +17,9 @@ export const Process: React.FC = () => {
       className="relative z-10 overflow-x-clip px-5 pb-16 pt-4 text-maroon sm:px-8 lg:-mt-[14vw] lg:-mb-[min(30vw,450px)] lg:px-0 lg:pb-0 lg:pt-0"
     >
       <BlurredFoliage />
-      <InView className="process-art mx-auto max-w-[1500px] lg:relative lg:aspect-[1258/1100]">
+      {/* Phones and tablets get their own vertical layout */}
+      <ProcessMobile />
+      <InView className="process-art mx-auto hidden max-w-[1500px] lg:relative lg:block lg:aspect-[1258/1100]">
         {/* Studio glow and cast shadows that give the vessels depth */}
         <ProcessGround />
 

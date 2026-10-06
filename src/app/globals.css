@@ -208,6 +208,27 @@ body {
   transform: none;
 }
 
+/* Pop jowar drifting about the process scene on small screens */
+.proc-float {
+  transform: rotate(var(--r, 0deg));
+  animation: proc-float var(--d, 5s) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+@keyframes proc-float {
+  from {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  to {
+    transform: translateY(-9px) rotate(calc(var(--r, 0deg) + 10deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proc-float {
+    animation: none;
+  }
+}
+
 /* Process ground: glow fades up, the stream flows in, vessels cast real shadows */
 .process-contact {
   opacity: 0;
@@ -558,6 +579,24 @@ body {
 .flavours-art[data-in-view="true"] .flavour-card {
   opacity: 1;
   transform: none;
+}
+
+/* Flavours on phones: the centred card is in focus, its neighbours step back */
+@media (max-width: 767px) {
+  .flavour-slide {
+    transform: scale(0.93);
+    opacity: 0.7;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.5s ease-out;
+  }
+
+  .flavour-track[data-active="0"] > .flavour-slide:nth-child(1),
+  .flavour-track[data-active="1"] > .flavour-slide:nth-child(2),
+  .flavour-track[data-active="2"] > .flavour-slide:nth-child(3) {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 /* Reviews: heading rises in, cards slide in one after another (and on every arrow click) */
@@ -1254,7 +1293,7 @@ html.lenis body {
 /* Footer wordmark: golden-cream letters with a fine outline. They stand up one
    by one, then a sweep of light runs across them and the word gently ripples. */
 .footer-word-layer {
-  filter: drop-shadow(0 16px 24px rgba(60, 25, 5, 0.5));
+  /* no filter here: the letters animate inside it, so a filter would repaint every frame */
 }
 
 .footer-word {
@@ -1686,5 +1725,177 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Footer on phones: a taller valley with the sun on its horizon, drifting leaves */
+.footer-leaf {
+  transform: rotate(var(--r, 0deg));
+  animation: footer-leaf-drift 10s ease-in-out infinite alternate;
+}
+
+@keyframes footer-leaf-drift {
+  from {
+    transform: translate(0, 0) rotate(var(--r, 0deg));
+  }
+  to {
+    transform: translate(3vw, 5vw) rotate(calc(var(--r, 0deg) + 14deg));
+  }
+}
+
+@media (max-width: 639px) {
+  .footer-sundisc {
+    bottom: 20%;
+    width: 15vw;
+    height: 15vw;
+    margin-left: -7.5vw;
+    translate: 0 calc(var(--fp, 0) * -3vw);
+  }
+
+  .footer-rays {
+    bottom: 20%;
+    width: 130vw;
+    height: 130vw;
+    margin-left: -65vw;
+    margin-bottom: -58vw;
+    translate: 0 calc(var(--fp, 0) * -3vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-leaf {
+    animation: none;
+  }
+}
+
+/* Footer performance: nothing animates while the footer is off screen... */
+#footer:not([data-live="true"]) *,
+#footer:not([data-live="true"]) *::before,
+#footer:not([data-live="true"]) *::after {
+  animation-play-state: paused !important;
+}
+
+/* ...and phones get a calmer scene: no spinning rays, no breathing valley */
+@media (max-width: 639px) {
+  .footer-rays,
+  .footer-valley {
+    animation: none !important;
+  }
+}
+
+/* Looping animations stop while their section is off screen */
+[data-offscreen],
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+
+/* Phones and tablets: skip rendering the sections that are far off screen */
+@media (max-width: 1023px) {
+  #flavours,
+  #testimonials,
+  #footer {
+    content-visibility: auto;
+  }
+
+  #flavours {
+    contain-intrinsic-size: auto 800px;
+  }
+
+  #testimonials {
+    contain-intrinsic-size: auto 1420px;
+  }
+
+  #footer {
+    contain-intrinsic-size: auto 820px;
+  }
+}
+
+/* Flavours heading art: a pencil sketch that draws itself in, then sways and drifts */
+.fl-art g,
+.fl-art circle {
+  transform-box: fill-box;
+}
+
+.fl-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.flavours-art[data-in-view="true"] .fl-draw {
+  stroke-dashoffset: 0;
+}
+
+.fl-sway {
+  transform-origin: 50% 100%;
+  animation: fl-sway 4.8s ease-in-out infinite alternate;
+}
+
+.fl-s2 {
+  animation-duration: 5.6s;
+  animation-delay: -1.2s;
+}
+
+.fl-s3 {
+  animation-duration: 6.4s;
+  animation-delay: -2.4s;
+}
+
+.fl-bob {
+  transform-origin: 50% 50%;
+  animation: fl-bob 4.6s ease-in-out infinite alternate;
+}
+
+.fl-b2 {
+  animation-duration: 5.8s;
+  animation-delay: -1.4s;
+}
+
+.fl-b3 {
+  animation-duration: 6.6s;
+  animation-delay: -2.6s;
+}
+
+.fl-ring {
+  transform-origin: 50% 50%;
+  animation: fl-turn 40s linear infinite;
+}
+
+@keyframes fl-sway {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes fl-bob {
+  from {
+    transform: translateY(0) rotate(-6deg);
+  }
+  to {
+    transform: translateY(-4px) rotate(8deg);
+  }
+}
+
+@keyframes fl-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-sway,
+  .fl-bob,
+  .fl-ring {
+    animation: none;
+  }
+
+  .fl-draw {
+    stroke-dashoffset: 0;
+    transition: none;
   }
 }
