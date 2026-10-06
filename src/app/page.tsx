@@ -1,3 +1,4 @@
+import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { WaveEdge } from "@/components/sections/Hero/WaveEdge";
@@ -21,6 +22,7 @@ export default function Home() {
             <Flavours />
             <Testimonials />
           </div>
+          <Footer />
         </div>
       </main>
     </>
