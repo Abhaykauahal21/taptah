@@ -5,20 +5,21 @@ import { useEffect } from "react";
 /**
  * One scroll-driven parallax engine for the whole site.
  *
- * Mark any element with `data-parallax="0.12"` (vertical speed) and optionally
- * `data-parallax-x="0.05"`. Positive speeds make an element drift slower than
- * the page (it feels further away); negative speeds make it faster (nearer).
- * The offset is zero when the element is centred in the viewport.
+ * Mark any element with `data-parallax="0.12"`. Positive speeds make an element
+ * drift slower than the page (it feels further away); negative speeds make it
+ * faster (nearer). The offset is zero when the element is centred in the
+ * viewport.
  *
- * Why it is cheap:
- *  - a single passive scroll listener and a single requestAnimationFrame for
- *    every element on the page;
- *  - each element's page position is measured only on load / resize / layout
- *    change, never per frame, so scrolling does no layout reads;
- *  - it only moves elements that are (nearly) on screen;
- *  - it writes the individual `translate` property, which the compositor
- *    animates without repainting and which never fights the element's own
- *    `transform` animations.
+ * How it works, and why:
+ *  - Each element gets one paused Web Animation of its `translate` property,
+ *    and scrolling just scrubs its `currentTime`. That never writes to the
+ *    element's `style` attribute (or any attribute), so React's hydration of
+ *    server-rendered markup cannot be upset by it.
+ *  - One passive scroll listener and one requestAnimationFrame serve every
+ *    element; page positions are measured only on load / resize / layout change,
+ *    never per frame; elements that are off screen are not touched.
+ *  - `translate` is animated on the compositor and never fights an element's
+ *    own `transform` animations.
  *
  * Skipped entirely for reduced-motion visitors.
  */
@@ -26,25 +27,24 @@ import { useEffect } from "react";
 interface Item {
   el: HTMLElement;
   speed: number;
-  speedX: number;
+  anim: Animation;
   /** Page-space centre, measured with the current offset removed. */
-  cx: number;
   cy: number;
   /** Offset currently applied. */
-  x: number;
   y: number;
   active: boolean;
 }
 
 const MAX_OFFSET = 140; // px, a hard cap so nothing ever drifts out of its section
+const DURATION = 1000; // ms; progress 0..1 maps onto -MAX_OFFSET..+MAX_OFFSET
 
 export function ParallaxManager() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (typeof Element.prototype.animate !== "function") return;
 
     const items = new Map<HTMLElement, Item>();
     let vh = window.innerHeight;
-    let vw = window.innerWidth;
     let raf = 0;
     let measureTimer = 0;
 
@@ -61,13 +61,11 @@ export function ParallaxManager() {
 
     const measure = (it: Item) => {
       const r = it.el.getBoundingClientRect();
-      it.cx = r.left + window.scrollX + r.width / 2 - it.x;
       it.cy = r.top + window.scrollY + r.height / 2 - it.y;
     };
 
     const measureAll = () => {
       vh = window.innerHeight;
-      vw = window.innerWidth;
       items.forEach(measure);
       schedule();
     };
@@ -77,15 +75,19 @@ export function ParallaxManager() {
     };
 
     const scan = () => {
-      document.querySelectorAll<HTMLElement>("[data-parallax],[data-parallax-x]").forEach((el) => {
+      document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
         if (items.has(el)) return;
+        const anim = el.animate(
+          { translate: [`0px ${-MAX_OFFSET}px`, `0px ${MAX_OFFSET}px`] },
+          { duration: DURATION, fill: "both", easing: "linear" },
+        );
+        anim.pause();
+        anim.currentTime = DURATION / 2;
         const it: Item = {
           el,
           speed: parseFloat(el.dataset.parallax ?? "0") || 0,
-          speedX: parseFloat(el.dataset.parallaxX ?? "0") || 0,
-          cx: 0,
+          anim,
           cy: 0,
-          x: 0,
           y: 0,
           active: false,
         };
@@ -100,15 +102,12 @@ export function ParallaxManager() {
     const frame = () => {
       raf = 0;
       const midY = window.scrollY + vh / 2;
-      const midX = window.scrollX + vw / 2;
       items.forEach((it) => {
         if (!it.active) return;
         const y = clamp((midY - it.cy) * it.speed);
-        const x = it.speedX ? clamp((midX - it.cx) * it.speedX) : 0;
-        if (Math.abs(y - it.y) < 0.15 && Math.abs(x - it.x) < 0.15) return;
+        if (Math.abs(y - it.y) < 0.15) return;
         it.y = y;
-        it.x = x;
-        it.el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+        it.anim.currentTime = ((y + MAX_OFFSET) / (2 * MAX_OFFSET)) * DURATION;
       });
     };
 
@@ -116,13 +115,13 @@ export function ParallaxManager() {
       if (!raf) raf = requestAnimationFrame(frame);
     }
 
-    // Wait a beat before touching the DOM, so React finishes hydrating first
-    // (writing inline styles into server-rendered markup would cause a mismatch).
+    scan();
+    measureAll();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", measureSoon);
     // Images and fonts settle after load, which can move things: measure again.
     window.addEventListener("load", measureSoon);
-    const settle = [350, 1800, 4500].map((ms) =>
+    const settle = [600, 1800, 4500].map((ms) =>
       window.setTimeout(() => {
         scan();
         measureAll();
@@ -140,7 +139,7 @@ export function ParallaxManager() {
       window.removeEventListener("load", measureSoon);
       io.disconnect();
       ro.disconnect();
-      items.forEach((it) => it.el.style.removeProperty("translate"));
+      items.forEach((it) => it.anim.cancel());
     };
   }, []);
 

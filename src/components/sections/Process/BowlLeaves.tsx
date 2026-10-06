@@ -49,6 +49,7 @@ function Leaf({ leaf }: { leaf: LeafSpec }) {
       }}
     >
       <Image
+        loading="eager"
         src={leaf.src}
         alt=""
         aria-hidden="true"

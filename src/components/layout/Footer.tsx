@@ -190,6 +190,8 @@ export const Footer: React.FC = () => {
             >
               <Image
                 src={`/images/footer/cloud-${sprite}.webp`}
+        loading="eager"
+        fetchPriority="low"
                 alt=""
                 width={1000}
                 height={380}
@@ -227,6 +229,8 @@ export const Footer: React.FC = () => {
       {/* Valley, anchored to the bottom, drifting ever so slightly */}
       <Image
         src="/images/footer/footer-bg.webp"
+        loading="eager"
+        fetchPriority="low"
         alt=""
         aria-hidden="true"
         width={1988}
@@ -285,6 +289,8 @@ export const Footer: React.FC = () => {
             <div className={"footer-jowar footer-jowar-" + side}>
               <Image
                 src="/images/footer/footer-jwaar.webp"
+        loading="eager"
+        fetchPriority="low"
                 alt=""
                 width={1477}
                 height={1065}

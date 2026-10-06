@@ -23,6 +23,7 @@ export const Process: React.FC = () => {
         {/* Naturally-grown cut-out: jowar, grain stream and scoop */}
         <div className="process-flow relative mx-auto w-full max-w-md lg:absolute lg:left-[24%] lg:top-[-8%] lg:mx-0 lg:w-[24%] lg:max-w-none">
           <Image
+            loading="eager"
             src="/images/why/naturally-grown-clean.png"
             alt=""
             aria-hidden="true"
@@ -32,6 +33,7 @@ export const Process: React.FC = () => {
             className="process-cast process-cast-air pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
           />
           <Image
+            loading="eager"
             src="/images/why/naturally-grown-clean.png"
             alt="Jowar stalks with a stream of grains pouring from a wooden scoop"
             width={1396}
@@ -49,6 +51,7 @@ export const Process: React.FC = () => {
           style={{ transitionDelay: "0.5s" }}
         >
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt=""
             aria-hidden="true"
@@ -58,6 +61,7 @@ export const Process: React.FC = () => {
             className="process-cast process-cast-floor pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
           />
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt="Cleaned jowar grains pouring into a wooden bowl"
             width={1492}
@@ -75,6 +79,7 @@ export const Process: React.FC = () => {
           style={{ transitionDelay: "1s" }}
         >
           <Image
+            loading="eager"
             src="/images/why/kadayi.png"
             alt=""
             aria-hidden="true"
@@ -84,6 +89,7 @@ export const Process: React.FC = () => {
             className="process-cast process-cast-floor pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
           />
           <Image
+            loading="eager"
             src="/images/why/kadayi.png"
             alt="Copper kadayi on a clay stove with a wood fire burning below"
             width={1419}
@@ -100,6 +106,7 @@ export const Process: React.FC = () => {
           style={{ transitionDelay: "1.3s" }}
         >
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt=""
             aria-hidden="true"
@@ -109,6 +116,7 @@ export const Process: React.FC = () => {
             className="process-cast process-cast-floor pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
           />
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt="A wooden bowl catching freshly popped, masala-coated jowar"
             width={1492}
@@ -123,6 +131,7 @@ export const Process: React.FC = () => {
           style={{ transitionDelay: "1.45s" }}
         >
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt=""
             aria-hidden="true"
@@ -132,6 +141,7 @@ export const Process: React.FC = () => {
             className="process-cast process-cast-floor pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
           />
           <Image
+            loading="eager"
             src="/images/why/step-2-bowl-empty.png"
             alt="A wooden bowl catching pudina-flavoured pop jowar"
             width={1492}
@@ -150,6 +160,7 @@ export const Process: React.FC = () => {
             style={{ left: b.left, top: "44.9%", width: "5%", transitionDelay: "1.7s" }}
           >
             <Image
+              loading="eager"
               src="/images/why/podina-masalla-bottle.png"
               alt="Pudina Masalle spice shaker"
               width={1024}
@@ -173,6 +184,7 @@ export const Process: React.FC = () => {
             style={{ left: b.left, top: "44.9%", width: "5%", transitionDelay: "1.6s" }}
           >
             <Image
+              loading="eager"
               src="/images/why/masala-bottle.png"
               alt="Special Masalle spice shaker"
               width={1024}

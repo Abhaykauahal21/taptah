@@ -598,8 +598,7 @@ body {
 
 /* ---------- Why Taptah: scroll-linked depth and staged text reveals ---------- */
 /* Parallax layers are moved by ParallaxManager through the `translate` property */
-[data-parallax],
-[data-parallax-x] {
+[data-parallax] {
   will-change: translate;
 }
 

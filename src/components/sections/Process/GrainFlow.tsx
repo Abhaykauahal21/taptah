@@ -757,6 +757,7 @@ export const GrainFlow: React.FC = () => {
         last = now;
         return;
       }
+
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
       update(dt);

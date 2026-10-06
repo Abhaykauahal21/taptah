@@ -55,6 +55,28 @@ const PIECES = [
   { src: "/images/why/masalla-pop-jwaar-1.png", w: 1316, h: 1195, dx: 38, up: 195, fall: 215, rot: -200, size: 22 },
 ];
 
+/**
+ * Sprites the steps section's grain physics draws straight from /public (not via
+ * next/image), fetched and decoded while the loader plays.
+ */
+const GRAIN_SPRITES = [
+  "/images/why/jwar-grain-2.png",
+  "/images/why/single-jwaar-grain.png",
+  "/images/why/pop-jwaar-1.png",
+  "/images/why/pop-jwaar-2.png",
+  "/images/why/masalla-pop-jwaar-1.png",
+  "/images/why/masalla-pop-jwaar-2.png",
+  "/images/why/podina-pop-jwaar.png",
+];
+
+/** Resolves once an <img> already in the page has downloaded and decoded. */
+const imgReady = (img: HTMLImageElement) =>
+  img.complete && img.naturalWidth > 0
+    ? Promise.resolve()
+    : img.decode
+      ? img.decode().catch(() => undefined)
+      : Promise.resolve();
+
 /** What the loader is "doing" as the count climbs, echoing the process steps. */
 const STAGES = [
   "Sourcing ancient grains",
@@ -95,6 +117,14 @@ export const Loader: React.FC = () => {
         : new Promise<void>((r) => window.addEventListener("load", () => r(), { once: true })),
       document.fonts ? document.fonts.ready.then(() => undefined) : Promise.resolve(),
       heroImg.decode ? heroImg.decode().catch(() => undefined) : Promise.resolve(),
+      // The steps section's own pictures (they load eagerly with the page), so
+      // every bowl, bottle and leaf is already there the moment you scroll to it.
+      ...Array.from(document.querySelectorAll<HTMLImageElement>("#process img")).map(imgReady),
+      ...GRAIN_SPRITES.map((src) => {
+        const img = new window.Image();
+        img.src = src;
+        return imgReady(img);
+      }),
     ]);
     assets.then(markReady);
 
