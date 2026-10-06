@@ -11,7 +11,7 @@ export interface FlavourItem {
   description: string;
   spiceLevel?: 1 | 2 | 3;
   accentColor: string;
-  /** Full card artwork under /public (pack, name, tagline and badges). */
+  /** Photo of the pack under /public. */
   image: string;
   /** Price in rupees. */
   price: number;
@@ -19,6 +19,10 @@ export interface FlavourItem {
   theme: { from: string; to: string };
   /** Small flag in the corner of the card, e.g. "Best Seller". */
   badge?: string;
+  /** Backdrop colour behind the pack photo (matches the artwork's own cream). */
+  tone: string;
+  /** What is inside, shown when the card's Ingredients button is pressed. */
+  ingredients: { name: string; note: string }[];
 }
 
 export interface TestimonialItem {

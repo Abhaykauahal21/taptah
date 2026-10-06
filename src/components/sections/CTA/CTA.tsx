@@ -12,10 +12,10 @@ export const CTA: React.FC = () => {
         <span className="text-xs uppercase tracking-widest text-gold font-semibold">
           Taste the Tradition
         </span>
-        <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-cream">
+        <h2 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-cream">
           Ready for a Crisp Revelation?
         </h2>
-        <p className="text-sm sm:text-base text-cream/80 max-w-xl mx-auto font-sans leading-relaxed">
+        <p className="text-sm sm:text-base text-cream/80 max-w-xl mx-auto leading-relaxed">
           Order your starter pack today and discover snacks crafted with pure ancient grains.
         </p>
         <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">

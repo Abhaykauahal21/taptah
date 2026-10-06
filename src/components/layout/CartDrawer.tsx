@@ -1,15 +1,51 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Minus, Plus, Truck, X } from "lucide-react";
 import { FREE_SHIPPING_AT, cart, useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 
+
+/** Counts up to `target` (from 0 each time the drawer opens, from the old value otherwise). */
+function useCountUp(target: number, active: boolean) {
+  const [value, setValue] = useState(target);
+  const from = useRef(0);
+  // Only read once the drawer is open (never during SSR), so no hydration mismatch.
+  const reduce = active && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  useEffect(() => {
+    if (!active) {
+      from.current = 0;
+      return;
+    }
+    if (reduce) return;
+    const a = from.current;
+    let raf = 0;
+    const timer = window.setTimeout(() => {
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - t0) / 800);
+        const val = Math.round(a + (target - a) * (1 - Math.pow(1 - t, 3)));
+        from.current = val;
+        setValue(val);
+        if (t < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, a === 0 ? 480 : 0);
+    return () => {
+      window.clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
+  }, [target, active, reduce]);
+
+  return active && !reduce ? value : target;
+}
+
 /** Slide-in cart. Opens from the navbar bag icon or any "Add to Cart" button. */
 export const CartDrawer: React.FC = () => {
-  const { open, lines, count, subtotal } = useCart();
+  const { open, lines, count, subtotal, lastAdded, bump } = useCart();
 
   useEffect(() => {
     if (!open) return;
@@ -18,6 +54,7 @@ export const CartDrawer: React.FC = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  const shownSubtotal = useCountUp(subtotal, open);
   const left = Math.max(0, FREE_SHIPPING_AT - subtotal);
   const pct = Math.min(100, (subtotal / FREE_SHIPPING_AT) * 100);
 
@@ -32,7 +69,7 @@ export const CartDrawer: React.FC = () => {
         tabIndex={open ? 0 : -1}
         onClick={cart.close}
         className={cn(
-          "absolute inset-0 bg-[#1a0904]/55 transition-opacity duration-500",
+          "absolute inset-0 bg-[#1a0904]/55 backdrop-blur-[3px] transition-opacity duration-500",
           open ? "opacity-100" : "opacity-0",
         )}
       />
@@ -42,12 +79,13 @@ export const CartDrawer: React.FC = () => {
         aria-modal="true"
         aria-label="Your cart"
         data-lenis-prevent
+        data-open={open}
         className={cn(
-          "absolute inset-y-0 right-0 flex w-[min(430px,100vw)] flex-col bg-[linear-gradient(180deg,#fbf0de,#f6e3c6)] text-[#4a3a33] shadow-[-24px_0_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "cart-drawer absolute inset-y-0 right-0 flex w-[min(430px,100vw)] flex-col bg-[linear-gradient(180deg,#fbf0de,#f6e3c6)] text-[#4a3a33] rounded-l-[28px] shadow-[-24px_0_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <header className="flex items-center justify-between border-b border-[#6B1022]/12 px-6 py-5">
+        <header className="cart-reveal flex items-center justify-between border-b border-[#6B1022]/12 px-6 py-5" style={{ "--i": 0 } as React.CSSProperties}>
           <div>
             <h2 className="text-[1.7rem] font-semibold leading-none text-[#6B1022]">Your Cart</h2>
             <p className="mt-1 text-sm font-medium text-[#8a6a5a]">
@@ -65,7 +103,7 @@ export const CartDrawer: React.FC = () => {
         </header>
 
         {lines.length > 0 && (
-          <div className="border-b border-[#6B1022]/10 px-6 py-4">
+          <div className="cart-reveal border-b border-[#6B1022]/10 px-6 py-4" style={{ "--i": 1 } as React.CSSProperties}>
             <p className="flex items-center gap-2 text-sm font-semibold text-[#6B1022]">
               <Truck className="h-4 w-4" />
               {left === 0
@@ -74,8 +112,8 @@ export const CartDrawer: React.FC = () => {
             </p>
             <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-[#6B1022]/12">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[#d9893a] to-[#6B1022] transition-[width] duration-700 ease-out"
-                style={{ width: `${pct}%` }}
+                className="cart-bar h-full rounded-full bg-gradient-to-r from-[#d9893a] to-[#6B1022] transition-[width] duration-700 ease-out"
+                style={{ width: `${pct}%`, "--pct": `${pct}%` } as React.CSSProperties}
               />
             </div>
           </div>
@@ -90,16 +128,17 @@ export const CartDrawer: React.FC = () => {
                 aria-hidden="true"
                 width={140}
                 height={113}
-                className="h-auto w-28 opacity-90 drop-shadow-[0_10px_8px_rgba(60,30,10,0.25)]"
+                className="cart-empty-art h-auto w-28 drop-shadow-[0_10px_8px_rgba(60,30,10,0.25)]"
               />
-              <p className="mt-5 text-xl font-semibold text-[#6B1022]">Your cart is empty</p>
-              <p className="mt-1 max-w-[16rem] text-[0.95rem] font-medium">
+              <p className="cart-reveal mt-5 text-xl font-semibold text-[#6B1022]" style={{ "--i": 3 } as React.CSSProperties}>Your cart is empty</p>
+              <p className="cart-reveal mt-1 max-w-[16rem] text-[0.95rem] font-medium" style={{ "--i": 4 } as React.CSSProperties}>
                 Pick a flavour and we&apos;ll pop it in.
               </p>
               <Link
                 href="#flavours"
                 onClick={cart.close}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#6B1022]/60 px-6 py-2.5 font-semibold text-[#6B1022] transition-colors hover:bg-[#6B1022] hover:text-cream"
+                style={{ "--i": 5 } as React.CSSProperties}
+                className="cart-reveal mt-6 inline-flex items-center gap-2 rounded-full border border-[#6B1022]/60 px-6 py-2.5 font-semibold text-[#6B1022] transition-colors hover:bg-[#6B1022] hover:text-cream"
               >
                 Explore flavours
                 <ArrowRight className="h-4 w-4" />
@@ -107,11 +146,15 @@ export const CartDrawer: React.FC = () => {
             </div>
           ) : (
             <ul className="space-y-4">
-              {lines.map(({ id, qty, flavour }) => (
+              {lines.map(({ id, qty, flavour }, n) => (
                 <li
                   key={id}
-                  className="flex gap-4 rounded-2xl bg-white/55 p-3 ring-1 ring-white/70"
+                  className="cart-reveal relative flex gap-4 overflow-hidden rounded-2xl bg-white/55 p-3 ring-1 ring-white/70"
+                  style={{ "--i": n + 2 } as React.CSSProperties}
                 >
+                  {id === lastAdded && (
+                    <span key={bump} aria-hidden="true" className="cart-flash pointer-events-none absolute inset-0" />
+                  )}
                   <div
                     className="relative h-[92px] w-[76px] shrink-0 overflow-hidden rounded-xl"
                     style={{ background: flavour.theme.to }}
@@ -121,7 +164,7 @@ export const CartDrawer: React.FC = () => {
                       alt=""
                       fill
                       sizes="80px"
-                      className="object-cover object-[50%_8%]"
+                      className="object-cover object-[50%_44%]"
                     />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col">
@@ -153,7 +196,7 @@ export const CartDrawer: React.FC = () => {
                         >
                           <Minus className="h-3.5 w-3.5" />
                         </button>
-                        <span className="w-6 text-center text-[0.95rem] font-semibold tabular-nums text-[#6B1022]">
+                        <span key={qty} className="cart-pop w-6 text-center text-[0.95rem] font-semibold tabular-nums text-[#6B1022]">
                           {qty}
                         </span>
                         <button
@@ -177,17 +220,17 @@ export const CartDrawer: React.FC = () => {
         </div>
 
         {lines.length > 0 && (
-          <footer className="border-t border-[#6B1022]/12 bg-[#fbf0de]/80 px-6 pb-6 pt-4">
+          <footer className="cart-reveal border-t border-[#6B1022]/12 bg-[#fbf0de]/80 px-6 pb-6 pt-4" style={{ "--i": lines.length + 2 } as React.CSSProperties}>
             <div className="flex items-baseline justify-between">
               <span className="font-semibold text-[#6B1022]">Subtotal</span>
-              <span className="text-2xl font-semibold tabular-nums text-[#6B1022]">₹{subtotal}</span>
+              <span className="text-2xl font-semibold tabular-nums text-[#6B1022]">₹{shownSubtotal}</span>
             </div>
             <p className="mt-1 text-sm font-medium text-[#8a6a5a]">
               Taxes included. {left === 0 ? "Delivery is free." : "Delivery calculated at checkout."}
             </p>
             <button
               type="button"
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-3.5 text-[1.05rem] font-semibold text-cream shadow-[0_10px_24px_-10px_rgba(90,14,28,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-10px_rgba(90,14,28,0.9)]"
+              className="cart-checkout relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-3.5 text-[1.05rem] font-semibold text-cream shadow-[0_10px_24px_-10px_rgba(90,14,28,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-10px_rgba(90,14,28,0.9)]"
             >
               Checkout
               <ArrowRight className="h-4 w-4" />

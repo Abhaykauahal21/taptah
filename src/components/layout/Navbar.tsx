@@ -3,7 +3,8 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Search, ShoppingBag } from "lucide-react";
+import { ArrowRight, Plus, Search, ShoppingBag } from "lucide-react";
+import { FLAVOURS_DATA } from "@/constants/flavours";
 import { NAVIGATION_LINKS } from "@/constants/navigation";
 import { cart, useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
@@ -16,7 +17,7 @@ import { SearchPalette } from "./SearchPalette";
  *
  * - On the hero it is a roomy, transparent bar. After a little scroll it
  *   condenses into a floating, rounded capsule.
- * - It slides away when you scroll down and returns when you scroll up.
+ * - It stays pinned at the top while you scroll.
  * - A highlight pill glides to whichever link you hover, and rests on the
  *   section you are currently reading (scroll-spy).
  * - On mobile the menu is a full-screen overlay with staggered links.
@@ -34,7 +35,6 @@ const SECTION_FOR: Record<string, string> = {
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState(NAVIGATION_LINKS[0].label);
   const [hover, setHover] = useState<string | null>(null);
   const [pill, setPill] = useState({ x: 0, w: 0, show: false });
@@ -45,25 +45,16 @@ export const Navbar: React.FC = () => {
 
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const menuOpenRef = useRef(false);
 
-  // Scroll: condensed state, hide/show, scroll-spy. One rAF.
+  // Scroll: condensed state and scroll-spy. One rAF.
   useEffect(() => {
     let raf = 0;
-    let lastY = window.scrollY;
     const update = () => {
       raf = 0;
       const y = window.scrollY;
       const vh = window.innerHeight;
       setScrolled(y > 40);
 
-      if (!menuOpenRef.current) {
-        const dy = y - lastY;
-        if (y < 200) setHidden(false);
-        else if (dy > 6) setHidden(true);
-        else if (dy < -6) setHidden(false);
-      }
-      lastY = y;
 
       // The last section whose top has passed ~40% of the viewport is current.
       let current = NAVIGATION_LINKS[0].label;
@@ -109,7 +100,6 @@ export const Navbar: React.FC = () => {
 
   // Mobile menu: lock the page behind it and close on Escape.
   useEffect(() => {
-    menuOpenRef.current = menuOpen;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -152,7 +142,6 @@ export const Navbar: React.FC = () => {
       <header
         className={cn(
           "nav-enter fixed inset-x-0 top-0 z-50 px-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-6",
-          hidden && !menuOpen && !overlay && !mega ? "-translate-y-[140%]" : "translate-y-0",
         )}
       >
         <div
@@ -169,14 +158,6 @@ export const Navbar: React.FC = () => {
             aria-label="Taptah home"
             className="group flex items-center gap-2.5 text-cream"
           >
-            <Image
-              src="/images/why/pop-jwaar-1.png"
-              alt=""
-              aria-hidden="true"
-              width={64}
-              height={52}
-              className="h-7 w-auto transition-transform duration-500 group-hover:rotate-[24deg] group-hover:scale-110 sm:h-8"
-            />
             <span
               className={cn(
                 "font-serif font-medium leading-none tracking-tight transition-all duration-500",
@@ -228,7 +209,7 @@ export const Navbar: React.FC = () => {
                       }}
                       onClick={() => setMega(false)}
                       className={cn(
-                        "relative block rounded-full px-4 py-2.5 text-[15px] font-semibold tracking-wide transition-colors duration-300",
+                        "relative block rounded-full px-4 py-2.5 text-base font-semibold tracking-wide transition-colors duration-300",
                         isActive || hover === link.label
                           ? "text-cream"
                           : "text-cream/70",
@@ -236,6 +217,14 @@ export const Navbar: React.FC = () => {
                     >
                       {link.label}
                     </Link>
+                    {link.label === "Products" && (
+                      <ProductsMenu
+                        open={mega && !menuOpen}
+                        onEnter={openMega}
+                        onLeave={() => closeMega()}
+                        onNavigate={() => setMega(false)}
+                      />
+                    )}
                   </li>
                 );
               })}
@@ -256,13 +245,18 @@ export const Navbar: React.FC = () => {
               type="button"
               aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`}
               onClick={cart.open}
+              data-cart-target
               className="relative flex h-10 w-10 items-center justify-center rounded-full text-cream/85 transition-colors hover:bg-cream/10 hover:text-cream"
             >
-              <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.75} />
+              <ShoppingBag
+                key={`bag-${bump}`}
+                className={cn("h-[18px] w-[18px]", bump > 0 && "nav-bag-bump")}
+                strokeWidth={1.75}
+              />
               {count > 0 && (
                 <span
                   key={bump}
-                  className="nav-badge absolute right-0 top-0 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-white"
+                  className="nav-badge absolute right-0 top-0 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-white"
                 >
                   {count}
                 </span>
@@ -308,70 +302,147 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          <ProductsMenu
-            open={mega && !menuOpen}
-            onEnter={openMega}
-            onLeave={() => closeMega()}
-            onNavigate={() => setMega(false)}
-          />
         </div>
       </header>
 
       <SearchPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
       <CartDrawer />
 
-      {/* Mobile overlay */}
+      {/* Mobile menu: a cream sheet in the site's own palette, big serif links,
+          the flavours to add straight from the menu, and the Shop Now button. */}
       <div
         data-lenis-prevent
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
         className={cn(
-          "fixed inset-0 z-40 flex flex-col justify-between overflow-y-auto bg-[radial-gradient(ellipse_at_80%_10%,#5a1b12_0%,#2b0f08_55%,#190804_100%)] px-7 pb-10 pt-28 text-cream transition-[opacity,visibility] duration-500 lg:hidden",
-          menuOpen ? "visible opacity-100" : "invisible opacity-0",
+          "fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[linear-gradient(180deg,#fbf0de,#f5e0c0)] px-6 pb-8 pt-[5.75rem] text-[#6B1022] transition-[opacity,visibility,clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden",
+          menuOpen
+            ? "visible opacity-100 [clip-path:circle(150%_at_92%_4%)]"
+            : "invisible opacity-0 [clip-path:circle(0%_at_92%_4%)]",
         )}
       >
-        <nav aria-label="Mobile Navigation">
+        {/* soft colour and a faded jowar stalk behind the links */}
+        <span aria-hidden="true" className="pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-[#f3c9b6]/60 blur-[70px]" />
+        <span aria-hidden="true" className="pointer-events-none absolute -left-20 bottom-24 h-64 w-64 rounded-full bg-[#ffd99a]/55 blur-[70px]" />
+        <Image
+          src="/images/why/jwar.png"
+          alt=""
+          aria-hidden="true"
+          width={1151}
+          height={1367}
+          sizes="60vw"
+          className="pointer-events-none absolute -right-10 bottom-[18%] w-[58vw] max-w-[16rem] rotate-[-8deg] opacity-[0.16] [mask-image:linear-gradient(0deg,transparent,#000_55%)]"
+        />
+
+        <nav aria-label="Mobile Navigation" className="relative">
           <ul className="flex flex-col">
-            {NAVIGATION_LINKS.map((link, i) => (
-              <li
-                key={link.label}
-                className="border-b border-cream/10"
-                style={{
-                  transform: menuOpen ? "none" : "translateY(28px)",
-                  opacity: menuOpen ? 1 : 0,
-                  transition: `transform 0.7s cubic-bezier(0.22,1,0.36,1) ${0.12 + i * 0.07}s, opacity 0.6s ease-out ${0.12 + i * 0.07}s`,
-                }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-baseline justify-between py-4 text-[2.4rem] font-medium leading-none tracking-tight"
+            {NAVIGATION_LINKS.map((link, i) => {
+              const current = link.label === active;
+              return (
+                <li
+                  key={link.label}
+                  style={{
+                    transform: menuOpen ? "none" : "translateY(24px)",
+                    opacity: menuOpen ? 1 : 0,
+                    transition: `transform 0.7s cubic-bezier(0.22,1,0.36,1) ${0.2 + i * 0.06}s, opacity 0.6s ease-out ${0.2 + i * 0.06}s`,
+                  }}
                 >
-                  {link.label}
-                  <span className="text-sm font-semibold tracking-[0.2em] text-cream/40">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </Link>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={current ? "page" : undefined}
+                    className="group flex items-center gap-3 border-b border-[#6B1022]/12 py-[0.85rem]"
+                  >
+                    <span className="w-6 text-[13px] font-semibold italic tabular-nums text-[#6B1022]/45">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      className={cn(
+                        "text-[2.15rem] font-semibold leading-none tracking-tight transition-transform duration-300 group-active:translate-x-1",
+                        current ? "text-[#6B1022]" : "text-[#6B1022]/80",
+                      )}
+                    >
+                      {link.label}
+                    </span>
+                    {current ? (
+                      <span aria-hidden="true" className="ml-1 h-2 w-2 rounded-full bg-[#d9893a]" />
+                    ) : null}
+                    <ArrowRight className="ml-auto h-5 w-5 text-[#6B1022]/40 transition-transform duration-300 group-active:translate-x-1" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        {/* Flavours, add straight from here */}
+        <div
+          className="relative mt-7"
+          style={{
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? "none" : "translateY(20px)",
+            transition: "opacity 0.7s ease-out 0.65s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.65s",
+          }}
+        >
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/60">
+            Our Flavours
+          </p>
+          <ul className="-mx-6 flex snap-x gap-3 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {FLAVOURS_DATA.map((f) => (
+              <li
+                key={f.id}
+                className="flex w-[15.5rem] shrink-0 snap-start items-center gap-3 rounded-2xl bg-white/60 p-2.5 pr-3 ring-1 ring-white/80 shadow-[0_10px_22px_-14px_rgba(90,40,10,0.5)]"
+              >
+                <div
+                  className="relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-xl"
+                  style={{ background: f.tone }}
+                >
+                  <Image
+                    src={f.image}
+                    alt=""
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                    style={{ objectPosition: "50% 42%", transform: "scale(1.15)", transformOrigin: "50% 42%" }}
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[1.05rem] font-semibold leading-tight">{f.name}</p>
+                  <p className="text-[0.95rem] font-semibold text-[#6B1022]/70">₹{f.price}</p>
+                </div>
+                <button
+                  type="button"
+                  aria-label={`Add ${f.name} to cart`}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    window.setTimeout(() => cart.add(f.id), 250);
+                  }}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#6B1022] text-cream transition-transform active:scale-90"
+                >
+                  <Plus className="h-[18px] w-[18px]" />
+                </button>
               </li>
             ))}
           </ul>
-        </nav>
+        </div>
+
         <div
-          className="mt-10 flex flex-col gap-4"
+          className="relative mt-auto flex flex-col gap-3 pt-8"
           style={{
             opacity: menuOpen ? 1 : 0,
-            transition: "opacity 0.7s ease-out 0.6s",
+            transition: "opacity 0.7s ease-out 0.8s",
           }}
         >
           <Link
             href="#flavours"
             onClick={() => setMenuOpen(false)}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(180deg,#fff6e4,#f4dcb2)] px-6 py-4 text-lg font-semibold text-[#5a1020]"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-4 text-lg font-semibold text-cream shadow-[0_14px_26px_-12px_rgba(90,14,28,0.9)] active:scale-[0.98]"
           >
             Shop Now
             <ArrowRight className="h-5 w-5" />
           </Link>
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.3em] text-cream/50">
-            Ancient Grain · Modern Crunch
+          <p className="text-center text-[12px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/55">
+            Ancient Grain &middot; Modern Crunch
           </p>
         </div>
       </div>

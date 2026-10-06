@@ -49,12 +49,12 @@ export const FlavourList: React.FC<{ children: React.ReactNode; labels: string[]
         ref={track}
         data-active={active}
         onScroll={onScroll}
-        className="flavour-track -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-[11%] py-8 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-[18%] md:mx-0 md:mt-10 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:py-0 lg:gap-7 [&::-webkit-scrollbar]:hidden"
+        className="flavour-track -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-[15%] py-8 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-[24%] md:mx-auto md:mt-10 md:grid md:max-w-[1040px] md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:py-0 lg:gap-6 [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((child, i) => (
           <div
             key={i}
-            className="flavour-slide w-[78%] shrink-0 snap-center sm:w-[64%] md:w-auto"
+            className="flavour-slide w-[70%] shrink-0 snap-center sm:w-[52%] md:w-auto"
           >
             {child}
           </div>
@@ -82,7 +82,7 @@ export const FlavourList: React.FC<{ children: React.ReactNode; labels: string[]
         <p
           aria-hidden="true"
           className={cn(
-            "text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/55 transition-opacity duration-500",
+            "text-xs font-semibold uppercase tracking-[0.3em] text-[#6B1022]/55 transition-opacity duration-500",
             touched ? "opacity-0" : "opacity-100",
           )}
         >

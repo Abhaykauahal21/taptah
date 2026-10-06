@@ -61,15 +61,15 @@ export const Why: React.FC = () => {
             {/* Intro */}
             <div>
               <div className="flex items-start gap-[1.2vw]">
-                <h2 className="text-[clamp(2.75rem,5vw,4.75rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
+                <h2 className="text-[clamp(2.5rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
                   <span className="why-line">
                     <span className="why-line-inner" style={{ "--i": 0 } as React.CSSProperties}>
-                      Why
+                      Why are we
                     </span>
                   </span>
                   <span className="why-line">
                     <span className="why-line-inner" style={{ "--i": 1 } as React.CSSProperties}>
-                      Taptah?
+                      called Taptah<span className="font-light">:</span>
                     </span>
                   </span>
                 </h2>

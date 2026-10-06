@@ -20,6 +20,7 @@ import Image from "next/image";
 
 const MIN_MS = 3400; // long enough for the pop and the fountain to play out
 const MAX_MS = 9000; // never trap the visitor on a slow network
+const ASSET_PATIENCE_MS = 4500; // stop waiting for assets (and let the bar finish) after this
 const LETTERS = "Taptah:".split("");
 
 const SPARKS = Array.from({ length: 14 }, (_, i) => {
@@ -119,14 +120,27 @@ export const Loader: React.FC = () => {
       heroImg.decode ? heroImg.decode().catch(() => undefined) : Promise.resolve(),
       // The steps section's own pictures (they load eagerly with the page), so
       // every bowl, bottle and leaf is already there the moment you scroll to it.
-      ...Array.from(document.querySelectorAll<HTMLImageElement>("#process img")).map(imgReady),
+      // Lazy ones are warmed through a detached copy with the same srcset/sizes, so the
+      // browser fetches the very candidate the page will use. (Waiting on the lazy <img>
+      // itself never settles off screen, and flipping its `loading` attribute would
+      // trip a hydration mismatch.)
+      ...Array.from(document.querySelectorAll<HTMLImageElement>("#process img")).map((img) => {
+        if (img.loading !== "lazy" || img.complete) return imgReady(img);
+        const copy = new window.Image();
+        copy.sizes = img.sizes;
+        copy.srcset = img.srcset;
+        copy.src = img.currentSrc || img.src;
+        return imgReady(copy);
+      }),
       ...GRAIN_SPRITES.map((src) => {
         const img = new window.Image();
         img.src = src;
         return imgReady(img);
       }),
     ]);
-    assets.then(markReady);
+    // Whatever is still outstanding after a few seconds is not worth holding the visitor for.
+    const patience = new Promise<void>((r) => window.setTimeout(r, ASSET_PATIENCE_MS));
+    Promise.race([assets, patience]).then(markReady);
 
     const lift = () => {
       if (finished) return;

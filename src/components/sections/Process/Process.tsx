@@ -206,7 +206,7 @@ export const Process: React.FC = () => {
 
         {/* Copy */}
         <div data-parallax="0.05" className="process-copy mt-10 lg:absolute lg:left-[5.3%] lg:top-[3%] lg:mt-0 lg:w-[36%]">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-xs">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-sm">
             The Taptah Process
           </p>
           <h2 className="mt-5 text-[clamp(2.5rem,4.6vw,4.5rem)] font-semibold leading-[1.06] tracking-tight text-[#6B1022]">
@@ -272,7 +272,7 @@ function StepLabel({
       <h3 className="mt-0.5 text-[clamp(1.05rem,1.45vw,1.4rem)] font-semibold leading-tight text-[#6B1022]">
         {title}
       </h3>
-      <p className="mt-1.5 text-[clamp(0.9rem,1vw,1rem)] font-medium leading-snug text-[#5a463c]">
+      <p className="mt-1.5 text-[clamp(1rem,1.1vw,1.1rem)] font-medium leading-snug text-[#5a463c]">
         {description}
       </p>
     </>

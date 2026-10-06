@@ -6,7 +6,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     author: "Riya Sharma",
     location: "Pune",
     quote:
-      "Finally, a snack that's tasty and healthy! The Korean Kimchi flavour is my favourite - can't stop munching this!!",
+      "Finally, a snack that's tasty and healthy! The Peri Peri flavour is my favourite - can't stop munching this!!",
     rating: 5,
     tone: ["#e7b99a", "#b9744f"],
   },
@@ -24,7 +24,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     author: "Neha Kapoor",
     location: "Delhi",
     quote:
-      "As someone who avoids gluten, Taptah has been a game changer. Great taste, great quality!",
+      "As someone who avoids maida, Taptah has been a game changer. Great taste, great quality!",
     rating: 5,
     tone: ["#d8b4a0", "#9c6a55"],
   },
@@ -33,7 +33,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     author: "Rohan Mehta",
     location: "Mumbai",
     quote:
-      "The Classic Masala is exactly how I remember snacking as a kid, only lighter. Whole family is hooked.",
+      "The Butter Salt is exactly how I remember snacking as a kid, only lighter. Whole family is hooked.",
     rating: 5,
     tone: ["#c9b38a", "#8a7140"],
   },
@@ -42,7 +42,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     author: "Ishita Rao",
     location: "Hyderabad",
     quote:
-      "Herb & Onion is so fragrant and crunchy. I keep a pack in my gym bag and another at my desk.",
+      "Tangy Pudina is so fragrant and crunchy. I keep a pack in my gym bag and another at my desk.",
     rating: 5,
     tone: ["#a9c4a0", "#5a8052"],
   },

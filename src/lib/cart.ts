@@ -18,12 +18,14 @@ export interface CartState {
   items: CartItem[];
   open: boolean;
   bump: number;
+  /** Id of the flavour added most recently, so the drawer can highlight it. */
+  lastAdded: string | null;
 }
 
 const KEY = "taptah-cart-v1";
 export const FREE_SHIPPING_AT = 299;
 
-const EMPTY: CartState = { items: [], open: false, bump: 0 };
+const EMPTY: CartState = { items: [], open: false, bump: 0, lastAdded: null };
 let state: CartState = EMPTY;
 let loaded = false;
 const listeners = new Set<() => void>();
@@ -74,7 +76,7 @@ export const cart = {
     const items = exists
       ? state.items.map((i) => (i.id === id ? { ...i, qty: Math.min(i.qty + 1, 20) } : i))
       : [...state.items, { id, qty: 1 }];
-    set({ items, bump: state.bump + 1, open: open || state.open }, true);
+    set({ items, bump: state.bump + 1, lastAdded: id, open: open || state.open }, true);
   },
   setQty(id: string, qty: number) {
     const items =

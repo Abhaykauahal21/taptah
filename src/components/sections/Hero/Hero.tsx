@@ -34,7 +34,7 @@ export const Hero: React.FC = () => {
 
       <div className="hero-content relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-28 pt-28 sm:px-8 lg:px-12">
         <div className="max-w-[520px]">
-          <p style={{ "--i": 0 } as React.CSSProperties} className="hero-fade mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-cream/80 sm:text-xs">
+          <p style={{ "--i": 0 } as React.CSSProperties} className="hero-fade mb-4 text-[13px] font-semibold uppercase tracking-[0.28em] text-cream/80 sm:text-sm">
             The Ancient Supergrain
           </p>
 
@@ -104,7 +104,7 @@ export const Hero: React.FC = () => {
       <a
         href="#story"
         style={{ "--i": 8 } as React.CSSProperties}
-        className="hero-fade absolute bottom-24 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-cream/80 lg:flex"
+        className="hero-fade absolute bottom-24 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-cream/85 lg:flex"
       >
         <span className="flex h-8 w-5 justify-center rounded-full border border-cream/60 pt-1.5">
           <span className="h-1.5 w-0.5 animate-bounce rounded-full bg-cream/80" />

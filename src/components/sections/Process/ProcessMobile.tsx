@@ -157,7 +157,7 @@ export const ProcessMobile: React.FC = () => {
           ))}
         </div>
 
-        <p className="flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-xs">
+        <p className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-sm">
           The Taptah Process
           <span aria-hidden="true" className="h-px max-w-[10rem] flex-1 bg-[#6B1022]/30" />
         </p>
@@ -399,10 +399,10 @@ export const ProcessMobile: React.FC = () => {
             <span aria-hidden="true" className="w-px shrink-0 bg-[#6B1022]/20" />
             <div className="min-w-0 pb-1">
               <Icon aria-hidden="true" strokeWidth={1.1} className="h-7 w-7 text-[#6B1022] sm:h-9 sm:w-9" />
-              <h3 className="mt-1 text-[1.02rem] font-semibold leading-[1.15] text-[#6B1022] sm:text-[1.4rem]">
+              <h3 className="mt-1 text-[1.12rem] font-semibold leading-[1.15] text-[#6B1022] sm:text-[1.4rem]">
                 {l.title}
               </h3>
-              <p className="mt-1 text-[0.8rem] font-medium leading-snug text-[#5a463c] sm:text-[1rem]">
+              <p className="mt-1 text-[0.95rem] font-medium leading-snug text-[#5a463c] sm:text-[1.1rem]">
                 {l.description}
               </p>
             </div>

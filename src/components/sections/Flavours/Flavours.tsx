@@ -2,10 +2,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { AddToCartButton } from "@/components/common/AddToCartButton";
 import { InView } from "@/components/common/InView";
 import { FLAVOURS_DATA } from "@/constants/flavours";
-import { FlavourItem } from "@/types";
+import { FlavourCard } from "./FlavourCard";
 import { FlavourList } from "./FlavourList";
 
 /** One jowar ear drawn in pencil: a stalk, two leaves and a teardrop of kernel dots. */
@@ -120,33 +119,6 @@ function HeadArt() {
   );
 }
 
-function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: number }) {
-  return (
-    <article
-      data-parallax={["0.05", "-0.04", "0.07"][index % 3]}
-      className="flavour-card group relative flex flex-col overflow-hidden rounded-[22px] text-cream shadow-[0_22px_40px_-18px_rgba(40,10,10,0.55)]"
-      style={{ background: flavour.theme.to, "--i": index } as React.CSSProperties}
-    >
-      {/* The artwork already carries the pack, name, tagline and badges */}
-      <div className="overflow-hidden">
-        <Image
-          src={flavour.image}
-          alt={`${flavour.name} pop jowar: ${flavour.tagline}`}
-          width={1145}
-          height={1374}
-          sizes="(min-width: 1024px) 31vw, (min-width: 768px) 30vw, 80vw"
-          className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.04]"
-        />
-      </div>
-
-      <div className="flex items-center justify-between gap-4 px-5 pb-5 pt-1">
-        <span className="text-2xl font-semibold">&#8377;{flavour.price}</span>
-        <AddToCartButton id={flavour.id} />
-      </div>
-    </article>
-  );
-}
-
 export const Flavours: React.FC = () => {
   return (
     <section
@@ -154,17 +126,48 @@ export const Flavours: React.FC = () => {
       aria-label="Our Flavours"
       className="relative overflow-hidden bg-background px-5 py-16 text-maroon sm:px-8 lg:px-12 lg:py-24"
     >
-      <InView className="flavours-art mx-auto max-w-[1280px]">
-        <div data-parallax="0.06" className="flavours-head relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      {/* Backdrop (tablet and up): colour washes in each flavour's tone, a faded
+          outlined wordmark and two faded leaves. Everything melts into the page. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden md:block">
+        <span className="flavour-wash left-[2%] bg-[#C28A1C]" />
+        <span className="flavour-wash left-[34%] bg-[#B3261E] [animation-delay:-3s]" />
+        <span className="flavour-wash right-[2%] bg-[#4F7A2B] [animation-delay:-6s]" />
+        <p data-parallax="0.08" className="flavour-watermark">
+          Pop Jowar
+        </p>
+        <Image
+          src="/images/why/leaf-b.png"
+          alt=""
+          width={175}
+          height={126}
+          className="flavour-leaf absolute -left-[3%] top-[8%] w-[15vw] max-w-[14rem] rotate-[24deg]"
+        />
+        <Image
+          src="/images/why/leaf-c.png"
+          alt=""
+          width={169}
+          height={141}
+          className="flavour-leaf absolute -right-[3%] bottom-[6%] w-[15vw] max-w-[14rem] -rotate-[28deg] scale-x-[-1]"
+        />
+      </div>
+
+      <InView className="flavours-art relative z-10 mx-auto max-w-[1280px]">
+        <div data-parallax="0.06" className="flavours-head relative mx-auto flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between md:max-w-[1040px]">
           <HeadArt />
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-xs">
-              Our Flavours
-            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-sm">
+                Our Flavours
+              </p>
+              <span aria-hidden="true" className="rv-rule hidden h-px w-16 bg-[#6B1022]/45 sm:block" />
+            </div>
             <h2 className="relative z-10 mt-3 text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
-              Flavours That
-              <br />
-              Tell a Story.
+              <span className="rv-line" style={{ "--l": 0 } as React.CSSProperties}>
+                <span>Flavours That</span>
+              </span>
+              <span className="rv-line" style={{ "--l": 1 } as React.CSSProperties}>
+                <span>Tell a Story.</span>
+              </span>
             </h2>
           </div>
 
@@ -174,7 +177,7 @@ export const Flavours: React.FC = () => {
             </p>
             <Link
               href="#flavours"
-              className="group hidden shrink-0 items-center gap-2 text-base font-semibold text-[#6B1022] sm:inline-flex"
+              className="group hidden shrink-0 items-center gap-2 border-b border-[#6B1022]/30 pb-0.5 text-base font-semibold text-[#6B1022] transition-colors hover:border-[#6B1022] sm:inline-flex"
             >
               View All Flavours
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

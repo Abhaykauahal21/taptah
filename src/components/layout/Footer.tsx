@@ -76,7 +76,7 @@ const SOCIALS = [
   },
 ];
 
-const WORD = "TAPTAH".split("");
+const WORD = "Taptah:".split("");
 
 /** Pollen drifting up through the valley (deterministic, so SSR matches). */
 const POLLEN = Array.from({ length: 18 }, (_, i) => ({
@@ -267,11 +267,11 @@ export const Footer: React.FC = () => {
       <InView
         threshold={0.2}
         aria-hidden="true"
-        className="footer-word-layer pointer-events-none absolute inset-x-0 bottom-[calc(min(5vw,72px)+3.4vw)] z-[4] hidden flex-col items-center sm:flex"
+        className="footer-word-layer pointer-events-none absolute inset-x-0 bottom-[calc(min(5vw,72px)+0.2vw)] z-[4] hidden flex-col items-center sm:flex"
       >
-        <div className="footer-word flex font-semibold leading-[0.8] tracking-[-0.01em]">
+        <div className="footer-word flex font-medium leading-[0.8] tracking-tight">
           {WORD.map((c, i) => (
-            <span key={i} style={{ "--i": i } as React.CSSProperties}>
+            <span key={i} className={c === ":" ? "font-light" : c === "p" ? "footer-p" : undefined} style={{ "--i": i } as React.CSSProperties}>
               {c}
             </span>
           ))}
@@ -320,7 +320,7 @@ export const Footer: React.FC = () => {
         <div className="flex w-full flex-col items-center sm:hidden">
           <div className="footer-rise flex w-full items-center gap-3" style={rise(0)}>
             <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]">
+            <p className="text-[0.8rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]">
               Ancient Grain, Modern Crunch
             </p>
             <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
@@ -328,10 +328,10 @@ export const Footer: React.FC = () => {
 
           <p
             aria-label="Taptah"
-            className="relative mt-7 flex text-[23.5vw] font-semibold leading-[0.85] tracking-[-0.01em] text-[#6B1022] drop-shadow-[0_6px_10px_rgba(107,16,34,0.18)]"
+            className="relative mt-7 flex text-[26vw] font-medium leading-[0.85] tracking-tight text-[#6B1022] drop-shadow-[0_6px_10px_rgba(107,16,34,0.18)]"
           >
             {WORD.map((c, i) => (
-              <span key={i} aria-hidden="true" className="footer-rise inline-block" style={rise(i + 1)}>
+              <span key={i} aria-hidden="true" className={"footer-rise inline-block" + (c === ":" ? " font-light" : "")} style={rise(i + 1)}>
                 {c}
               </span>
             ))}
@@ -403,7 +403,7 @@ export const Footer: React.FC = () => {
               <li key={l.label} className="footer-rise" style={rise(i + 1)}>
                 <Link
                   href={l.href}
-                  className="footer-link text-[0.82rem] font-semibold uppercase tracking-[0.34em] text-[#6B1022]"
+                  className="footer-link text-[0.95rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]"
                 >
                   {l.label}
                 </Link>
@@ -417,7 +417,7 @@ export const Footer: React.FC = () => {
         </nav>
 
         <p
-          className="footer-rise mt-9 hidden text-[0.8rem] font-semibold uppercase tracking-[0.42em] text-[#6B1022] sm:block"
+          className="footer-rise mt-9 hidden text-[0.92rem] font-semibold uppercase tracking-[0.36em] text-[#6B1022] sm:block"
           style={rise(5)}
         >
           Ancient Grain, Modern Crunch
@@ -478,9 +478,9 @@ export const Footer: React.FC = () => {
         className="footer-legal absolute inset-x-0 bottom-0 z-[6] bg-gradient-to-t from-black/50 to-transparent px-5 pb-4 pt-10 sm:px-8 lg:px-12"
       >
         <div className="mx-auto max-w-[1280px] border-t border-cream/30 pt-4">
-          <div className="grid items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cream/90 sm:grid-cols-3">
+          <div className="grid items-center gap-3 text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-cream/95 sm:grid-cols-3">
             <p className="text-center sm:text-left">
-              © {new Date().getFullYear()} Taptah Foods
+              © {new Date().getFullYear()} Taptah Foods. All rights reserved.
             </p>
             <ul className="flex items-center justify-center gap-3 sm:gap-4">
               {LEGAL.map((l, i) => (
@@ -498,7 +498,36 @@ export const Footer: React.FC = () => {
                 </React.Fragment>
               ))}
             </ul>
-            <p className="text-center sm:text-right">All rights reserved.</p>
+            <p className="angaar-credit group flex items-center justify-center gap-3 sm:justify-end">
+              <span className="font-medium text-cream/70">Crafted by</span>
+              <span className="angaar-pill relative inline-flex items-center gap-2 rounded-full border border-[#f6c46c]/45 bg-gradient-to-b from-black/35 to-black/15 py-1.5 pl-2.5 pr-4 shadow-[inset_0_1px_0_rgba(255,240,215,0.16),0_6px_18px_-8px_rgba(0,0,0,0.7)] backdrop-blur-sm transition-[border-color,box-shadow] duration-500 hover:border-[#f6c46c]/80 hover:shadow-[inset_0_1px_0_rgba(255,240,215,0.2),0_8px_24px_-6px_rgba(242,164,62,0.55)]">
+                {/* ember: the flame flickers, sparks lift off it on hover */}
+                <span className="relative flex h-5 w-4 items-end justify-center" aria-hidden="true">
+                  <i className="angaar-spark" style={{ "--x": "-3px", "--d": "0s" } as React.CSSProperties} />
+                  <i className="angaar-spark" style={{ "--x": "3px", "--d": "0.35s" } as React.CSSProperties} />
+                  <i className="angaar-spark" style={{ "--x": "0px", "--d": "0.7s" } as React.CSSProperties} />
+                  <svg viewBox="0 0 24 32" className="angaar-flame h-5 w-4 drop-shadow-[0_0_6px_rgba(242,140,50,0.75)]" fill="none">
+                    <defs>
+                      <linearGradient id="angaar-ember" x1="12" y1="2" x2="12" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#fff1c9" />
+                        <stop offset="0.45" stopColor="#f6b043" />
+                        <stop offset="1" stopColor="#d9442a" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M12 1c1 5 7.500 8.500 7.500 16.500C19.500 24.500 16.200 30 12 30S4.500 24.500 4.500 18.500c0-3.600 1.800-6 3.500-8 .2 2.200 1 3.600 2.200 4.400C9.800 10 10 5.500 12 1Z"
+                      fill="url(#angaar-ember)"
+                    />
+                    <path
+                      d="M12 17c.8 2.200 3 3.500 3 6.200 0 2.200-1.400 3.800-3 3.800s-3-1.600-3-3.800c0-1.700 1-2.600 1.800-3.600.3 1 .8 1.500 1.200 1.700.1-1.300 0-2.800 0-4.300Z"
+                      fill="#fff6dc"
+                      fillOpacity="0.85"
+                    />
+                  </svg>
+                </span>
+                <span className="angaar-name font-serif text-[1.02rem] font-semibold tracking-[0.18em]">Angaar Labs</span>
+              </span>
+            </p>
           </div>
         </div>
       </InView>
