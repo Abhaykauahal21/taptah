@@ -25,8 +25,8 @@ interface Floater {
   drift: number;
 }
 
-const P1 = { src: "/images/why/pop-jwaar-1.png", width: 1397, height: 1126 };
-const P2 = { src: "/images/why/pop-jwaar-2.png", width: 1293, height: 1217 };
+const P1 = { src: "/images/why/pop-jwaar-1.webp", width: 1397, height: 1126 };
+const P2 = { src: "/images/why/pop-jwaar-2.webp", width: 1293, height: 1217 };
 
 const FLOATERS: Floater[] = [
   { ...P1, left: 57, top: 20, size: 5.4, rotate: -18, depth: 0.95, delay: 0.1, drift: 7 },

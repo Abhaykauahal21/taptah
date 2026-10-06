@@ -152,7 +152,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
           >
             {/* faded jowar in the corner, like a pressed botanical on the page */}
             <Image
-              src="/images/why/jwar.png"
+              src="/images/why/jwar.webp"
               alt=""
               aria-hidden="true"
               width={1151}
@@ -249,7 +249,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
           {PUFFS.map(([left, size, dx, rot, delay], i) => (
             <Image
               key={i}
-              src={`/images/why/${puff.src}.png`}
+              src={`/images/why/${puff.src}.webp`}
               alt=""
               width={puff.w}
               height={puff.h}

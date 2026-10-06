@@ -69,7 +69,7 @@ export const WhyArtwork: React.FC = () => {
       {/* Field inside the cut-out window */}
       <div className="why-window absolute left-[17.9%] top-0 h-[66.95%] w-[67.25%] overflow-hidden">
         <Image
-          src="/images/why/bg-jwar.png"
+          src="/images/why/bg-jwar.webp"
           alt=""
           fill
           sizes="(min-width: 1024px) 26vw, 60vw"
@@ -81,7 +81,7 @@ export const WhyArtwork: React.FC = () => {
       {/* Jowar cut-out, breaking out of the window */}
       <div className="why-jowar absolute bottom-[34%] left-[21%] w-[62%]">
         <Image
-          src="/images/why/jwar.png"
+          src="/images/why/jwar.webp"
           alt=""
           width={1151}
           height={1367}

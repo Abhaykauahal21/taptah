@@ -194,7 +194,7 @@ export const Testimonials: React.FC = () => {
         {/* mid: jowar stalks, softly out of focus and faded into the page */}
         <div data-parallax="0.08" className="absolute inset-0">
           <Image
-            src="/images/why/jwar.png"
+            src="/images/why/jwar.webp"
             alt=""
             width={1151}
             height={1367}
@@ -202,7 +202,7 @@ export const Testimonials: React.FC = () => {
             className="absolute -left-[3%] -bottom-[14%] w-[19vw] max-w-[22rem] rotate-[-9deg] opacity-[0.28] blur-[1.5px] [mask-image:linear-gradient(0deg,transparent_2%,#000_55%)]"
           />
           <Image
-            src="/images/why/jwar.png"
+            src="/images/why/jwar.webp"
             alt=""
             width={1151}
             height={1367}
@@ -221,7 +221,7 @@ export const Testimonials: React.FC = () => {
         {/* near: big blurred pop jowar that drifts the most, plus a few crisp grains */}
         <div data-parallax="0.15" className="absolute inset-0">
           <Image
-            src="/images/why/pop-jwaar-1.png"
+            src="/images/why/pop-jwaar-1.webp"
             alt=""
             width={1397}
             height={1126}
@@ -230,7 +230,7 @@ export const Testimonials: React.FC = () => {
             style={{ "--r": "24deg", "--d": "7s" } as React.CSSProperties}
           />
           <Image
-            src="/images/why/masalla-pop-jwaar-1.png"
+            src="/images/why/masalla-pop-jwaar-1.webp"
             alt=""
             width={1316}
             height={1195}
@@ -239,7 +239,7 @@ export const Testimonials: React.FC = () => {
             style={{ "--r": "-18deg", "--d": "9s", "--dl": "-3s" } as React.CSSProperties}
           />
           <Image
-            src="/images/why/podina-pop-jwaar.png"
+            src="/images/why/podina-pop-jwaar.webp"
             alt=""
             width={1452}
             height={1083}
@@ -248,7 +248,7 @@ export const Testimonials: React.FC = () => {
             style={{ "--r": "40deg", "--d": "6s", "--dl": "-1s" } as React.CSSProperties}
           />
           <Image
-            src="/images/why/single-jwaar-grain.png"
+            src="/images/why/single-jwaar-grain.webp"
             alt=""
             width={1286}
             height={1223}
@@ -256,7 +256,7 @@ export const Testimonials: React.FC = () => {
             style={{ "--r": "20deg", "--d": "6s" } as React.CSSProperties}
           />
           <Image
-            src="/images/why/jwar-grain-2.png"
+            src="/images/why/jwar-grain-2.webp"
             alt=""
             width={1512}
             height={1040}
@@ -281,7 +281,7 @@ export const Testimonials: React.FC = () => {
           {/* Phones: jowar on the left, a heap of pop jowar on the right */}
           <div aria-hidden="true" className="pointer-events-none absolute -inset-x-5 -top-6 bottom-0 overflow-visible md:hidden">
             <Image
-              src="/images/why/jwar.png"
+              src="/images/why/jwar.webp"
               alt=""
               width={1151}
               height={1367}
@@ -291,7 +291,7 @@ export const Testimonials: React.FC = () => {
             <Blob className="absolute -right-[28%] -top-[2%] h-[46%] w-[74%]" />
             <Heap kind="plain" className="absolute -right-[16%] top-[2%] w-[40%]" />
             <Image
-              src="/images/why/single-jwaar-grain.png"
+              src="/images/why/single-jwaar-grain.webp"
               alt=""
               width={1286}
               height={1223}
@@ -299,7 +299,7 @@ export const Testimonials: React.FC = () => {
               style={{ "--r": "20deg", "--d": "6s" } as React.CSSProperties}
             />
             <Image
-              src="/images/why/jwar-grain-2.png"
+              src="/images/why/jwar-grain-2.webp"
               alt=""
               width={1512}
               height={1040}

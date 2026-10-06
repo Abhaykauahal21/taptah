@@ -123,7 +123,7 @@ export const CartDrawer: React.FC = () => {
           {lines.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
               <Image
-                src="/images/why/pop-jwaar-1.png"
+                src="/images/why/pop-jwaar-1.webp"
                 alt=""
                 aria-hidden="true"
                 width={140}

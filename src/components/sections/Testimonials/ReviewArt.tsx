@@ -66,7 +66,7 @@ export function Heap({
         return (
           <Image
             key={i}
-            src={`/images/why/${sp.src}.png`}
+            src={`/images/why/${sp.src}.webp`}
             alt=""
             width={sp.w}
             height={sp.h}

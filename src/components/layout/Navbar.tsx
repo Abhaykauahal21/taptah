@@ -325,7 +325,7 @@ export const Navbar: React.FC = () => {
         <span aria-hidden="true" className="pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-[#f3c9b6]/60 blur-[70px]" />
         <span aria-hidden="true" className="pointer-events-none absolute -left-20 bottom-24 h-64 w-64 rounded-full bg-[#ffd99a]/55 blur-[70px]" />
         <Image
-          src="/images/why/jwar.png"
+          src="/images/why/jwar.webp"
           alt=""
           aria-hidden="true"
           width={1151}

@@ -24,17 +24,17 @@ const WORLD_W = 1000;
 const WORLD_H = (WORLD_W * 1100) / 1258;
 
 const SPRITES = [
-  { src: "/images/why/jwar-grain-2.png", aspect: 1040 / 1512 },
-  { src: "/images/why/single-jwaar-grain.png", aspect: 1223 / 1286 },
+  { src: "/images/why/jwar-grain-2.webp", aspect: 1040 / 1512 },
+  { src: "/images/why/single-jwaar-grain.webp", aspect: 1223 / 1286 },
   // Pop jowar (index 2 and 3)
-  { src: "/images/why/pop-jwaar-1.png", aspect: 1126 / 1397 },
-  { src: "/images/why/pop-jwaar-2.png", aspect: 1217 / 1293 },
+  { src: "/images/why/pop-jwaar-1.webp", aspect: 1126 / 1397 },
+  { src: "/images/why/pop-jwaar-2.webp", aspect: 1217 / 1293 },
   // Masala-coated pop jowar (index 4)
-  { src: "/images/why/masalla-pop-jwaar-1.png", aspect: 1195 / 1316 },
+  { src: "/images/why/masalla-pop-jwaar-1.webp", aspect: 1195 / 1316 },
   // Masala-coated pop jowar (index 5)
-  { src: "/images/why/masalla-pop-jwaar-2.png", aspect: 1083 / 1452 },
+  { src: "/images/why/masalla-pop-jwaar-2.webp", aspect: 1083 / 1452 },
   // Pudina-coated pop jowar (index 6)
-  { src: "/images/why/podina-pop-jwaar.png", aspect: 1083 / 1452 },
+  { src: "/images/why/podina-pop-jwaar.webp", aspect: 1083 / 1452 },
 ];
 const SPRITE_PX = 96;
 const POP_SPRITE = 2; // first pop jowar sprite index

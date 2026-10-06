@@ -134,7 +134,7 @@ export const ProcessMobile: React.FC = () => {
             className="absolute right-[6%] top-[46%] w-[52%] rotate-[96deg] drop-shadow-[2px_6px_5px_rgba(60,35,15,0.25)]"
           />
           <Image
-            src="/images/why/jwar-grain-2.png"
+            src="/images/why/jwar-grain-2.webp"
             alt=""
             width={1512}
             height={1040}
@@ -147,7 +147,7 @@ export const ProcessMobile: React.FC = () => {
           ].map(([l, t, w, n, r], i) => (
             <Image
               key={i}
-              src={`/images/why/pop-jwaar-${n}.png`}
+              src={`/images/why/pop-jwaar-${n}.webp`}
               alt=""
               width={140}
               height={113}
@@ -265,10 +265,10 @@ export const ProcessMobile: React.FC = () => {
 
         {/* Step 1: jowar stalks and the scoop */}
         <Item x={STALKS.x} y={STALKS.y} w={STALKS.w} delay={0}>
-          <Cast src="/images/why/naturally-grown-clean.png" w={1396} h={1127} className="process-cast-air" />
+          <Cast src="/images/why/naturally-grown-clean.webp" w={1396} h={1127} className="process-cast-air" />
           <Image
             loading="eager"
-            src="/images/why/naturally-grown-clean.png"
+            src="/images/why/naturally-grown-clean.webp"
             alt="Jowar stalks with a stream of grains pouring from a wooden scoop"
             width={1396}
             height={1127}
@@ -279,10 +279,10 @@ export const ProcessMobile: React.FC = () => {
 
         {/* Step 2: the bowl the grains pour into */}
         <Item x={BOWL1.x} y={BOWL1.y} w={BOWL1.w} delay={0.4}>
-          <Cast src="/images/why/step-2-bowl-empty.png" w={1492} h={1054} className="process-cast-floor" />
+          <Cast src="/images/why/step-2-bowl-empty.webp" w={1492} h={1054} className="process-cast-floor" />
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt="Cleaned jowar grains pouring into a wooden bowl"
             width={1492}
             height={1054}
@@ -297,10 +297,10 @@ export const ProcessMobile: React.FC = () => {
 
         {/* Step 3: slow-cooking kadayi on a clay chulha */}
         <Item x={KADAYI.x} y={KADAYI.y} w={KADAYI.w} delay={0.8}>
-          <Cast src="/images/why/kadayi.png" w={1419} h={1108} className="process-cast-floor" />
+          <Cast src="/images/why/kadayi.webp" w={1419} h={1108} className="process-cast-floor" />
           <Image
             loading="eager"
-            src="/images/why/kadayi.png"
+            src="/images/why/kadayi.webp"
             alt="Copper kadayi on a clay stove with a wood fire burning below"
             width={1419}
             height={1108}
@@ -317,10 +317,10 @@ export const ProcessMobile: React.FC = () => {
         ].map(({ bowl, bottle, alt, d }) => (
           <React.Fragment key={bottle}>
             <Item x={bowl.x} y={bowl.y} w={bowl.w} delay={d}>
-              <Cast src="/images/why/step-2-bowl-empty.png" w={1492} h={1054} className="process-cast-floor" />
+              <Cast src="/images/why/step-2-bowl-empty.webp" w={1492} h={1054} className="process-cast-floor" />
               <Image
                 loading="eager"
-                src="/images/why/step-2-bowl-empty.png"
+                src="/images/why/step-2-bowl-empty.webp"
                 alt={alt}
                 width={1492}
                 height={1054}
@@ -332,7 +332,7 @@ export const ProcessMobile: React.FC = () => {
               <Item key={k} x={bowl.x + dx} y={bowl.y + BOTTLE_DY} w={BOTTLE_W} delay={d + 0.4} className="z-10">
                 <Image
                   loading="eager"
-                  src={`/images/why/${bottle}.png`}
+                  src={`/images/why/${bottle}.webp`}
                   alt={k === 0 ? "Spice shaker" : ""}
                   aria-hidden={k === 0 ? undefined : true}
                   width={1024}
@@ -360,7 +360,7 @@ export const ProcessMobile: React.FC = () => {
           {POPS.map(([x, y, w, n, r], i) => (
             <Image
               key={i}
-              src={`/images/why/pop-jwaar-${n}.png`}
+              src={`/images/why/pop-jwaar-${n}.webp`}
               alt=""
               width={140}
               height={113}

@@ -46,14 +46,14 @@ const MOTES = Array.from({ length: 16 }, (_, i) => ({
 
 /** Popped jowar thrown out of the kernel: where it lands, how high it flies, how it spins. */
 const PIECES = [
-  { src: "/images/why/pop-jwaar-1.png", w: 1397, h: 1126, dx: -150, up: 120, fall: 150, rot: -300, size: 34 },
-  { src: "/images/why/masalla-pop-jwaar-1.png", w: 1316, h: 1195, dx: 140, up: 135, fall: 160, rot: 320, size: 36 },
-  { src: "/images/why/pop-jwaar-2.png", w: 1293, h: 1217, dx: -85, up: 175, fall: 195, rot: 260, size: 28 },
-  { src: "/images/why/podina-pop-jwaar.png", w: 1452, h: 1083, dx: 95, up: 170, fall: 190, rot: -280, size: 30 },
-  { src: "/images/why/masalla-pop-jwaar-2.png", w: 1452, h: 1083, dx: -205, up: 80, fall: 110, rot: 200, size: 28 },
-  { src: "/images/why/pop-jwaar-1.png", w: 1397, h: 1126, dx: 210, up: 85, fall: 115, rot: -220, size: 26 },
-  { src: "/images/why/podina-pop-jwaar.png", w: 1452, h: 1083, dx: -30, up: 205, fall: 225, rot: 180, size: 24 },
-  { src: "/images/why/masalla-pop-jwaar-1.png", w: 1316, h: 1195, dx: 38, up: 195, fall: 215, rot: -200, size: 22 },
+  { src: "/images/why/pop-jwaar-1.webp", w: 1397, h: 1126, dx: -150, up: 120, fall: 150, rot: -300, size: 34 },
+  { src: "/images/why/masalla-pop-jwaar-1.webp", w: 1316, h: 1195, dx: 140, up: 135, fall: 160, rot: 320, size: 36 },
+  { src: "/images/why/pop-jwaar-2.webp", w: 1293, h: 1217, dx: -85, up: 175, fall: 195, rot: 260, size: 28 },
+  { src: "/images/why/podina-pop-jwaar.webp", w: 1452, h: 1083, dx: 95, up: 170, fall: 190, rot: -280, size: 30 },
+  { src: "/images/why/masalla-pop-jwaar-2.webp", w: 1452, h: 1083, dx: -205, up: 80, fall: 110, rot: 200, size: 28 },
+  { src: "/images/why/pop-jwaar-1.webp", w: 1397, h: 1126, dx: 210, up: 85, fall: 115, rot: -220, size: 26 },
+  { src: "/images/why/podina-pop-jwaar.webp", w: 1452, h: 1083, dx: -30, up: 205, fall: 225, rot: 180, size: 24 },
+  { src: "/images/why/masalla-pop-jwaar-1.webp", w: 1316, h: 1195, dx: 38, up: 195, fall: 215, rot: -200, size: 22 },
 ];
 
 /**
@@ -61,13 +61,13 @@ const PIECES = [
  * next/image), fetched and decoded while the loader plays.
  */
 const GRAIN_SPRITES = [
-  "/images/why/jwar-grain-2.png",
-  "/images/why/single-jwaar-grain.png",
-  "/images/why/pop-jwaar-1.png",
-  "/images/why/pop-jwaar-2.png",
-  "/images/why/masalla-pop-jwaar-1.png",
-  "/images/why/masalla-pop-jwaar-2.png",
-  "/images/why/podina-pop-jwaar.png",
+  "/images/why/jwar-grain-2.webp",
+  "/images/why/single-jwaar-grain.webp",
+  "/images/why/pop-jwaar-1.webp",
+  "/images/why/pop-jwaar-2.webp",
+  "/images/why/masalla-pop-jwaar-1.webp",
+  "/images/why/masalla-pop-jwaar-2.webp",
+  "/images/why/podina-pop-jwaar.webp",
 ];
 
 /** Resolves once an <img> already in the page has downloaded and decoded. */
@@ -241,7 +241,7 @@ export const Loader: React.FC = () => {
           <span className="loader-shadow" />
 
           <Image
-            src="/images/why/single-jwaar-grain.png"
+            src="/images/why/single-jwaar-grain.webp"
             alt=""
             aria-hidden="true"
             width={160}
@@ -252,7 +252,7 @@ export const Loader: React.FC = () => {
 
           <div className="loader-pop-wrap">
             <Image
-              src="/images/why/pop-jwaar-1.png"
+              src="/images/why/pop-jwaar-1.webp"
               alt=""
               aria-hidden="true"
               width={300}

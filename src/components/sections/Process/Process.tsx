@@ -27,7 +27,7 @@ export const Process: React.FC = () => {
         <div className="process-flow relative mx-auto w-full max-w-md lg:absolute lg:left-[24%] lg:top-[-8%] lg:mx-0 lg:w-[24%] lg:max-w-none">
           <Image
             loading="eager"
-            src="/images/why/naturally-grown-clean.png"
+            src="/images/why/naturally-grown-clean.webp"
             alt=""
             aria-hidden="true"
             width={1396}
@@ -37,7 +37,7 @@ export const Process: React.FC = () => {
           />
           <Image
             loading="eager"
-            src="/images/why/naturally-grown-clean.png"
+            src="/images/why/naturally-grown-clean.webp"
             alt="Jowar stalks with a stream of grains pouring from a wooden scoop"
             width={1396}
             height={1127}
@@ -55,7 +55,7 @@ export const Process: React.FC = () => {
         >
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt=""
             aria-hidden="true"
             width={1492}
@@ -65,7 +65,7 @@ export const Process: React.FC = () => {
           />
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt="Cleaned jowar grains pouring into a wooden bowl"
             width={1492}
             height={1054}
@@ -83,7 +83,7 @@ export const Process: React.FC = () => {
         >
           <Image
             loading="eager"
-            src="/images/why/kadayi.png"
+            src="/images/why/kadayi.webp"
             alt=""
             aria-hidden="true"
             width={1419}
@@ -93,7 +93,7 @@ export const Process: React.FC = () => {
           />
           <Image
             loading="eager"
-            src="/images/why/kadayi.png"
+            src="/images/why/kadayi.webp"
             alt="Copper kadayi on a clay stove with a wood fire burning below"
             width={1419}
             height={1108}
@@ -110,7 +110,7 @@ export const Process: React.FC = () => {
         >
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt=""
             aria-hidden="true"
             width={1492}
@@ -120,7 +120,7 @@ export const Process: React.FC = () => {
           />
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt="A wooden bowl catching freshly popped, masala-coated jowar"
             width={1492}
             height={1054}
@@ -135,7 +135,7 @@ export const Process: React.FC = () => {
         >
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt=""
             aria-hidden="true"
             width={1492}
@@ -145,7 +145,7 @@ export const Process: React.FC = () => {
           />
           <Image
             loading="eager"
-            src="/images/why/step-2-bowl-empty.png"
+            src="/images/why/step-2-bowl-empty.webp"
             alt="A wooden bowl catching pudina-flavoured pop jowar"
             width={1492}
             height={1054}
@@ -164,7 +164,7 @@ export const Process: React.FC = () => {
           >
             <Image
               loading="eager"
-              src="/images/why/podina-masalla-bottle.png"
+              src="/images/why/podina-masalla-bottle.webp"
               alt="Pudina Masalle spice shaker"
               width={1024}
               height={1536}
@@ -188,7 +188,7 @@ export const Process: React.FC = () => {
           >
             <Image
               loading="eager"
-              src="/images/why/masala-bottle.png"
+              src="/images/why/masala-bottle.webp"
               alt="Special Masalle spice shaker"
               width={1024}
               height={1536}
