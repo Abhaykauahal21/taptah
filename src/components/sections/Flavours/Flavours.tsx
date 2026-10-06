@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ShoppingCart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { AddToCartButton } from "@/components/common/AddToCartButton";
 import { InView } from "@/components/common/InView";
 import { FLAVOURS_DATA } from "@/constants/flavours";
 import { FlavourItem } from "@/types";
@@ -27,13 +28,7 @@ function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: number }
 
       <div className="flex items-center justify-between gap-4 px-5 pb-5 pt-1">
         <span className="text-2xl font-semibold">&#8377;{flavour.price}</span>
-        <button
-          type="button"
-          className="flex flex-1 items-center justify-center gap-2 rounded-full bg-cream px-5 py-2.5 text-[15px] font-semibold text-[#5a1020] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg"
-        >
-          <ShoppingCart className="h-4 w-4" />
-          Add to Cart
-        </button>
+        <AddToCartButton id={flavour.id} />
       </div>
     </article>
   );

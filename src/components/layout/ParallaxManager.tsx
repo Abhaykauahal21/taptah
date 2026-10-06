@@ -116,13 +116,13 @@ export function ParallaxManager() {
       if (!raf) raf = requestAnimationFrame(frame);
     }
 
-    scan();
-    measureAll();
+    // Wait a beat before touching the DOM, so React finishes hydrating first
+    // (writing inline styles into server-rendered markup would cause a mismatch).
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", measureSoon);
     // Images and fonts settle after load, which can move things: measure again.
     window.addEventListener("load", measureSoon);
-    const settle = [600, 1800, 4500].map((ms) =>
+    const settle = [350, 1800, 4500].map((ms) =>
       window.setTimeout(() => {
         scan();
         measureAll();
