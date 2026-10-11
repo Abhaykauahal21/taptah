@@ -74,7 +74,7 @@ export const FlavourList: React.FC<{ children: React.ReactNode; labels: string[]
               onClick={() => go(i)}
               className={cn(
                 "h-2 rounded-full transition-all duration-500",
-                i === active ? "w-8 bg-[#6B1022]" : "w-2 bg-[#6B1022]/25",
+                i === active ? "w-8 bg-[#C8154B]" : "w-2 bg-[#C8154B]/25",
               )}
             />
           ))}
@@ -82,7 +82,7 @@ export const FlavourList: React.FC<{ children: React.ReactNode; labels: string[]
         <p
           aria-hidden="true"
           className={cn(
-            "text-xs font-semibold uppercase tracking-[0.3em] text-[#6B1022]/55 transition-opacity duration-500",
+            "text-xs font-semibold uppercase tracking-[0.3em] text-[#C8154B]/55 transition-opacity duration-500",
             touched ? "opacity-0" : "opacity-100",
           )}
         >

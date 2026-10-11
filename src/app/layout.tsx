@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { fontSerif, fontScript } from "@/config/fonts";
+import { fontSerif, fontScript, fontLogo } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
 import { Loader } from "@/components/layout/Loader";
+import { Navbar } from "@/components/layout/Navbar";
 import { ParallaxManager } from "@/components/layout/ParallaxManager";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#F8E9D6",
+  themeColor: "#F2EEBF",
   width: "device-width",
   initialScale: 1,
 };
@@ -67,11 +68,12 @@ export default function RootLayout({
       lang="en"
       data-loading="true"
       suppressHydrationWarning
-      className={`${fontSerif.variable} ${fontScript.variable}`}
+      className={`${fontSerif.variable} ${fontScript.variable} ${fontLogo.variable}`}
     >
       <body className="min-h-screen flex flex-col font-serif bg-background text-foreground antialiased selection:bg-maroon selection:text-cream">
         <Loader />
         <SmoothScroll />
+        <Navbar />
         <ParallaxManager />
         <noscript>
           <style>{`.loader{display:none}html[data-loading]{overflow:auto!important}`}</style>

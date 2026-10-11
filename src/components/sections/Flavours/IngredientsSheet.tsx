@@ -121,7 +121,7 @@ export const IngredientsSheet: React.FC<{
         {/* Grab handle and header: drag down to dismiss */}
         <div onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} className="touch-none">
           <div className="flex justify-center pb-1 pt-3">
-            <span className="h-1.5 w-11 rounded-full bg-[#6B1022]/25" />
+            <span className="h-1.5 w-11 rounded-full bg-[#C8154B]/25" />
           </div>
           <div className="flavour-ing-head flex items-center gap-4 px-5 pb-3 pt-2">
             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-[0_8px_18px_-8px_rgba(60,28,12,0.6)] ring-1 ring-black/5">
@@ -138,7 +138,7 @@ export const IngredientsSheet: React.FC<{
               <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[color:var(--accent)]">
                 Ingredients
               </p>
-              <p className="mt-1 truncate text-[1.7rem] font-semibold leading-none text-[#6B1022]">{flavour.name}</p>
+              <p className="mt-1 truncate text-[1.7rem] font-semibold leading-none text-[#C8154B]">{flavour.name}</p>
               <svg viewBox="0 0 120 8" className="mt-2 h-2 w-28" fill="none" aria-hidden="true">
                 <path
                   d="M2 5C16 1 28 7 42 4s26-3 40 0 24 2 36-1"
@@ -154,7 +154,7 @@ export const IngredientsSheet: React.FC<{
               type="button"
               onClick={onClose}
               aria-label="Close ingredients"
-              className="flex h-10 w-10 shrink-0 items-center justify-center self-start rounded-full border border-[#6B1022]/25 text-[#6B1022] active:bg-[#6B1022] active:text-cream"
+              className="flex h-10 w-10 shrink-0 items-center justify-center self-start rounded-full border border-[#C8154B]/25 text-[#C8154B] active:bg-[#C8154B] active:text-cream"
             >
               <X className="h-[18px] w-[18px]" />
             </button>
@@ -183,8 +183,8 @@ export const IngredientsSheet: React.FC<{
         </ol>
 
         {/* Pinned footer: badges and Add to Cart */}
-        <div className="border-t border-[#6B1022]/15 bg-[#fffaf0]/85 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md">
-          <p className="mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6B1022]/80">
+        <div className="border-t border-[#C8154B]/15 bg-[#fffaf0]/85 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md">
+          <p className="mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#C8154B]/80">
             {FLAVOUR_BADGES.map((b, i) => (
               <React.Fragment key={b.id}>
                 {i > 0 && <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--accent)]" />}

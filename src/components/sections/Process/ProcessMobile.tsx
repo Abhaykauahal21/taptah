@@ -3,12 +3,11 @@ import Image from "next/image";
 import { Flame, Leaf, Sparkles, Sprout } from "lucide-react";
 import { InView } from "@/components/common/InView";
 import { PROCESS_STEPS } from "@/constants/process";
+import { MasalaStation } from "./MasalaStation";
+import { MOBILE_STATIONS } from "./masalaLayout";
 import { GrainFlow } from "./GrainFlow";
 import { KadayiFire } from "./KadayiFire";
 import {
-  BOTTLE_DX,
-  BOTTLE_DY,
-  BOTTLE_W,
   BOWL1,
   BOWL2,
   BOWL3,
@@ -157,17 +156,15 @@ export const ProcessMobile: React.FC = () => {
           ))}
         </div>
 
-        <p className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-sm">
+        <p className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.25em] text-[#C8154B]/80 sm:text-sm">
           The Taptah Process
-          <span aria-hidden="true" className="h-px max-w-[10rem] flex-1 bg-[#6B1022]/30" />
+          <span aria-hidden="true" className="h-px max-w-[10rem] flex-1 bg-[#C8154B]/30" />
         </p>
-        <h2 className="relative mt-4 max-w-[17.5rem] text-[2.6rem] font-semibold leading-[1.06] tracking-tight text-[#6B1022] sm:max-w-[30rem] sm:text-[3.6rem]">
-          From Ancient Grains to Your Favourite Crunch.
+        <h2 className="relative mt-4 max-w-[17.5rem] text-[2.6rem] font-semibold leading-[1.06] tracking-tight text-[#C8154B] sm:max-w-[30rem] sm:text-[3.6rem]">
+          From Single Millet to Your Crunch.
         </h2>
-        <p className="relative mt-5 max-w-[22rem] text-[1.05rem] font-medium leading-[1.5] text-[#3a2a24] sm:max-w-[28rem] sm:text-[1.2rem]">
-          Every pack of Taptah Pop Jowar goes through a thoughtful journey —
-          from our fields to your hands, with purity, care and the flavour of
-          tradition.
+        <p className="relative mt-5 max-w-[22rem] text-[1.05rem] font-medium leading-[1.5] text-[#082567] sm:max-w-[28rem] sm:text-[1.2rem]">
+          Single millet. Five careful steps.
         </p>
       </div>
 
@@ -185,8 +182,8 @@ export const ProcessMobile: React.FC = () => {
           <defs>
             <radialGradient id="pm-glow" cx="50%" cy="50%" r="50%">
               <stop offset="0" stopColor="#fffaf0" stopOpacity="0.75" />
-              <stop offset="0.6" stopColor="#fff3df" stopOpacity="0.3" />
-              <stop offset="1" stopColor="#fff3df" stopOpacity="0" />
+              <stop offset="0.6" stopColor="#FAF8DC" stopOpacity="0.3" />
+              <stop offset="1" stopColor="#FAF8DC" stopOpacity="0" />
             </radialGradient>
             <filter id="pm-soft" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="5" />
@@ -310,43 +307,27 @@ export const ProcessMobile: React.FC = () => {
           <KadayiFire className="" />
         </Item>
 
-        {/* Step 4: two bowls, each with a pair of shakers */}
+        {/* Step 4: two bowls catching the popped jowar */}
         {[
-          { bowl: BOWL3, bottle: "podina-masalla-bottle", alt: "A wooden bowl catching pudina-flavoured pop jowar", d: 1.1 },
-          { bowl: BOWL2, bottle: "masala-bottle", alt: "A wooden bowl catching freshly popped, masala-coated jowar", d: 1.25 },
-        ].map(({ bowl, bottle, alt, d }) => (
-          <React.Fragment key={bottle}>
-            <Item x={bowl.x} y={bowl.y} w={bowl.w} delay={d}>
-              <Cast src="/images/why/step-2-bowl-empty.webp" w={1492} h={1054} className="process-cast-floor" />
-              <Image
-                loading="eager"
-                src="/images/why/step-2-bowl-empty.webp"
-                alt={alt}
-                width={1492}
-                height={1054}
-                sizes="(min-width: 640px) 260px, 50vw"
-                className="relative h-auto w-full"
-              />
-            </Item>
-            {BOTTLE_DX.map((dx, k) => (
-              <Item key={k} x={bowl.x + dx} y={bowl.y + BOTTLE_DY} w={BOTTLE_W} delay={d + 0.4} className="z-10">
-                <Image
-                  loading="eager"
-                  src={`/images/why/${bottle}.webp`}
-                  alt={k === 0 ? "Spice shaker" : ""}
-                  aria-hidden={k === 0 ? undefined : true}
-                  width={1024}
-                  height={1536}
-                  sizes="(min-width: 640px) 60px, 14vw"
-                  className={
-                    "masala-shaker h-auto w-full drop-shadow-[4px_8px_6px_rgba(40,20,5,0.35)] " +
-                    (k === 1 ? "masala-shaker-right" : "")
-                  }
-                />
-              </Item>
-            ))}
-          </React.Fragment>
+          { bowl: BOWL3, alt: "A wooden bowl catching pudina-flavoured pop jowar", d: 1.1 },
+          { bowl: BOWL2, alt: "A wooden bowl catching freshly popped, masala-coated jowar", d: 1.25 },
+        ].map(({ bowl, alt, d }) => (
+          <Item key={d} x={bowl.x} y={bowl.y} w={bowl.w} delay={d}>
+            <Cast src="/images/why/step-2-bowl-empty.webp" w={1492} h={1054} className="process-cast-floor" />
+            <Image
+              loading="eager"
+              src="/images/why/step-2-bowl-empty.webp"
+              alt={alt}
+              width={1492}
+              height={1054}
+              sizes="(min-width: 640px) 260px, 50vw"
+              className="relative h-auto w-full"
+            />
+          </Item>
         ))}
+
+        {/* Two bowls of masala; a hand dips in and sprinkles it over the popped jowar */}
+        <MasalaStation layout={MOBILE_STATIONS} />
 
         {LEAVES.slice(4).map((l, i) => (
           <SceneLeaf key={i} leaf={l} i={i + 4} />
@@ -393,13 +374,13 @@ export const ProcessMobile: React.FC = () => {
               } as React.CSSProperties
             }
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center self-start rounded-full bg-[#f0d9b2]/90 text-[0.95rem] font-semibold text-[#6B1022] shadow-[0_6px_14px_-6px_rgba(120,70,30,0.5)] sm:h-11 sm:w-11 sm:text-[1.1rem]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center self-start rounded-full bg-[#f0d9b2]/90 text-[0.95rem] font-semibold text-[#C8154B] shadow-[0_6px_14px_-6px_rgba(120,70,30,0.5)] sm:h-11 sm:w-11 sm:text-[1.1rem]">
               {String(l.step).padStart(2, "0")}
             </span>
-            <span aria-hidden="true" className="w-px shrink-0 bg-[#6B1022]/20" />
+            <span aria-hidden="true" className="w-px shrink-0 bg-[#C8154B]/20" />
             <div className="min-w-0 pb-1">
-              <Icon aria-hidden="true" strokeWidth={1.1} className="h-7 w-7 text-[#6B1022] sm:h-9 sm:w-9" />
-              <h3 className="mt-1 text-[1.12rem] font-semibold leading-[1.15] text-[#6B1022] sm:text-[1.4rem]">
+              <Icon aria-hidden="true" strokeWidth={1.1} className="h-7 w-7 text-[#C8154B] sm:h-9 sm:w-9" />
+              <h3 className="mt-1 text-[1.12rem] font-semibold leading-[1.15] text-[#C8154B] sm:text-[1.4rem]">
                 {l.title}
               </h3>
               <p className="mt-1 text-[0.95rem] font-medium leading-snug text-[#5a463c] sm:text-[1.1rem]">

@@ -61,7 +61,7 @@ export const Why: React.FC = () => {
             {/* Intro */}
             <div>
               <div className="flex items-start gap-[1.2vw]">
-                <h2 className="text-[clamp(2.5rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
+                <h2 className="text-[clamp(2.5rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#C8154B]">
                   <span className="why-line">
                     <span className="why-line-inner" style={{ "--i": 0 } as React.CSSProperties}>
                       Why are we
@@ -69,35 +69,39 @@ export const Why: React.FC = () => {
                   </span>
                   <span className="why-line">
                     <span className="why-line-inner" style={{ "--i": 1 } as React.CSSProperties}>
-                      called Taptah<span className="font-light">:</span>
+                      called Taptah<span className="font-light">?</span>
                     </span>
                   </span>
                 </h2>
                 <Leaf
                   aria-hidden="true"
                   strokeWidth={0.9}
-                  className="why-leaf-icon mt-[1.6vw] h-[clamp(2rem,3.6vw,3.5rem)] w-[clamp(2rem,3.6vw,3.5rem)] shrink-0 -rotate-[8deg] text-[#6B1022]/80"
+                  className="why-leaf-icon mt-[1.6vw] h-[clamp(2rem,3.6vw,3.5rem)] w-[clamp(2rem,3.6vw,3.5rem)] shrink-0 -rotate-[8deg] text-[#C8154B]/80"
                 />
               </div>
 
+              <h3 className="mt-[clamp(1rem,2vw,1.75rem)] text-[clamp(1.35rem,1.9vw,1.8rem)] font-semibold tracking-tight text-[#C8154B]">
+                Taptah means Roasted.
+              </h3>
+
               <ScrollWords
-                className="mt-[clamp(1rem,2vw,1.75rem)] max-w-[30rem] text-[clamp(1.05rem,1.35vw,1.3rem)] font-medium leading-[1.55] text-[#3a2a24]"
-                text="Taptah is a Sanskrit word that embodies the essence of purity, warmth and nourishment. It reflects our belief in the power of honest food to bring healthier, happier lives — today and for tomorrow."
+                className="mt-[clamp(0.6rem,1vw,0.9rem)] max-w-[30rem] text-[clamp(1.05rem,1.35vw,1.3rem)] font-medium leading-[1.55] text-[#082567]"
+                text="The name Taptah comes from Sanskrit, meaning ‘heat’ or ‘roasted’. It’s more than a name, it’s our promise to roast just enough – never more, so the millet’s natural goodness stays exactly as nature intended."
               />
 
               <Link
                 href="#process"
-                className="why-cta mt-[clamp(1.5rem,3vw,2.5rem)] inline-flex items-center gap-3 rounded-full border border-[#6B1022]/70 px-[clamp(1.5rem,2.6vw,2.5rem)] py-[clamp(0.6rem,1vw,0.85rem)] text-[clamp(1rem,1.2vw,1.15rem)] font-semibold text-[#6B1022] transition-colors duration-300 hover:bg-[#6B1022] hover:text-cream"
+                className="why-cta mt-[clamp(1.5rem,3vw,2.5rem)] inline-flex items-center gap-3 rounded-full border border-[#C8154B]/70 px-[clamp(1.5rem,2.6vw,2.5rem)] py-[clamp(0.6rem,1vw,0.85rem)] text-[clamp(1rem,1.2vw,1.15rem)] font-semibold text-[#C8154B] transition-colors duration-300 hover:bg-[#C8154B] hover:text-cream"
               >
-                Our Story
+                Meet the Millet
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
 
             {/* Pull quote */}
-            <blockquote className="why-quote text-[clamp(1.4rem,2.05vw,2rem)] font-medium italic leading-[1.3] text-[#6B1022] sm:pt-[0.5vw]">
-              <span aria-hidden="true">&ldquo;</span> Food that nourishes
-              traditions that live on.&rdquo;
+            <blockquote className="why-quote text-[clamp(1.4rem,2.05vw,2rem)] font-medium italic leading-[1.3] text-[#C8154B] sm:pt-[0.5vw]">
+              <span aria-hidden="true">&ldquo;</span>One millet. Roasted right.
+              Crunch for life.&rdquo;
             </blockquote>
           </div>
         </div>

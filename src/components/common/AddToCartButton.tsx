@@ -24,7 +24,7 @@ function flyToCart(from: DOMRect, to: DOMRect, image: string): Promise<void> {
     backgroundImage: `url("${image}")`,
     backgroundSize: "135%",
     backgroundPosition: "50% 38%",
-    border: "2px solid #fbf0de",
+    border: "2px solid #F7F4D4",
     boxShadow: "0 14px 24px -8px rgba(40,10,10,0.55)",
     zIndex: "9999",
     pointerEvents: "none",

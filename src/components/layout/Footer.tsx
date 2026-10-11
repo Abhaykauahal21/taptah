@@ -1,3 +1,4 @@
+import { Logo } from "@/components/common/Logo";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,9 +15,9 @@ import { FooterMotion } from "./FooterMotion";
  */
 
 const NAV = [
-  { label: "Shop", href: "#flavours" },
-  { label: "Our Story", href: "#story" },
-  { label: "Process", href: "#process" },
+  { label: "Shop", href: "/products" },
+  { label: "Our Story", href: "/#story" },
+  { label: "Process", href: "/#process" },
   { label: "Contact", href: "mailto:hello@taptah.com" },
 ];
 
@@ -76,7 +77,6 @@ const SOCIALS = [
   },
 ];
 
-const WORD = "Taptah:".split("");
 
 /** Pollen drifting up through the valley (deterministic, so SSR matches). */
 const POLLEN = Array.from({ length: 18 }, (_, i) => ({
@@ -163,10 +163,10 @@ export const Footer: React.FC = () => {
   return (
     <footer
       id="footer"
-      className="relative isolate mt-auto w-full overflow-hidden text-[#6B1022]"
+      className="relative isolate mt-auto w-full overflow-hidden text-[#C8154B]"
       style={{
         background:
-          "linear-gradient(180deg, #f8e9d6 0%, #f8e9d6 22%, #f5dcb9 52%, #efc78e 78%, #e8b06a 100%)",
+          "linear-gradient(180deg, #F2EEBF 0%, #F2EEBF 22%, #f5dcb9 52%, #efc78e 78%, #e8b06a 100%)",
       }}
     >
       <FooterMotion />
@@ -249,7 +249,7 @@ export const Footer: React.FC = () => {
 
       {/* Depth: atmospheric haze over the distant mountains, and a soft shade in
           the field behind the wordmark, so the content reads clearly */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[41vw] sm:block bg-[linear-gradient(180deg,rgba(248,233,214,0.78)_0%,rgba(246,224,190,0.5)_30%,rgba(240,205,150,0.16)_62%,transparent_85%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[41vw] sm:block bg-[linear-gradient(180deg,rgba(242,238,191,0.78)_0%,rgba(240,232,180,0.5)_30%,rgba(240,205,150,0.16)_62%,transparent_85%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] hidden h-[30vw] sm:block bg-[radial-gradient(ellipse_at_50%_62%,rgba(70,28,8,0.5),transparent_66%)]" />
 
       {/* Pollen */}
@@ -269,12 +269,8 @@ export const Footer: React.FC = () => {
         aria-hidden="true"
         className="footer-word-layer pointer-events-none absolute inset-x-0 bottom-[calc(min(5vw,72px)+0.2vw)] z-[4] hidden flex-col items-center sm:flex"
       >
-        <div className="footer-word flex font-medium leading-[0.8] tracking-tight">
-          {WORD.map((c, i) => (
-            <span key={i} className={c === ":" ? "font-light" : c === "p" ? "footer-p" : undefined} style={{ "--i": i } as React.CSSProperties}>
-              {c}
-            </span>
-          ))}
+        <div className="footer-word">
+          <Logo />
         </div>
         <p className="footer-script">Crunch · Clean · Repeat</p>
       </InView>
@@ -319,26 +315,14 @@ export const Footer: React.FC = () => {
         {/* Phones: tagline, wordmark, intro, socials and a Shop Now button */}
         <div className="flex w-full flex-col items-center sm:hidden">
           <div className="footer-rise flex w-full items-center gap-3" style={rise(0)}>
-            <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
-            <p className="text-[0.8rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]">
+            <span aria-hidden="true" className="h-px flex-1 bg-[#C8154B]/35" />
+            <p className="text-[0.8rem] font-semibold uppercase tracking-[0.3em] text-[#C8154B]">
               Ancient Grain, Modern Crunch
             </p>
-            <span aria-hidden="true" className="h-px flex-1 bg-[#6B1022]/35" />
+            <span aria-hidden="true" className="h-px flex-1 bg-[#C8154B]/35" />
           </div>
 
-          <p
-            aria-label="Taptah"
-            className="relative mt-7 flex text-[26vw] font-medium leading-[0.85] tracking-tight text-[#6B1022] drop-shadow-[0_6px_10px_rgba(107,16,34,0.18)]"
-          >
-            {WORD.map((c, i) => (
-              <span key={i} aria-hidden="true" className={"footer-rise inline-block" + (c === ":" ? " font-light" : "")} style={rise(i + 1)}>
-                {c}
-              </span>
-            ))}
-            <sup aria-hidden="true" className="absolute -right-[1.6vw] top-[1vw] text-[2.6vw] font-medium tracking-normal">
-              TM
-            </sup>
-          </p>
+          <Logo className="footer-rise relative mt-7 w-[72vw] max-w-[28rem] text-[#C8154B] drop-shadow-[0_6px_10px_rgba(200,21,75,0.18)]" style={rise(1)} />
           <p
             className="footer-rise mt-[5.4vw] font-[family-name:var(--font-script)] text-[8.6vw] leading-none text-[#a8642e]"
             style={rise(7)}
@@ -359,7 +343,7 @@ export const Footer: React.FC = () => {
           </svg>
 
           <p
-            className="footer-rise mt-7 max-w-[19rem] text-[1.05rem] font-medium leading-[1.5] text-[#4a3a33]"
+            className="footer-rise mt-7 max-w-[19rem] text-[1.05rem] font-medium leading-[1.5] text-[#082567]"
             style={rise(9)}
           >
             Light, crunchy snacks crafted from ancient grains, for a healthier,
@@ -372,7 +356,7 @@ export const Footer: React.FC = () => {
                 <a
                   href={s.href}
                   aria-label={s.label}
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f3dcb9]/85 text-[#6B1022] shadow-[0_6px_14px_-8px_rgba(120,70,30,0.6)] transition-transform active:scale-90"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#E9E5AE]/85 text-[#C8154B] shadow-[0_6px_14px_-8px_rgba(120,70,30,0.6)] transition-transform active:scale-90"
                   {...(s.href.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
@@ -384,7 +368,7 @@ export const Footer: React.FC = () => {
           </ul>
 
           <Link
-            href="#flavours"
+            href="/products"
             className="footer-rise mt-7 inline-flex items-center gap-3 rounded-full bg-[#5a0f1e] px-9 py-4 text-lg font-semibold text-[#fbe9cf] shadow-[0_14px_24px_-10px_rgba(60,8,18,0.7)] transition-transform active:scale-95"
             style={rise(14)}
           >
@@ -395,7 +379,7 @@ export const Footer: React.FC = () => {
 
         <nav aria-label="Footer" className="hidden w-full items-center gap-5 sm:flex sm:gap-8">
           <span
-            className="footer-line hidden h-px flex-1 origin-right bg-[#6B1022]/25 sm:block"
+            className="footer-line hidden h-px flex-1 origin-right bg-[#C8154B]/25 sm:block"
             style={rise(0)}
           />
           <ul className="mx-auto flex flex-wrap items-center justify-center gap-x-7 gap-y-2 sm:gap-x-12">
@@ -403,7 +387,7 @@ export const Footer: React.FC = () => {
               <li key={l.label} className="footer-rise" style={rise(i + 1)}>
                 <Link
                   href={l.href}
-                  className="footer-link text-[0.95rem] font-semibold uppercase tracking-[0.3em] text-[#6B1022]"
+                  className="footer-link text-[0.95rem] font-semibold uppercase tracking-[0.3em] text-[#C8154B]"
                 >
                   {l.label}
                 </Link>
@@ -411,19 +395,19 @@ export const Footer: React.FC = () => {
             ))}
           </ul>
           <span
-            className="footer-line hidden h-px flex-1 origin-left bg-[#6B1022]/25 sm:block"
+            className="footer-line hidden h-px flex-1 origin-left bg-[#C8154B]/25 sm:block"
             style={rise(0)}
           />
         </nav>
 
         <p
-          className="footer-rise mt-9 hidden text-[0.92rem] font-semibold uppercase tracking-[0.36em] text-[#6B1022] sm:block"
+          className="footer-rise mt-9 hidden text-[0.92rem] font-semibold uppercase tracking-[0.36em] text-[#C8154B] sm:block"
           style={rise(5)}
         >
           Ancient Grain, Modern Crunch
         </p>
         <p
-          className="footer-rise mt-3 hidden max-w-[42rem] sm:block text-[clamp(1rem,1.3vw,1.2rem)] font-medium leading-[1.5] text-[#4a3a33]"
+          className="footer-rise mt-3 hidden max-w-[42rem] sm:block text-[clamp(1rem,1.3vw,1.2rem)] font-medium leading-[1.5] text-[#082567]"
           style={rise(6)}
         >
           Light, crunchy snacks crafted from ancient grains, for a healthier,
@@ -436,7 +420,7 @@ export const Footer: React.FC = () => {
               <a
                 href={s.href}
                 aria-label={s.label}
-                className="footer-social block text-[#6B1022]"
+                className="footer-social block text-[#C8154B]"
                 {...(s.href.startsWith("http")
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
@@ -498,7 +482,13 @@ export const Footer: React.FC = () => {
                 </React.Fragment>
               ))}
             </ul>
-            <p className="angaar-credit group flex items-center justify-center gap-2 whitespace-nowrap sm:justify-end">
+            <a
+              href="https://labs.theangaarbatch.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Crafted by Angaar Labs (opens in a new tab)"
+              className="angaar-credit group flex items-center justify-center gap-2 whitespace-nowrap sm:justify-end"
+            >
               <span className="font-medium text-cream/70">Crafted by</span>
               <svg viewBox="0 0 24 32" className="angaar-flame h-[1.15em] w-auto" fill="none" aria-hidden="true">
                 <defs>
@@ -514,7 +504,7 @@ export const Footer: React.FC = () => {
                 />
               </svg>
               <span className="angaar-name font-bold">Angaar Labs</span>
-            </p>
+            </a>
           </div>
         </div>
       </InView>

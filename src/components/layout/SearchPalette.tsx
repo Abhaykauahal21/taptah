@@ -25,7 +25,7 @@ const ENTRIES: Entry[] = [
   ...FLAVOURS_DATA.map((f) => ({
     label: f.name,
     hint: `${f.tagline}  ·  ₹${f.price}`,
-    href: "#flavours",
+    href: `/products/${f.id}`,
     group: "Flavours" as const,
   })),
   { label: "Contact us", hint: "hello@taptah.com", href: "mailto:hello@taptah.com", group: "Jump to" },

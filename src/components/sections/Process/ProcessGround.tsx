@@ -100,12 +100,12 @@ export const ProcessGround: React.FC = () => (
     <defs>
       <radialGradient id="stage-glow" cx="50%" cy="50%" r="50%">
         <stop offset="0" stopColor="#fffaf0" stopOpacity="0.7" />
-        <stop offset="0.55" stopColor="#fff3df" stopOpacity="0.3" />
-        <stop offset="1" stopColor="#fff3df" stopOpacity="0" />
+        <stop offset="0.55" stopColor="#FAF8DC" stopOpacity="0.3" />
+        <stop offset="1" stopColor="#FAF8DC" stopOpacity="0" />
       </radialGradient>
       <linearGradient id="stream-fill" gradientUnits="userSpaceOnUse" x1="300" y1="-90" x2="560" y2="820">
         <stop offset="0" stopColor="#ffffff" stopOpacity="0.5" />
-        <stop offset="0.5" stopColor="#fbefdc" stopOpacity="0.4" />
+        <stop offset="0.5" stopColor="#FAF8DC" stopOpacity="0.4" />
         <stop offset="1" stopColor="#ecd2ae" stopOpacity="0.28" />
       </linearGradient>
       <filter id="stream-soft" filterUnits="userSpaceOnUse" x="-300" y="-300" width="1600" height="1600">

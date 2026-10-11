@@ -1,8 +1,10 @@
 "use client";
 
+import { Logo } from "@/components/common/Logo";
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Plus, Search, ShoppingBag } from "lucide-react";
 import { FLAVOURS_DATA } from "@/constants/flavours";
 import { NAVIGATION_LINKS } from "@/constants/navigation";
@@ -27,12 +29,14 @@ import { SearchPalette } from "./SearchPalette";
 const SECTION_FOR: Record<string, string> = {
   Home: "hero",
   "Our Story": "story",
-  Products: "flavours",
+  Flavours: "flavours",
   Process: "process",
   Reviews: "testimonials",
 };
 
 export const Navbar: React.FC = () => {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState(NAVIGATION_LINKS[0].label);
@@ -57,8 +61,8 @@ export const Navbar: React.FC = () => {
 
 
       // The last section whose top has passed ~40% of the viewport is current.
-      let current = NAVIGATION_LINKS[0].label;
-      for (const link of NAVIGATION_LINKS) {
+      let current = onHome ? NAVIGATION_LINKS[0].label : "Flavours";
+      for (const link of onHome ? NAVIGATION_LINKS : []) {
         const id = SECTION_FOR[link.label];
         const el = id && id !== "hero" ? document.getElementById(id) : null;
         if (el && el.getBoundingClientRect().top <= vh * 0.4) current = link.label;
@@ -76,7 +80,7 @@ export const Navbar: React.FC = () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, []);
+  }, [onHome]);
 
   // The highlight pill rests on the hovered link, else on the current one.
   const place = useCallback(() => {
@@ -135,11 +139,13 @@ export const Navbar: React.FC = () => {
     document.documentElement.style.overflow = menuOpen || overlay ? "hidden" : "";
   }, [menuOpen, overlay]);
 
-  const condensed = scrolled || menuOpen;
+  // Pages without a hero image always use the compact bar.
+  const condensed = scrolled || menuOpen || !onHome;
 
   return (
     <>
       <header
+        style={{ viewTransitionName: "site-header" }}
         className={cn(
           "nav-enter fixed inset-x-0 top-0 z-50 px-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-6",
         )}
@@ -158,14 +164,12 @@ export const Navbar: React.FC = () => {
             aria-label="Taptah home"
             className="group flex items-center gap-2.5 text-cream"
           >
-            <span
+            <Logo
               className={cn(
-                "font-serif font-medium leading-none tracking-tight transition-all duration-500",
-                condensed ? "text-[1.9rem] sm:text-[2.1rem]" : "text-4xl sm:text-5xl",
+                "w-auto transition-all duration-500",
+                condensed ? "h-9 sm:h-10" : "h-11 sm:h-14",
               )}
-            >
-              Taptah<span className="font-light">:</span>
-            </span>
+            />
           </Link>
 
           {/* Desktop navigation */}
@@ -189,8 +193,8 @@ export const Navbar: React.FC = () => {
                   <li
                     key={link.label}
                     className="relative"
-                    onMouseEnter={link.label === "Products" ? openMega : undefined}
-                    onMouseLeave={link.label === "Products" ? () => closeMega() : undefined}
+                    onMouseEnter={link.label === "Flavours" ? openMega : undefined}
+                    onMouseLeave={link.label === "Flavours" ? () => closeMega() : undefined}
                   >
                     <Link
                       ref={(el) => {
@@ -201,11 +205,11 @@ export const Navbar: React.FC = () => {
                       onMouseEnter={() => setHover(link.label)}
                       onFocus={() => {
                         setHover(link.label);
-                        if (link.label === "Products") openMega();
+                        if (link.label === "Flavours") openMega();
                       }}
                       onBlur={() => {
                         setHover(null);
-                        if (link.label === "Products") closeMega(250);
+                        if (link.label === "Flavours") closeMega(250);
                       }}
                       onClick={() => setMega(false)}
                       className={cn(
@@ -217,7 +221,7 @@ export const Navbar: React.FC = () => {
                     >
                       {link.label}
                     </Link>
-                    {link.label === "Products" && (
+                    {link.label === "Flavours" && (
                       <ProductsMenu
                         open={mega && !menuOpen}
                         onEnter={openMega}
@@ -264,7 +268,8 @@ export const Navbar: React.FC = () => {
             </button>
 
             <Link
-              href="#flavours"
+              href="/products"
+              transitionTypes={["nav-forward"]}
               className="nav-cta group relative ml-1 hidden items-center gap-2 overflow-hidden rounded-full bg-[linear-gradient(180deg,#fff6e4,#f4dcb2)] px-5 py-2.5 text-[15px] font-semibold text-[#5a1020] shadow-[0_6px_16px_-6px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_-6px_rgba(0,0,0,0.55)] sm:inline-flex"
             >
               Shop Now
@@ -315,7 +320,7 @@ export const Navbar: React.FC = () => {
         aria-hidden={!menuOpen}
         inert={!menuOpen}
         className={cn(
-          "fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[linear-gradient(180deg,#fbf0de,#f5e0c0)] px-6 pb-8 pt-[5.75rem] text-[#6B1022] transition-[opacity,visibility,clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden",
+          "fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[linear-gradient(180deg,#F7F4D4,#ECE8B0)] px-6 pb-8 pt-[5.75rem] text-[#C8154B] transition-[opacity,visibility,clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden",
           menuOpen
             ? "visible opacity-100 [clip-path:circle(150%_at_92%_4%)]"
             : "invisible opacity-0 [clip-path:circle(0%_at_92%_4%)]",
@@ -351,15 +356,15 @@ export const Navbar: React.FC = () => {
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
                     aria-current={current ? "page" : undefined}
-                    className="group flex items-center gap-3 border-b border-[#6B1022]/12 py-[0.85rem]"
+                    className="group flex items-center gap-3 border-b border-[#C8154B]/12 py-[0.85rem]"
                   >
-                    <span className="w-6 text-[13px] font-semibold italic tabular-nums text-[#6B1022]/45">
+                    <span className="w-6 text-[13px] font-semibold italic tabular-nums text-[#C8154B]/45">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
                       className={cn(
                         "text-[2.15rem] font-semibold leading-none tracking-tight transition-transform duration-300 group-active:translate-x-1",
-                        current ? "text-[#6B1022]" : "text-[#6B1022]/80",
+                        current ? "text-[#C8154B]" : "text-[#C8154B]/80",
                       )}
                     >
                       {link.label}
@@ -367,7 +372,7 @@ export const Navbar: React.FC = () => {
                     {current ? (
                       <span aria-hidden="true" className="ml-1 h-2 w-2 rounded-full bg-[#d9893a]" />
                     ) : null}
-                    <ArrowRight className="ml-auto h-5 w-5 text-[#6B1022]/40 transition-transform duration-300 group-active:translate-x-1" />
+                    <ArrowRight className="ml-auto h-5 w-5 text-[#C8154B]/40 transition-transform duration-300 group-active:translate-x-1" />
                   </Link>
                 </li>
               );
@@ -384,7 +389,7 @@ export const Navbar: React.FC = () => {
             transition: "opacity 0.7s ease-out 0.65s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.65s",
           }}
         >
-          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/60">
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/60">
             Our Flavours
           </p>
           <ul className="-mx-6 flex snap-x gap-3 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -408,7 +413,7 @@ export const Navbar: React.FC = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[1.05rem] font-semibold leading-tight">{f.name}</p>
-                  <p className="text-[0.95rem] font-semibold text-[#6B1022]/70">₹{f.price}</p>
+                  <p className="text-[0.95rem] font-semibold text-[#C8154B]/70">₹{f.price}</p>
                 </div>
                 <button
                   type="button"
@@ -417,7 +422,7 @@ export const Navbar: React.FC = () => {
                     setMenuOpen(false);
                     window.setTimeout(() => cart.add(f.id), 250);
                   }}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#6B1022] text-cream transition-transform active:scale-90"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C8154B] text-cream transition-transform active:scale-90"
                 >
                   <Plus className="h-[18px] w-[18px]" />
                 </button>
@@ -434,14 +439,14 @@ export const Navbar: React.FC = () => {
           }}
         >
           <Link
-            href="#flavours"
+            href="/products"
             onClick={() => setMenuOpen(false)}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-4 text-lg font-semibold text-cream shadow-[0_14px_26px_-12px_rgba(90,14,28,0.9)] active:scale-[0.98]"
           >
             Shop Now
             <ArrowRight className="h-5 w-5" />
           </Link>
-          <p className="text-center text-[12px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/55">
+          <p className="text-center text-[12px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/55">
             Ancient Grain &middot; Modern Crunch
           </p>
         </div>

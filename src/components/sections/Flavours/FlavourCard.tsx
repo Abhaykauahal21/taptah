@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ViewTransition } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Flame, Plus, X } from "lucide-react";
 import { AddToCartButton } from "@/components/common/AddToCartButton";
 import { FLAVOUR_BADGES } from "@/constants/flavours";
@@ -54,7 +55,19 @@ const PUFFS = [
   [28, 26, -64, -260, 1.3],
 ] as const;
 
-export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: number }) {
+export function FlavourCard({
+  flavour,
+  index,
+  href,
+  viewName,
+}: {
+  flavour: FlavourItem;
+  index: number;
+  /** When set, the pack photo and name link to the product page. */
+  href?: string;
+  /** Shared-element name: the pack photo morphs into the product page's photo. */
+  viewName?: string;
+}) {
   const puff = PUFF_FOR[flavour.id] ?? PUFF_FOR["butter-salt"];
   const [showing, setShowing] = useState(false);
   // Phones get a bottom sheet instead of the in-card panel.
@@ -107,13 +120,33 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
           className="relative aspect-[1144/1375] overflow-hidden"
           style={{ background: flavour.tone }}
         >
-          <Image
-            src={flavour.image}
-            alt={`${flavour.name} pop jowar pack`}
-            fill
-            sizes="(min-width: 1024px) 31vw, (min-width: 768px) 30vw, 80vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          />
+          {viewName ? (
+            <ViewTransition name={viewName} share="morph" default="none">
+              <Image
+                src={flavour.image}
+                alt={`${flavour.name} pop jowar pack`}
+                fill
+                sizes="(min-width: 1024px) 31vw, (min-width: 768px) 30vw, 80vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+            </ViewTransition>
+          ) : (
+            <Image
+              src={flavour.image}
+              alt={`${flavour.name} pop jowar pack`}
+              fill
+              sizes="(min-width: 1024px) 31vw, (min-width: 768px) 30vw, 80vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          )}
+          {href && (
+            <Link
+              href={href}
+              transitionTypes={["nav-forward"]}
+              aria-label={`${flavour.name}: view product`}
+              className="absolute inset-0 z-[5]"
+            />
+          )}
           {/* A band of light sweeps across the pack on hover */}
           <span
             aria-hidden="true"
@@ -125,10 +158,10 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
             onClick={open}
             aria-haspopup="dialog"
             aria-label={`See what is inside ${flavour.name}`}
-            className="flavour-ing-btn group/ing absolute right-2.5 top-2.5 z-10 inline-flex items-center gap-1.5 rounded-full border border-[#6B1022]/20 bg-[#fffaf0]/85 py-1 pl-3 pr-1 text-[13px] sm:right-3 sm:top-3 sm:gap-2 sm:py-1.5 sm:pl-4 sm:pr-1.5 sm:text-[15px] font-semibold italic text-[#5a1020] shadow-[0_8px_18px_-10px_rgba(60,28,12,0.55)] backdrop-blur-md transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white"
+            className="flavour-ing-btn group/ing absolute right-2.5 top-2.5 z-10 inline-flex items-center gap-1.5 rounded-full border border-[#C8154B]/20 bg-[#fffaf0]/85 py-1 pl-3 pr-1 text-[13px] sm:right-3 sm:top-3 sm:gap-2 sm:py-1.5 sm:pl-4 sm:pr-1.5 sm:text-[15px] font-semibold italic text-[#5a1020] shadow-[0_8px_18px_-10px_rgba(60,28,12,0.55)] backdrop-blur-md transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
             Ingredients
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#6B1022] text-cream transition-transform duration-500 group-hover/ing:rotate-90 sm:h-7 sm:w-7">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C8154B] text-cream transition-transform duration-500 group-hover/ing:rotate-90 sm:h-7 sm:w-7">
               <Plus className="h-4 w-4" strokeWidth={2.2} />
             </span>
           </button>
@@ -166,7 +199,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
                 <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[color:var(--accent)]">
                   Ingredients
                 </p>
-                <p className="mt-1 text-[1.75rem] font-semibold leading-none text-[#6B1022]">
+                <p className="mt-1 text-[1.75rem] font-semibold leading-none text-[#C8154B]">
                   {flavour.name}
                 </p>
                 <svg viewBox="0 0 120 8" className="mt-2 h-2 w-[7.5rem]" fill="none" aria-hidden="true">
@@ -184,7 +217,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
                 type="button"
                 onClick={() => setShowing(false)}
                 aria-label="Close ingredients"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#6B1022]/25 text-[#6B1022] transition-all duration-300 hover:rotate-90 hover:bg-[#6B1022] hover:text-cream"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#C8154B]/25 text-[#C8154B] transition-all duration-300 hover:rotate-90 hover:bg-[#C8154B] hover:text-cream"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -192,7 +225,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
 
             <ol
               data-lenis-prevent
-              className="relative mt-4 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(107,16,34,0.3)_transparent] [scrollbar-width:thin]"
+              className="relative mt-4 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(200,21,75,0.3)_transparent] [scrollbar-width:thin]"
             >
               {flavour.ingredients.map((ing, i) => {
                 const long = ing.note.length > 34;
@@ -214,7 +247,7 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
               })}
             </ol>
 
-            <p className="relative mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 border-t border-[#6B1022]/15 pt-3 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-[#6B1022]/80">
+            <p className="relative mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 border-t border-[#C8154B]/15 pt-3 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-[#C8154B]/80">
               {FLAVOUR_BADGES.map((b, i) => (
                 <React.Fragment key={b.id}>
                   {i > 0 && <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--accent)]" />}
@@ -226,7 +259,15 @@ export function FlavourCard({ flavour, index }: { flavour: FlavourItem; index: n
         </div>
 
         <div className="px-4 pb-4 pt-3 lg:px-5">
-          <p className="text-[1.3rem] font-semibold leading-tight">{flavour.name}</p>
+          <p className="text-[1.3rem] font-semibold leading-tight">
+            {href ? (
+              <Link href={href} transitionTypes={["nav-forward"]} className="hover:underline">
+                {flavour.name}
+              </Link>
+            ) : (
+              flavour.name
+            )}
+          </p>
           <p className="mt-0.5 text-[0.92rem] leading-snug text-cream/75">{flavour.tagline}</p>
           {/* Phones: price and spice on one row, a full-width Add to Cart under them. md+: side by side. */}
           <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-3">

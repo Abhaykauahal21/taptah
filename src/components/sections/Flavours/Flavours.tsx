@@ -17,8 +17,8 @@ function SketchEar({ x, h, cls }: { x: number; h: number; cls: string }) {
   return (
     <g className={"fl-sway " + cls}>
       <path d={`M${x} 150C${x - 1} ${top + 60} ${x + 1} ${top + 26} ${x} ${top + 30}`} />
-      <path d={`M${x} 144C${x - 10} 140 ${x - 17} 130 ${x - 19} 120C${x - 9} 124 ${x - 2} 132 ${x} 144Z`} fill="#f1dcc0" fillOpacity="0.7" />
-      <path d={`M${x} 136C${x + 9} 133 ${x + 15} 125 ${x + 17} 116C${x + 8} 119 ${x + 2} 126 ${x} 136Z`} fill="#f1dcc0" fillOpacity="0.7" />
+      <path d={`M${x} 144C${x - 10} 140 ${x - 17} 130 ${x - 19} 120C${x - 9} 124 ${x - 2} 132 ${x} 144Z`} fill="#E9E5AE" fillOpacity="0.7" />
+      <path d={`M${x} 136C${x + 9} 133 ${x + 15} 125 ${x + 17} 116C${x + 8} 119 ${x + 2} 126 ${x} 136Z`} fill="#E9E5AE" fillOpacity="0.7" />
       <path d={`M${x} ${top}C${x + 6} ${top + 8} ${x + 6} ${top + 22} ${x} ${top + 32}C${x - 6} ${top + 22} ${x - 6} ${top + 8} ${x} ${top}Z`} fill="#ecd2ab" fillOpacity="0.8" />
       {dots.map(([cx, cy], i) => (
         <circle key={i} cx={cx} cy={cy} r="0.9" fill="#a98467" stroke="none" />
@@ -31,7 +31,7 @@ function SketchEar({ x, h, cls }: { x: number; h: number; cls: string }) {
 function SketchPuff({ x, y, s = 1, cls }: { x: number; y: number; s?: number; cls: string }) {
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <g className={"fl-bob " + cls} fill="#f7ead4" fillOpacity="0.9">
+      <g className={"fl-bob " + cls} fill="#F7F4D4" fillOpacity="0.9">
         <circle cx="-4" cy="1" r="4.4" />
         <circle cx="3.6" cy="0" r="4.6" />
         <circle cx="0" cy="-4" r="4.2" />
@@ -62,8 +62,8 @@ function HeadArt() {
     >
       <defs>
         <radialGradient id="fl-wash" cx="50%" cy="55%" r="55%">
-          <stop offset="0" stopColor="#f3dcb9" stopOpacity="0.85" />
-          <stop offset="1" stopColor="#f3dcb9" stopOpacity="0" />
+          <stop offset="0" stopColor="#E9E5AE" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#E9E5AE" stopOpacity="0" />
         </radialGradient>
       </defs>
       <ellipse cx="124" cy="92" rx="122" ry="66" fill="url(#fl-wash)" />
@@ -85,7 +85,7 @@ function HeadArt() {
 
         {/* farmhouse */}
         <path d="M150 90V103H184V90" pathLength={1} className="fl-draw" />
-        <path d="M146 90L167 76L188 90Z" fill="#f1dcc0" fillOpacity="0.8" pathLength={1} className="fl-draw" />
+        <path d="M146 90L167 76L188 90Z" fill="#E9E5AE" fillOpacity="0.8" pathLength={1} className="fl-draw" />
         <path d="M176 82V76H180V84" pathLength={1} className="fl-draw" />
         <path d="M160 103V95H166V103M171 95H178V100H171Z" strokeOpacity="0.8" pathLength={1} className="fl-draw" />
 
@@ -156,12 +156,12 @@ export const Flavours: React.FC = () => {
           <HeadArt />
           <div>
             <div className="flex items-center gap-4">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-sm">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/70 sm:text-sm">
                 Our Flavours
               </p>
-              <span aria-hidden="true" className="rv-rule hidden h-px w-16 bg-[#6B1022]/45 sm:block" />
+              <span aria-hidden="true" className="rv-rule hidden h-px w-16 bg-[#C8154B]/45 sm:block" />
             </div>
-            <h2 className="relative z-10 mt-3 text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
+            <h2 className="relative z-10 mt-3 text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#C8154B]">
               <span className="rv-line" style={{ "--l": 0 } as React.CSSProperties}>
                 <span>Flavours That</span>
               </span>
@@ -172,12 +172,13 @@ export const Flavours: React.FC = () => {
           </div>
 
           <div className="flex items-end gap-8 sm:gap-12">
-            <p className="max-w-[16rem] text-[clamp(1rem,1.15vw,1.15rem)] font-medium leading-snug text-[#4a3a33]">
+            <p className="max-w-[16rem] text-[clamp(1rem,1.15vw,1.15rem)] font-medium leading-snug text-[#082567]">
               Classic grains, exciting flavours. Find your perfect crunch.
             </p>
             <Link
-              href="#flavours"
-              className="group hidden shrink-0 items-center gap-2 border-b border-[#6B1022]/30 pb-0.5 text-base font-semibold text-[#6B1022] transition-colors hover:border-[#6B1022] sm:inline-flex"
+              href="/products"
+              transitionTypes={["nav-forward"]}
+              className="group hidden shrink-0 items-center gap-2 border-b border-[#C8154B]/30 pb-0.5 text-base font-semibold text-[#C8154B] transition-colors hover:border-[#C8154B] sm:inline-flex"
             >
               View All Flavours
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { InView } from "@/components/common/InView";
 import { TESTIMONIALS_DATA } from "@/constants/testimonials";
 import { TestimonialItem } from "@/types";
@@ -96,7 +96,7 @@ function ReviewCard({ item, slot = 0 }: { item: TestimonialItem; slot?: number }
       ref={ref}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className="review-card group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-white/45 p-5 shadow-[0_8px_30px_-12px_rgba(120,70,30,0.25)] ring-1 ring-white/60 transition-[transform,box-shadow,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] max-md:min-h-[15rem] max-md:bg-[#fdf4e8]/90 md:bg-[#fdf4e8]/80 md:p-6 lg:p-7 lg:hover:-translate-y-2 lg:hover:shadow-[0_30px_50px_-18px_rgba(120,70,30,0.5)]"
+      className="review-card group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-white/45 p-5 shadow-[0_8px_30px_-12px_rgba(120,70,30,0.25)] ring-1 ring-white/60 transition-[transform,box-shadow,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] max-md:min-h-[15rem] max-md:bg-[#F7F4D4]/90 md:bg-[#F7F4D4]/80 md:p-6 lg:p-7 lg:hover:-translate-y-2 lg:hover:shadow-[0_30px_50px_-18px_rgba(120,70,30,0.5)]"
     >
       <span
         aria-hidden="true"
@@ -106,32 +106,21 @@ function ReviewCard({ item, slot = 0 }: { item: TestimonialItem; slot?: number }
       <DesktopArt slot={slot} />
       <span
         aria-hidden="true"
-        className="relative text-[2.6rem] font-bold leading-[0.7] text-[#7a1020] md:text-[4.2rem] md:leading-[0.6]"
+        className="relative text-[2.6rem] font-bold leading-[0.7] text-[#C8154B] md:text-[4.2rem] md:leading-[0.6]"
       >
         &ldquo;
       </span>
-      <blockquote className="relative mt-3 flex-1 text-[1.1rem] font-medium leading-[1.45] text-[#4a3a33] max-md:max-w-[62%] md:mt-8 lg:text-[1.25rem] lg:leading-[1.5]">
+      <blockquote className="relative mt-3 flex-1 text-[1.1rem] font-medium leading-[1.45] text-[#082567] max-md:max-w-[62%] md:mt-8 lg:text-[1.25rem] lg:leading-[1.5]">
         {item.quote}
       </blockquote>
-      <span aria-hidden="true" className="relative mt-6 hidden h-px w-full bg-[#6B1022]/15 md:block" />
+      <span aria-hidden="true" className="relative mt-6 hidden h-px w-full bg-[#C8154B]/15 md:block" />
       <figcaption className="relative mt-5 flex items-center gap-3 md:mt-5">
         <Avatar item={item} />
         <div>
-          <p className="text-[1.05rem] font-bold leading-tight text-[#6B1022]">
+          <p className="text-[1.05rem] font-bold leading-tight text-[#C8154B]">
             {item.author}
           </p>
           <p className="text-base font-medium text-[#9a5a3c]">{item.location}</p>
-          <div className="mt-1 flex gap-0.5" aria-label={`${item.rating} out of 5 stars`}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className={cn(
-                  "h-4 w-4",
-                  i < item.rating ? "fill-amber-500 text-amber-500" : "text-amber-300",
-                )}
-              />
-            ))}
-          </div>
         </div>
       </figcaption>
     </figure>
@@ -141,7 +130,9 @@ function ReviewCard({ item, slot = 0 }: { item: TestimonialItem; slot?: number }
 export const Testimonials: React.FC = () => {
   const [start, setStart] = useState(0);
   const total = TESTIMONIALS_DATA.length;
-  const shown = Array.from({ length: VISIBLE }, (_, i) => TESTIMONIALS_DATA[(start + i) % total]);
+  const shown = total
+    ? Array.from({ length: VISIBLE }, (_, i) => TESTIMONIALS_DATA[(start + i) % total])
+    : [];
   const [dir, setDir] = useState<1 | -1>(1);
   const [paused, setPaused] = useState(false);
   const [leaving, setLeaving] = useState(false);
@@ -164,7 +155,9 @@ export const Testimonials: React.FC = () => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     step(1);
   };
-  const average = (TESTIMONIALS_DATA.reduce((sum, t) => sum + t.rating, 0) / total).toFixed(1);
+
+  // No genuine tester quotes yet: keep the whole section hidden.
+  if (total === 0) return null;
 
   return (
     <section
@@ -182,11 +175,11 @@ export const Testimonials: React.FC = () => {
         <div data-parallax="0.03" className="absolute inset-0">
           <span className="absolute -left-[8%] top-[4%] h-[70%] w-[46%] rounded-full bg-[#f3c9b6]/55 blur-[90px]" />
           <span className="absolute -bottom-[16%] right-[6%] h-[64%] w-[42%] rounded-full bg-[#ffd99a]/50 blur-[100px]" />
-          <span className="absolute left-[34%] top-[-18%] h-[50%] w-[30%] rounded-full bg-[#fbe3cf]/80 blur-[80px]" />
+          <span className="absolute left-[34%] top-[-18%] h-[50%] w-[30%] rounded-full bg-[#F7F4D4]/80 blur-[80px]" />
         </div>
         <p
           data-parallax="0.05"
-          className="absolute left-[1.5%] top-[-3%] select-none font-serif text-[clamp(18rem,34vw,36rem)] font-semibold leading-none text-[#6B1022]/[0.055] [mask-image:linear-gradient(180deg,#000_30%,transparent_85%)]"
+          className="absolute left-[1.5%] top-[-3%] select-none font-serif text-[clamp(18rem,34vw,36rem)] font-semibold leading-none text-[#C8154B]/[0.055] [mask-image:linear-gradient(180deg,#000_30%,transparent_85%)]"
         >
           &ldquo;
         </p>
@@ -307,39 +300,21 @@ export const Testimonials: React.FC = () => {
               style={{ "--r": "-30deg", "--d": "7s" } as React.CSSProperties}
             />
           </div>
-          <p className="relative max-md:ml-[34%] text-[13px] font-semibold uppercase tracking-[0.3em] text-[#6B1022]/70 sm:text-sm">
+          <p className="relative max-md:ml-[34%] text-[13px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/70 sm:text-sm">
             Real Stories
           </p>
-          <span aria-hidden="true" className="rv-rule relative mt-3 block h-px w-14 bg-[#6B1022]/50 md:w-20 max-md:ml-[34%]" />
-          <h2 className="relative mt-3 max-md:ml-[34%] max-md:text-[2.7rem] text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#6B1022]">
+          <span aria-hidden="true" className="rv-rule relative mt-3 block h-px w-14 bg-[#C8154B]/50 md:w-20 max-md:ml-[34%]" />
+          <h2 className="relative mt-3 max-md:ml-[34%] max-md:text-[2.7rem] text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#C8154B]">
             <span className="rv-line" style={{ "--l": 0 } as React.CSSProperties}>
-              <span>Loved by</span>
+              <span>Crunch-</span>
             </span>
             <span className="rv-line" style={{ "--l": 1 } as React.CSSProperties}>
-              <span>Snack Enthusiasts.</span>
+              <span>Approved.</span>
             </span>
           </h2>
-          <p className="relative mt-5 max-w-[26rem] max-md:ml-[34%] max-md:text-[0.98rem] text-[clamp(1rem,1.2vw,1.2rem)] font-medium leading-[1.5] text-[#4a3a33]">
-            From fitness lovers to flavour seekers, Taptah is winning hearts
-            across India with its clean, crunchy and delicious snacks.
+          <p className="relative mt-5 max-w-[26rem] max-md:ml-[34%] max-md:text-[0.98rem] text-[clamp(1rem,1.2vw,1.2rem)] font-medium leading-[1.5] text-[#082567]">
+            Real reactions from the people who tried it first.
           </p>
-
-          {/* Desktop: rating summary */}
-          <div className="mt-6 hidden items-center gap-3 md:flex">
-            <div className="flex gap-0.5" aria-hidden="true">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="rv-star h-5 w-5 fill-amber-500 text-amber-500"
-                  style={{ "--i": i } as React.CSSProperties}
-                />
-              ))}
-            </div>
-            <p className="text-[0.95rem] font-semibold text-[#6B1022]">
-              {average} / 5
-              <span className="ml-2 font-medium text-[#9a5a3c]">from our snackers</span>
-            </p>
-          </div>
 
           <div className="mt-8 hidden items-center gap-5 md:flex">
             <div className="flex gap-3">
@@ -352,22 +327,22 @@ export const Testimonials: React.FC = () => {
                   type="button"
                   aria-label={label}
                   onClick={() => step(dir)}
-                  className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[#6B1022]/70 text-[#6B1022] transition-all duration-300 hover:scale-105 hover:bg-[#6B1022] hover:text-cream"
+                  className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[#C8154B]/70 text-[#C8154B] transition-all duration-300 hover:scale-105 hover:bg-[#C8154B] hover:text-cream"
                 >
                   <Icon className="h-5 w-5" />
                 </button>
               ))}
             </div>
             <div className="flex items-center gap-3" aria-hidden="true">
-              <span className="text-sm font-semibold tabular-nums tracking-widest text-[#6B1022]">
+              <span className="text-sm font-semibold tabular-nums tracking-widest text-[#C8154B]">
                 {String(start + 1).padStart(2, "0")}
-                <span className="text-[#6B1022]/40"> / {String(total).padStart(2, "0")}</span>
+                <span className="text-[#C8154B]/40"> / {String(total).padStart(2, "0")}</span>
               </span>
-              <span className="relative block h-[3px] w-24 overflow-hidden rounded-full bg-[#6B1022]/15">
+              <span className="relative block h-[3px] w-24 overflow-hidden rounded-full bg-[#C8154B]/15">
                 <span
                   key={start}
                   onAnimationEnd={autoAdvance}
-                  className="rv-progress absolute inset-y-0 left-0 rounded-full bg-[#6B1022]"
+                  className="rv-progress absolute inset-y-0 left-0 rounded-full bg-[#C8154B]"
                 />
               </span>
             </div>
@@ -398,7 +373,7 @@ export const Testimonials: React.FC = () => {
                 type="button"
                 aria-label={label}
                 onClick={() => step(dir)}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#6B1022]/70 text-[#6B1022] transition-colors active:bg-[#6B1022] active:text-cream"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#C8154B]/70 text-[#C8154B] transition-colors active:bg-[#C8154B] active:text-cream"
               >
                 <Icon className="h-5 w-5" />
               </button>
@@ -410,7 +385,7 @@ export const Testimonials: React.FC = () => {
                 key={t.id}
                 className={cn(
                   "h-2 rounded-full transition-all duration-500",
-                  i === start ? "w-6 bg-[#6B1022]" : "w-2 bg-[#6B1022]/25",
+                  i === start ? "w-6 bg-[#C8154B]" : "w-2 bg-[#C8154B]/25",
                 )}
               />
             ))}

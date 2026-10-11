@@ -6,6 +6,8 @@ import { BlurredFoliage } from "./BlurredFoliage";
 import { BowlLeavesBehind, BowlLeavesFront } from "./BowlLeaves";
 import { GrainFlow } from "./GrainFlow";
 import { KadayiFire } from "./KadayiFire";
+import { MasalaStation } from "./MasalaStation";
+import { DESKTOP_STATIONS } from "./masalaLayout";
 import { ProcessGround } from "./ProcessGround";
 import { ProcessMobile } from "./ProcessMobile";
 
@@ -153,75 +155,26 @@ export const Process: React.FC = () => {
             className="h-auto w-full"
           />
         </div>
-        {[
-          { left: "40.6%", flip: false },
-          { left: "55.4%", flip: true },
-        ].map((b) => (
-          <div
-            key={b.left}
-            className="process-flow absolute z-10 hidden lg:block"
-            style={{ left: b.left, top: "44.9%", width: "5%", transitionDelay: "1.7s" }}
-          >
-            <Image
-              loading="eager"
-              src="/images/why/podina-masalla-bottle.webp"
-              alt="Pudina Masalle spice shaker"
-              width={1024}
-              height={1536}
-              sizes="6vw"
-              className={
-                "masala-shaker h-auto w-full drop-shadow-[4px_8px_6px_rgba(40,20,5,0.35)] " +
-                (b.flip ? "masala-shaker-right" : "")
-              }
-            />
-          </div>
-        ))}
-
-        {[
-          { left: "64.6%", flip: false },
-          { left: "79.4%", flip: true },
-        ].map((b) => (
-          <div
-            key={b.left}
-            className="process-flow absolute z-10 hidden lg:block"
-            style={{ left: b.left, top: "44.9%", width: "5%", transitionDelay: "1.6s" }}
-          >
-            <Image
-              loading="eager"
-              src="/images/why/masala-bottle.webp"
-              alt="Special Masalle spice shaker"
-              width={1024}
-              height={1536}
-              sizes="6vw"
-              className={
-                "masala-shaker h-auto w-full drop-shadow-[4px_8px_6px_rgba(40,20,5,0.35)] " +
-                (b.flip ? "masala-shaker-right" : "")
-              }
-            />
-          </div>
-        ))}
+        {/* Two bowls of masala; a hand dips in and sprinkles it over the popped jowar */}
+        <MasalaStation layout={DESKTOP_STATIONS} className="hidden lg:block" />
 
         {/* Grains spill from the scoop, heap up in the bowl and overflow */}
         <GrainFlow />
 
         {/* Copy */}
         <div data-parallax="0.05" className="process-copy mt-10 lg:absolute lg:left-[5.3%] lg:top-[3%] lg:mt-0 lg:w-[36%]">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.25em] text-[#6B1022]/80 sm:text-sm">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.25em] text-[#C8154B]/80 sm:text-sm">
             The Taptah Process
           </p>
-          <h2 className="mt-5 text-[clamp(2.5rem,4.6vw,4.5rem)] font-semibold leading-[1.06] tracking-tight text-[#6B1022]">
-            From Ancient
+          <h2 className="mt-5 text-[clamp(2.5rem,4.6vw,4.5rem)] font-semibold leading-[1.06] tracking-tight text-[#C8154B]">
+            From Single
             <br />
-            Grains to
+            Millet to
             <br />
-            Your Favourite
-            <br />
-            Crunch.
+            Your Crunch.
           </h2>
-          <p className="mt-6 max-w-[26rem] text-[clamp(1.05rem,1.3vw,1.25rem)] font-medium leading-[1.55] text-[#3a2a24]">
-            Every pack of Taptah Pop Jowar goes through a thoughtful journey —
-            from our fields to your hands, with purity, care and the flavour of
-            tradition.
+          <p className="mt-6 max-w-[26rem] text-[clamp(1.05rem,1.3vw,1.25rem)] font-medium leading-[1.55] text-[#082567]">
+            Single millet. Five careful steps.
           </p>
         </div>
 
@@ -266,10 +219,10 @@ function StepLabel({
 }) {
   return (
     <>
-      <span className="text-[clamp(1.1rem,1.45vw,1.4rem)] font-semibold text-[#6B1022]">
+      <span className="text-[clamp(1.1rem,1.45vw,1.4rem)] font-semibold text-[#C8154B]">
         {String(step).padStart(2, "0")}
       </span>
-      <h3 className="mt-0.5 text-[clamp(1.05rem,1.45vw,1.4rem)] font-semibold leading-tight text-[#6B1022]">
+      <h3 className="mt-0.5 text-[clamp(1.05rem,1.45vw,1.4rem)] font-semibold leading-tight text-[#C8154B]">
         {title}
       </h3>
       <p className="mt-1.5 text-[clamp(1rem,1.1vw,1.1rem)] font-medium leading-snug text-[#5a463c]">

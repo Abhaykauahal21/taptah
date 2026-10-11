@@ -75,7 +75,7 @@ export const WhyArtwork: React.FC = () => {
           sizes="(min-width: 1024px) 26vw, 60vw"
           className="why-field object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#f8e9d6]/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F2EEBF]/30 via-transparent to-transparent" />
       </div>
 
       {/* Jowar cut-out, breaking out of the window */}

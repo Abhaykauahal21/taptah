@@ -57,7 +57,8 @@ export const ProductsMenu: React.FC<{
             </span>
           </p>
           <Link
-            href="#flavours"
+            href="/products"
+            transitionTypes={["nav-forward"]}
             onClick={onNavigate}
             tabIndex={open ? 0 : -1}
             className="group inline-flex items-center gap-1.5 text-sm font-semibold text-cream/90 transition-colors hover:text-cream"
@@ -86,7 +87,8 @@ export const ProductsMenu: React.FC<{
             >
               {/* Whole row is the link; the + button sits above it */}
               <Link
-                href="#flavours"
+                href={`/products/${f.id}`}
+                transitionTypes={["nav-forward"]}
                 onClick={onNavigate}
                 tabIndex={open ? 0 : -1}
                 aria-label={`${f.name}, ${f.tagline}`}

@@ -12,14 +12,14 @@ export const Hero: React.FC = () => {
       className="sticky top-0 isolate flex h-[100svh] min-h-[620px] items-center overflow-hidden bg-[#2a1209] text-cream"
     >
       {/* Background image */}
-      <div className="hero-bg absolute inset-0 -z-20">
+      <div className="hero-bg absolute inset-0 -z-20 lg:[mask-image:linear-gradient(180deg,transparent,#000_22%)]">
         <Image
-          src="/images/hero/hero.webp"
-          alt="Spiced roasted ancient-grain puffs bursting from a stone bowl"
+          src="/images/hero/hero-2.webp"
+          alt="Spiced Pop Jowar heaped in a glass bowl on a rustic table in warm sunlight"
           fill
           priority
           sizes="100vw"
-          className="hero-kenburns object-cover object-[72%_center] lg:object-center"
+          className="hero-kenburns object-cover object-[68%_center] lg:object-contain lg:object-bottom lg:[@media(min-aspect-ratio:107/50)]:object-cover lg:[@media(min-aspect-ratio:107/50)]:object-center"
         />
       </div>
       {/* Readability overlays */}
@@ -35,25 +35,25 @@ export const Hero: React.FC = () => {
       <div className="hero-content relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-28 pt-28 sm:px-8 lg:px-12">
         <div className="max-w-[520px]">
           <p style={{ "--i": 0 } as React.CSSProperties} className="hero-fade mb-4 text-[13px] font-semibold uppercase tracking-[0.28em] text-cream/80 sm:text-sm">
-            The Ancient Supergrain
+            The Single Millet Snack
           </p>
 
           <h1 className="text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl lg:text-[clamp(3rem,4.9vw,4.75rem)]">
             <span className="hero-line">
               <span className="hero-line-inner" style={{ "--i": 0 } as React.CSSProperties}>
-                Ancient Grain
+                Single Millet.
               </span>
             </span>
             <span className="hero-line">
               <span className="hero-line-inner" style={{ "--i": 1 } as React.CSSProperties}>
-                Modern Crunch.
+                Endless Crunch.
               </span>
             </span>
           </h1>
 
           <p style={{ "--i": 3 } as React.CSSProperties} className="hero-fade mt-5 max-w-sm text-base leading-snug text-cream/90 sm:text-lg">
-            Light, crunchy snacks crafted from ancient grains, for a healthier,
-            happier you.
+            Pop Jowar is popped from one ancient millet and tossed in bold
+            flavours.
           </p>
 
           <div style={{ "--i": 4 } as React.CSSProperties} className="hero-fade mt-7 flex flex-wrap items-center gap-5">
@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
               href="#flavours"
               className="hero-shine relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-cream px-6 py-3 text-base font-semibold text-maroon shadow-lg transition-all duration-300 hover:bg-white hover:shadow-xl"
             >
-              Explore Pop Jowar
+              Shop Pop Jowar
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
@@ -74,6 +74,10 @@ export const Hero: React.FC = () => {
               Our Story
             </Link>
           </div>
+
+          <p style={{ "--i": 5 } as React.CSSProperties} className="hero-fade mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-cream/75 sm:text-[13px]">
+            Single Millet · Millet Flavours
+          </p>
         </div>
       </div>
 

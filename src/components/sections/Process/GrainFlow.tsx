@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef } from "react";
 import * as ML from "./mobileLayout";
+import { masalaState } from "./masalaState";
+import { DESKTOP_STATIONS, MOBILE_STATIONS } from "./masalaLayout";
 
 /**
  * Grain physics for the process flow.
@@ -40,17 +42,6 @@ const SPRITE_PX = 96;
 const POP_SPRITE = 2; // first pop jowar sprite index
 const MASALA_SPRITE = 4; // masala sprites are 4 and 5
 const PUDINA_SPRITE = 6;
-
-/** Mouths of the two masala shakers, one each side of the bowl (artboard units). */
-const SHAKERS = [
-  { x: 702, y: 452, dir: 1 },
-  { x: 788, y: 452, dir: -1 },
-];
-/** Mouths of the two pudina shakers, one each side of the third bowl. */
-const PUDINA_SHAKERS = [
-  { x: 462, y: 452, dir: 1 },
-  { x: 548, y: 452, dir: -1 },
-];
 
 // Scoop mouth (where grains spill from)
 const SPAWN = { x0: 405, x1: 455, y0: 0.065 * WORLD_H, y1: 0.11 * WORLD_H };
@@ -196,8 +187,8 @@ interface Layout {
   W: number;
   H: number;
   spawn: { x0: number; x1: number; y0: number; y1: number };
-  shakers: Array<{ x: number; y: number; dir: number }>;
-  pudinaShakers: Array<{ x: number; y: number; dir: number }>;
+  /** Where masala falls from when the hands are not running (artboard units). */
+  sprinkle: { pudina: { x: number; y: number }; red: { x: number; y: number } };
   bowl: VesselConfig;
   kadayi: VesselConfig;
   bowl2: VesselConfig;
@@ -208,8 +199,10 @@ const DESKTOP: Layout = {
   W: WORLD_W,
   H: WORLD_H,
   spawn: SPAWN,
-  shakers: SHAKERS,
-  pudinaShakers: PUDINA_SHAKERS,
+  sprinkle: {
+    pudina: DESKTOP_STATIONS.stations[0].target,
+    red: DESKTOP_STATIONS.stations[1].target,
+  },
   bowl: BOWL_CFG,
   kadayi: KADAYI_CFG,
   bowl2: BOWL2_CFG,
@@ -229,14 +222,10 @@ const MOBILE: Layout = {
     y0: ML.STALKS.y + ((ML.STALKS.w * 1127) / 1396) * 0.65,
     y1: ML.STALKS.y + ((ML.STALKS.w * 1127) / 1396) * 0.86,
   },
-  shakers: [
-    { x: ML.BOWL2.x + 72, y: ML.BOWL2.y + 32, dir: 1 },
-    { x: ML.BOWL2.x + 158, y: ML.BOWL2.y + 32, dir: -1 },
-  ],
-  pudinaShakers: [
-    { x: ML.BOWL3.x + 72, y: ML.BOWL3.y + 32, dir: 1 },
-    { x: ML.BOWL3.x + 158, y: ML.BOWL3.y + 32, dir: -1 },
-  ],
+  sprinkle: {
+    pudina: MOBILE_STATIONS.stations[0].target,
+    red: MOBILE_STATIONS.stations[1].target,
+  },
   bowl: { ...BOWL_CFG, x: ML.BOWL1.x, y: ML.BOWL1.y, w: ML.BOWL1.w, h: bowlH },
   kadayi: { ...KADAYI_CFG, x: ML.KADAYI.x, y: ML.KADAYI.y, w: ML.KADAYI.w, h: kadayiH },
   bowl2: { ...BOWL2_CFG, x: ML.BOWL2.x, y: ML.BOWL2.y, w: ML.BOWL2.w, h: bowlH },
@@ -576,30 +565,27 @@ export const GrainFlow: React.FC<{
       }
     };
 
+    // Masala falls from each hand while it sprinkles (or, if the hands are not running, from a
+    // fixed point above each bowl so the pop jowar still gets seasoned).
     const shake = () => {
-      if (Math.random() < 0.34) {
-        const sh = L.pudinaShakers[Math.random() < 0.5 ? 0 : 1];
+      const sides = [
+        { st: masalaState.pudina, fb: L.sprinkle.pudina, pudina: true, bowl: bowl3 },
+        { st: masalaState.red, fb: L.sprinkle.red, pudina: false, bowl: bowl2 },
+      ];
+      for (const side of sides) {
+        const live = masalaState.active ? side.st.on : Math.random() < 0.34;
+        if (!live) continue;
+        const src = masalaState.active ? side.st : side.fb;
         masala.push({
-          x: sh.x + rnd(-3, 3),
-          y: sh.y + rnd(-2, 2),
-          vx: sh.dir * rnd(18, 50),
-          vy: rnd(-5, 25),
+          x: src.x + rnd(-5, 5),
+          y: src.y + rnd(-2, 4),
+          vx: rnd(-16, 16),
+          vy: rnd(-4, 16),
           life: 0,
-          pudina: true,
+          pudina: side.pudina,
         });
-        if (Math.random() < 0.3) season(bowl3, PUDINA_SPRITE, 1);
-        return;
+        if (Math.random() < 0.3) season(side.bowl, side.pudina ? PUDINA_SPRITE : MASALA_SPRITE, side.pudina ? 1 : 2);
       }
-      const sh = L.shakers[Math.random() < 0.5 ? 0 : 1];
-      masala.push({
-        x: sh.x + rnd(-3, 3),
-        y: sh.y + rnd(-2, 2),
-        vx: sh.dir * rnd(18, 50),
-        vy: rnd(-5, 25),
-        life: 0,
-        pudina: false,
-      });
-      if (Math.random() < 0.3) season(bowl2, MASALA_SPRITE, 2);
     };
 
     const update = (dt: number) => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/common/Logo";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
@@ -21,7 +22,6 @@ import Image from "next/image";
 const MIN_MS = 3400; // long enough for the pop and the fountain to play out
 const MAX_MS = 9000; // never trap the visitor on a slow network
 const ASSET_PATIENCE_MS = 4500; // stop waiting for assets (and let the bar finish) after this
-const LETTERS = "Taptah:".split("");
 
 const SPARKS = Array.from({ length: 14 }, (_, i) => {
   const a = (i / 14) * Math.PI * 2 + (i % 2 ? 0.2 : -0.1);
@@ -111,7 +111,7 @@ export const Loader: React.FC = () => {
       ready = true;
     };
     const heroImg = new window.Image();
-    heroImg.src = "/images/hero/hero.webp";
+    heroImg.src = "/images/hero/hero-2.webp";
     const assets = Promise.all([
       document.readyState === "complete"
         ? Promise.resolve()
@@ -216,7 +216,7 @@ export const Loader: React.FC = () => {
               cy="130"
               r={RING_R}
               fill="none"
-              stroke="rgba(107,16,34,0.12)"
+              stroke="rgba(200,21,75,0.12)"
               strokeWidth="2"
             />
             <circle
@@ -310,22 +310,16 @@ export const Loader: React.FC = () => {
         {/* Wordmark: the outline is drawn first, then the colour fills it as the load climbs */}
         <div className="loader-word" aria-hidden="true">
           <div className="loader-word-outline">
-            {LETTERS.map((c, i) => (
-              <span key={i} style={{ "--i": i } as React.CSSProperties}>
-                {c}
-              </span>
-            ))}
+            <Logo />
           </div>
           <div
             className="loader-word-fill"
             style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}
           >
-            {LETTERS.map((c, i) => (
-              <span key={i}>{c}</span>
-            ))}
+            <Logo />
           </div>
         </div>
-        <p className="loader-tag">Ancient Grain &middot; Modern Crunch</p>
+        <p className="loader-tag">Single Millet &middot; Endless Crunch</p>
 
         <div className="loader-meter" aria-hidden="true">
           <span key={stage} className="loader-stage-label">

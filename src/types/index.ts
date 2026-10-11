@@ -31,7 +31,7 @@ export interface TestimonialItem {
   location?: string;
   role?: string;
   quote: string;
-  rating: number;
+  rating?: number;
   /** Portrait under /public; when absent an initials avatar is drawn. */
   avatar?: string;
   /** Gradient used for the initials avatar. */
