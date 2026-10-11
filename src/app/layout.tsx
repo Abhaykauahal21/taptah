@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { fontSerif, fontScript, fontLogo } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
 import { Loader } from "@/components/layout/Loader";
@@ -83,6 +84,7 @@ export default function RootLayout({
           <style>{`.loader{display:none}html[data-loading]{overflow:auto!important}`}</style>
         </noscript>
         {children}
+        <Analytics />
       </body>
     </html>
   );
