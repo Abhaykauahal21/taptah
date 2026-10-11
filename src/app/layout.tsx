@@ -70,6 +70,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${fontSerif.variable} ${fontScript.variable} ${fontLogo.variable}`}
     >
+      <head>
+        {/* take over scroll restoration before the browser can jump back down on a reload */}
+        <script dangerouslySetInnerHTML={{ __html: "try{history.scrollRestoration='manual'}catch(e){}" }} />
+      </head>
       <body className="min-h-screen flex flex-col font-serif bg-background text-foreground antialiased selection:bg-maroon selection:text-cream">
         <Loader />
         <SmoothScroll />

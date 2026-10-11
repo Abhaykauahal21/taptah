@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 /**
@@ -12,6 +13,26 @@ import Lenis from "lenis";
  * - Skipped entirely for visitors who prefer reduced motion.
  */
 export function SmoothScroll() {
+  const pathname = usePathname();
+
+  // A reload, or opening a page fresh, always starts at the top (the browser would otherwise put
+  // you back where you were, and keep a stale #hash). Following a #link from another page still
+  // lands on its section.
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const arrived = nav?.type === "reload" || nav?.type === "back_forward" || !window.location.hash;
+    if (arrived) {
+      if (window.location.hash) history.replaceState(null, "", window.location.pathname + window.location.search);
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  // Moving to another page lands at the top (unless the link points at a section).
+  useEffect(() => {
+    if (!window.location.hash) window.scrollTo(0, 0);
+  }, [pathname]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
