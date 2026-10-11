@@ -22,8 +22,8 @@ interface LeafSpec {
   delay: number;
 }
 
-const A = { src: "/images/why/leaf-a.png", width: 127, height: 99 };
-const B = { src: "/images/why/leaf-b.png", width: 175, height: 126 };
+const A = { src: "/images/why/leaf-a.webp", width: 127, height: 99 };
+const B = { src: "/images/why/leaf-b.webp", width: 175, height: 126 };
 
 const LEAVES: { behind: LeafSpec[]; front: LeafSpec[] } = {
   // One leaf tucked in at each side of the bowl's base; nothing around the rim.

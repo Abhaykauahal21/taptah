@@ -119,14 +119,14 @@ export const ProcessMobile: React.FC = () => {
         {/* A spill of grains and leaves in the top-right corner */}
         <div aria-hidden="true" className="pointer-events-none absolute -right-5 -top-8 h-[8.5rem] w-32 sm:-right-8 sm:h-44 sm:w-40">
           <Image
-            src="/images/why/leaf-b.png"
+            src="/images/why/leaf-b.webp"
             alt=""
             width={175}
             height={126}
             className="absolute right-[-10%] top-[4%] w-[78%] rotate-[28deg] drop-shadow-[2px_6px_5px_rgba(60,35,15,0.25)]"
           />
           <Image
-            src="/images/why/leaf-b.png"
+            src="/images/why/leaf-b.webp"
             alt=""
             width={175}
             height={126}

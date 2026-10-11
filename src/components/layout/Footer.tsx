@@ -437,7 +437,7 @@ export const Footer: React.FC = () => {
         {LEAVES.map(([side, top, w, rot, dur, delay], i) => (
           <Image
             key={i}
-            src="/images/why/leaf-b.png"
+            src="/images/why/leaf-b.webp"
             alt=""
             width={175}
             height={126}

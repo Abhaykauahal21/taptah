@@ -203,7 +203,7 @@ export const Testimonials: React.FC = () => {
             className="absolute -right-[4%] -top-[10%] w-[17vw] max-w-[20rem] rotate-[168deg] opacity-[0.2] blur-[2.5px] [mask-image:linear-gradient(0deg,transparent_2%,#000_55%)]"
           />
           <Image
-            src="/images/why/leaf-b.png"
+            src="/images/why/leaf-b.webp"
             alt=""
             width={175}
             height={126}

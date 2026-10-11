@@ -121,14 +121,14 @@ export function Leaves({ className = "" }: { className?: string }) {
   return (
     <div aria-hidden="true" className={"pointer-events-none absolute " + className}>
       <Image
-        src="/images/why/leaf-b.png"
+        src="/images/why/leaf-b.webp"
         alt=""
         width={175}
         height={126}
         className="absolute left-0 top-[34%] w-[62%] rotate-[-18deg] drop-shadow-[2px_5px_4px_rgba(60,35,15,0.28)]"
       />
       <Image
-        src="/images/why/leaf-c.png"
+        src="/images/why/leaf-c.webp"
         alt=""
         width={169}
         height={141}

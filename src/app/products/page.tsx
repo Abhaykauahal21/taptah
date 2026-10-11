@@ -25,7 +25,7 @@ export default function ProductsPage() {
             <span className="flavour-wash left-[34%] bg-[#B3261E] [animation-delay:-3s]" />
             <span className="flavour-wash right-[2%] bg-[#4F7A2B] [animation-delay:-6s]" />
             <Image
-              src="/images/why/leaf-b.png"
+              src="/images/why/leaf-b.webp"
               alt=""
               width={175}
               height={126}

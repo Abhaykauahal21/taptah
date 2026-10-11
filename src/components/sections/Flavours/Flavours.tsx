@@ -136,14 +136,14 @@ export const Flavours: React.FC = () => {
           Pop Jowar
         </p>
         <Image
-          src="/images/why/leaf-b.png"
+          src="/images/why/leaf-b.webp"
           alt=""
           width={175}
           height={126}
           className="flavour-leaf absolute -left-[3%] top-[8%] w-[15vw] max-w-[14rem] rotate-[24deg]"
         />
         <Image
-          src="/images/why/leaf-c.png"
+          src="/images/why/leaf-c.webp"
           alt=""
           width={169}
           height={141}
