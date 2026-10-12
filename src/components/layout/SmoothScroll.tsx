@@ -47,8 +47,9 @@ export function SmoothScroll() {
         if (!a) return;
         const url = new URL(a.href, window.location.href);
         if (url.pathname !== window.location.pathname || url.origin !== window.location.origin) return;
-        const target = url.hash ? document.querySelector<HTMLElement>(url.hash) : null;
-        if (!target && url.hash) return;
+        // The hero is sticky, so its own position never changes: "#hero" simply means the top.
+        const target = url.hash && url.hash !== "#hero" ? document.querySelector<HTMLElement>(url.hash) : null;
+        if (!target && url.hash && url.hash !== "#hero") return;
         e.preventDefault();
         e.stopPropagation();
         const top = target ? target.getBoundingClientRect().top + window.scrollY - 64 : 0;
@@ -81,8 +82,9 @@ export function SmoothScroll() {
       if (!a) return;
       const url = new URL(a.href, window.location.href);
       if (url.pathname !== window.location.pathname || url.origin !== window.location.origin) return;
-      const target = url.hash ? document.querySelector<HTMLElement>(url.hash) : null;
-      if (!target && url.hash) return;
+      // The hero is sticky, so its own position never changes: "#hero" simply means the top.
+      const target = url.hash && url.hash !== "#hero" ? document.querySelector<HTMLElement>(url.hash) : null;
+      if (!target && url.hash && url.hash !== "#hero") return;
       // Capture phase + stopPropagation: Next's <Link> would otherwise jump to the hash itself.
       e.preventDefault();
       e.stopPropagation();
