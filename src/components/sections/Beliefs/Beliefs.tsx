@@ -75,7 +75,7 @@ function MilletVisual() {
           })}
         />
       ))}
-      <div className="absolute left-1/2 top-1/2 w-[34%] -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 w-[24%] -translate-x-1/2 -translate-y-1/2">
         <div className="bel-grain">
           <Image
             src={GRAIN.src}
@@ -126,7 +126,7 @@ function PopVisual() {
         </div>
       </div>
       {/* ...and pops */}
-      <div className="absolute left-1/2 top-1/2 w-[46%] -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 w-[34%] -translate-x-1/2 -translate-y-1/2">
         <div className="bel-bigpop">
           <Image
             src={POP1.src}

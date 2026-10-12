@@ -413,7 +413,7 @@ function SceneLeaf({ leaf, i }: { leaf: (typeof LEAVES)[number]; i: number }) {
     >
       <Image
         loading="eager"
-        src={`/images/why/${leaf.src}.png`}
+        src={`/images/why/${leaf.src}.webp`}
         alt=""
         width={leaf.w}
         height={leaf.h}

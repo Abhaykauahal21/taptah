@@ -1314,8 +1314,8 @@ html[data-loading="true"] .hero-shine::after {
   position: absolute;
   left: 50%;
   top: 46%;
-  width: 150px;
-  margin: -68px 0 0 -75px;
+  width: 80px;
+  margin: -37px 0 0 -40px;
   opacity: 0;
   transform: scale(0.1);
   animation: loader-pop 0.9s cubic-bezier(0.2, 1.1, 0.3, 1) 1.5s forwards;
