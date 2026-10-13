@@ -219,7 +219,7 @@ export const MasalaStation: React.FC<{ layout: StationLayout; className?: string
             >
               <Image
                 loading="eager"
-                src={s.id === "red" ? "/images/why/hand-red.webp" : "/images/why/hand-pudina.webp"}
+                src={s.id === "red" ? "/images/why/hand-red.webp" : "/images/why/hand-pudina-olive.webp"}
                 alt=""
                 width={640}
                 height={427}

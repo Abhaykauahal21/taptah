@@ -3,6 +3,7 @@ import Image from "next/image";
 import { InView } from "@/components/common/InView";
 import { PageTransition } from "@/components/common/PageTransition";
 import { Footer } from "@/components/layout/Footer";
+import { JarGrid } from "@/components/sections/Flavours/FlavourJars";
 import { FlavourCard } from "@/components/sections/Flavours/FlavourCard";
 import { FLAVOURS_DATA } from "@/constants/flavours";
 
@@ -68,6 +69,21 @@ export default function ProductsPage() {
               ))}
             </div>
           </InView>
+        </section>
+
+        <section aria-label="Jars" className="relative overflow-hidden bg-background px-5 pb-20 text-[#C8154B] sm:px-8 lg:px-12 lg:pb-28">
+          <div className="mx-auto max-w-[1040px]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/70 sm:text-sm">Also in jars</p>
+            <h2 className="mt-3 text-[clamp(2.2rem,4.6vw,4rem)] font-semibold leading-[1.04] tracking-tight">
+              Same crunch, bigger jar.
+            </h2>
+            <p className="mt-4 max-w-[30rem] text-[clamp(1rem,1.2vw,1.2rem)] font-medium leading-[1.55] text-[#082567]">
+              Give a jar a spin, pick your flavour and add it to your cart.
+            </p>
+            <div className="mt-12">
+              <JarGrid shop />
+            </div>
+          </div>
         </section>
         <Footer />
       </main>

@@ -6,7 +6,7 @@ import { WaveEdge } from "@/components/sections/Hero/WaveEdge";
 import { Why } from "@/components/sections/Why";
 import { Beliefs } from "@/components/sections/Beliefs";
 import { Process } from "@/components/sections/Process";
-import { Flavours } from "@/components/sections/Flavours";
+import { Flavours, FlavourJars } from "@/components/sections/Flavours";
 import { SnackSmart } from "@/components/sections/SnackSmart";
 import { WhereToFind } from "@/components/sections/WhereToFind";
 import { Testimonials } from "@/components/sections/Testimonials";
@@ -26,6 +26,7 @@ export default function Home() {
             <Beliefs />
             <Process />
             <Flavours />
+            <FlavourJars />
             <SnackSmart />
             <WhereToFind />
             <Testimonials />

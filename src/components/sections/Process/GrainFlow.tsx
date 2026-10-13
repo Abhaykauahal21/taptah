@@ -768,7 +768,7 @@ export const GrainFlow: React.FC<{
       for (const m of masala) {
         ctx.globalAlpha = Math.min(1, (0.9 - m.life) * 2);
         ctx.fillStyle = m.pudina
-          ? m.life % 0.2 < 0.1 ? "#3f7d2a" : "#a9c24a"
+          ? m.life % 0.2 < 0.1 ? "#5a5a1c" : "#8a8a2c"
           : m.life % 0.2 < 0.1 ? "#d63a14" : "#f08a1c";
         ctx.beginPath();
         ctx.arc(m.x, m.y, 1.5, 0, Math.PI * 2);

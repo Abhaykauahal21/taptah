@@ -170,7 +170,7 @@ export const ProcessMobile: React.FC = () => {
 
       {/* The scene */}
       <div
-        className="process-scene-m relative -mx-5 mt-8 aspect-[480/880] sm:mx-auto sm:max-w-[560px]"
+        className="process-scene-m relative -mx-5 mt-8 aspect-[480/880] [container-type:inline-size] sm:mx-auto sm:max-w-[560px]"
       >
         {/* Studio glow and the flowing stream the grains travel along */}
         <svg
@@ -364,7 +364,7 @@ export const ProcessMobile: React.FC = () => {
         {LABELS.map(({ Icon, ...l }, i) => (
           <div
             key={l.step}
-            className="process-step absolute z-20 flex items-stretch gap-[0.55rem]"
+            className="process-step absolute z-20 flex items-stretch gap-[1.4cqw]"
             style={
               {
                 left: X(l.x),
@@ -374,16 +374,16 @@ export const ProcessMobile: React.FC = () => {
               } as React.CSSProperties
             }
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center self-start rounded-full bg-[#f0d9b2]/90 text-[0.95rem] font-semibold text-[#C8154B] shadow-[0_6px_14px_-6px_rgba(120,70,30,0.5)] sm:h-11 sm:w-11 sm:text-[1.1rem]">
+            <span className="flex h-[max(1.9rem,8.3cqw)] w-[max(1.9rem,8.3cqw)] shrink-0 items-center justify-center self-start rounded-full bg-[#f0d9b2]/90 text-[max(0.8rem,3.5cqw)] font-semibold text-[#C8154B] shadow-[0_6px_14px_-6px_rgba(120,70,30,0.5)]">
               {String(l.step).padStart(2, "0")}
             </span>
             <span aria-hidden="true" className="w-px shrink-0 bg-[#C8154B]/20" />
             <div className="min-w-0 pb-1">
-              <Icon aria-hidden="true" strokeWidth={1.1} className="h-7 w-7 text-[#C8154B] sm:h-9 sm:w-9" />
-              <h3 className="mt-1 text-[1.12rem] font-semibold leading-[1.15] text-[#C8154B] sm:text-[1.4rem]">
+              <Icon aria-hidden="true" strokeWidth={1.1} className="h-[max(1.35rem,6cqw)] w-[max(1.35rem,6cqw)] text-[#C8154B]" />
+              <h3 className="mt-[0.6cqw] text-[max(0.85rem,3.96cqw)] font-semibold leading-[1.12] text-[#C8154B]">
                 {l.title}
               </h3>
-              <p className="mt-1 text-[0.95rem] font-medium leading-snug text-[#5a463c] sm:text-[1.1rem]">
+              <p className="mt-[0.8cqw] text-[max(0.72rem,3.15cqw)] font-medium leading-[1.3] text-[#5a463c]">
                 {l.description}
               </p>
             </div>

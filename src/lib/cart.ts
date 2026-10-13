@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { FLAVOURS_DATA } from "@/constants/flavours";
+import { ALL_PRODUCTS } from "@/constants/flavours";
 
 /**
  * A tiny cart store shared by the navbar, the flavour cards and the cart
@@ -51,7 +51,7 @@ function load() {
     if (!raw) return;
     const parsed = JSON.parse(raw) as CartItem[];
     const items = parsed.filter(
-      (i) => FLAVOURS_DATA.some((f) => f.id === i.id) && Number.isInteger(i.qty) && i.qty > 0,
+      (i) => ALL_PRODUCTS.some((f) => f.id === i.id) && Number.isInteger(i.qty) && i.qty > 0,
     );
     state = { ...state, items };
   } catch {
@@ -99,7 +99,7 @@ export const cart = {
 export function useCart() {
   const s = useSyncExternalStore(cart.subscribe, cart.getSnapshot, cart.getServerSnapshot);
   const lines = s.items.flatMap((i) => {
-    const flavour = FLAVOURS_DATA.find((f) => f.id === i.id);
+    const flavour = ALL_PRODUCTS.find((f) => f.id === i.id);
     return flavour ? [{ ...i, flavour }] : [];
   });
   const count = lines.reduce((n, l) => n + l.qty, 0);
