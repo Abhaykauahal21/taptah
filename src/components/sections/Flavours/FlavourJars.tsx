@@ -204,19 +204,19 @@ export const FlavourJars: React.FC = () => {
           <p
             aria-hidden="true"
            
-            className="jars-mark pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[clamp(5rem,17vw,15rem)] font-extrabold uppercase leading-none"
+            className="jars-mark pointer-events-none absolute hidden sm:block left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[clamp(4rem,13vw,11rem)] font-extrabold uppercase leading-none"
           >
             Pop Jowar
           </p>
           <p className="relative text-[13px] font-semibold uppercase tracking-[0.3em] text-[#C8154B]/70 sm:text-sm">
             Pick your jar
           </p>
-          <h3 className="jars-title relative mt-3 text-[clamp(2.3rem,5.4vw,4.6rem)] font-semibold leading-[1.02] tracking-tight text-[#C8154B]">
+          <h3 className="jars-title relative mt-4 text-[clamp(2.2rem,4.8vw,4.2rem)] font-semibold leading-[1.12] text-[#C8154B]">
             Four Jars.
             <br />
             One Endless Crunch.
           </h3>
-          <p className="relative mx-auto mt-5 max-w-[34rem] text-[clamp(1rem,1.2vw,1.15rem)] font-medium leading-snug text-[#082567]">
+          <p className="relative mx-auto mt-7 max-w-[32rem] text-[clamp(1.05rem,1.3vw,1.2rem)] font-medium leading-[1.6] text-[#082567]">
             Single millet, roasted never fried, with no palm oil and no MSG. Give a jar a spin and find the one that sounds like you.
           </p>
         </div>

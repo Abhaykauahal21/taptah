@@ -3789,18 +3789,16 @@ html.lenis body {
 
 /* Heading for the jars: stacked shadows give the letters real thickness */
 .jars-title {
+  letter-spacing: 0.005em;
+  /* a slim, clean edge for depth: easy to read, still raised */
   text-shadow:
     1px 1px 0 #a10f3c,
     2px 2px 0 #a10f3c,
-    3px 3px 0 #a10f3c,
-    4px 4px 0 #8c0c34,
-    5px 5px 0 #8c0c34,
-    6px 6px 0 #8c0c34,
-    8px 14px 22px rgb(80 10 30 / 0.35);
+    3px 4px 6px rgb(120 10 40 / 0.22);
 }
 .jars-mark {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgb(200 21 75 / 0.16);
+  -webkit-text-stroke: 1.5px rgb(200 21 75 / 0.08);
 }
 .jar-tag {
   display: inline-block;
