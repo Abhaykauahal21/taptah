@@ -3516,7 +3516,7 @@ html.lenis body {
 
 /* ---------- Flavour jars: 4 cards, each a 3D jar that spins on hover ---------- */
 .jar-card {
-  --d: min(13rem, 74cqw);
+  --d: min(11rem, 60cqw);
   container-type: inline-size;
   position: relative;
   display: flex;
@@ -3526,16 +3526,11 @@ html.lenis body {
   outline: none;
   cursor: grab;
   isolation: isolate;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.jar-card:hover,
-.jar-card:focus-visible {
-  transform: translateY(-10px);
 }
 /* The arch the jar stands in. Its head is left open so the jar rises out of it. */
 .jar-arch {
   position: absolute;
-  inset: 3.2rem 0 0 0;
+  inset: 2rem 0 0 0;
   z-index: -2;
   overflow: hidden;
   border-radius: 999px 999px 2rem 2rem;
@@ -3622,6 +3617,7 @@ html.lenis body {
   translate: -50% 0;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0.1) 70%, transparent);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .jar-base::before {
   content: "";
@@ -3654,7 +3650,17 @@ html.lenis body {
   z-index: 1;
   width: var(--d);
   height: var(--hj);
-  margin-top: calc(var(--d) * 0.24);
+  margin-top: calc(var(--d) * 0.3);
+  transition: translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Only the jar lifts on hover; the card stays put. */
+.jar-card:hover .jar,
+.jar-card:focus-visible .jar {
+  translate: 0 calc(var(--d) * -0.1);
+}
+.jar-card:hover .jar-base,
+.jar-card:focus-visible .jar-base {
+  transform: translateY(calc(var(--d) * 0.1));
 }
 .jar-stage {
   position: absolute;

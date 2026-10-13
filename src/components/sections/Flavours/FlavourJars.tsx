@@ -30,10 +30,10 @@ interface Jar {
 }
 
 const JARS: Jar[] = [
-  { id: "butter-salt", name: "Butter Salt", word: "Butter", line: "Creamy, golden and classic.", tag: "The Classic", from: "#9a1d47", to: "#4d0b25", on: "#fbe7b0", paper: "#e8d58a" },
-  { id: "peri-peri", name: "Peri Peri", word: "Peri", line: "Hot, tangy and bold.", tag: "The Fiery One", from: "#ffd9b3", to: "#f29a6a", on: "#8f1d1a", paper: "#7d1a17" },
-  { id: "italian-herbs", name: "Italian Herbs", word: "Herbs", line: "Oregano, basil and calm.", tag: "The Herby One", from: "#d8efcf", to: "#8fcb9e", on: "#1e4d2b", paper: "#1b4426" },
-  { id: "tangy-pudina", name: "Tangy Pudina", word: "Pudina", line: "Cool mint, zesty kick.", tag: "The Fresh One", from: "#35683a", to: "#183d22", on: "#e7f3b8", paper: "#709a35" },
+  { id: "butter-salt", name: "Butter Salt", word: "Butter", line: "Creamy, golden and classic.", tag: "The Classic", from: "#f8e38e", to: "#e2ac2e", on: "#6b1a1a", paper: "#e8d58a" },
+  { id: "peri-peri", name: "Peri Peri", word: "Peri", line: "Hot, tangy and bold.", tag: "The Fiery One", from: "#d9453a", to: "#7d1512", on: "#fde6c8", paper: "#7d1a17" },
+  { id: "italian-herbs", name: "Italian Herbs", word: "Herbs", line: "Oregano, basil and calm.", tag: "The Herby One", from: "#3f8a50", to: "#174022", on: "#e9f3c9", paper: "#1b4426" },
+  { id: "tangy-pudina", name: "Tangy Pudina", word: "Pudina", line: "Cool mint, zesty kick.", tag: "The Fresh One", from: "#a9cf5a", to: "#4f7a2b", on: "#f6fbd8", paper: "#709a35" },
 ];
 
 /** [left %, top %, size scale, drift x, drift y, rotation] */
@@ -180,7 +180,7 @@ export function JarCard({ jar, index, shop = false }: { jar: Jar; index: number;
 
 /** The four jars in a row (a zig-zag from md up). */
 export const JarGrid: React.FC<{ shop?: boolean }> = ({ shop = false }) => (
-  <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:gap-6">
+  <div className="grid grid-cols-2 items-start gap-3 sm:gap-4 md:grid-cols-4 lg:gap-6">
     {JARS.map((jar, i) => (
       <JarCard key={jar.id} jar={jar} index={i} shop={shop} />
     ))}
