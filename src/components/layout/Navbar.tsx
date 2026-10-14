@@ -413,7 +413,6 @@ export const Navbar: React.FC = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[1.05rem] font-semibold leading-tight">{f.name}</p>
-                  <p className="text-[0.95rem] font-semibold text-[#C8154B]/70">₹{f.price}</p>
                 </div>
                 <button
                   type="button"

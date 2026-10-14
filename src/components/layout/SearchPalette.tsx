@@ -24,7 +24,7 @@ const ENTRIES: Entry[] = [
   })),
   ...FLAVOURS_DATA.map((f) => ({
     label: f.name,
-    hint: `${f.tagline}  ·  ₹${f.price}`,
+    hint: f.tagline,
     href: `/products/${f.id}`,
     group: "Flavours" as const,
   })),

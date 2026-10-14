@@ -81,12 +81,12 @@ export const Why: React.FC = () => {
               </div>
 
               <h3 className="mt-[clamp(1rem,2vw,1.75rem)] text-[clamp(1.35rem,1.9vw,1.8rem)] font-semibold tracking-tight text-[#C8154B]">
-                Taptah means Roasted.
+                Taptah = Roasted.
               </h3>
 
               <ScrollWords
                 className="mt-[clamp(0.6rem,1vw,0.9rem)] max-w-[30rem] text-[clamp(1.05rem,1.35vw,1.3rem)] font-medium leading-[1.55] text-[#082567]"
-                text="The name Taptah comes from Sanskrit, meaning ‘heat’ or ‘roasted’. It’s more than a name, it’s our promise to roast just enough – never more, so the millet’s natural goodness stays exactly as nature intended."
+                text="It’s more than a name, it’s our promise to roast just enough – never more, so the millet’s natural goodness stays exactly as nature intended."
               />
 
               <Link

@@ -1,51 +1,15 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Minus, Plus, Truck, X } from "lucide-react";
-import { FREE_SHIPPING_AT, cart, useCart } from "@/lib/cart";
+import { ArrowRight, Minus, Plus, X } from "lucide-react";
+import { cart, useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
-
-
-/** Counts up to `target` (from 0 each time the drawer opens, from the old value otherwise). */
-function useCountUp(target: number, active: boolean) {
-  const [value, setValue] = useState(target);
-  const from = useRef(0);
-  // Only read once the drawer is open (never during SSR), so no hydration mismatch.
-  const reduce = active && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  useEffect(() => {
-    if (!active) {
-      from.current = 0;
-      return;
-    }
-    if (reduce) return;
-    const a = from.current;
-    let raf = 0;
-    const timer = window.setTimeout(() => {
-      const t0 = performance.now();
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - t0) / 800);
-        const val = Math.round(a + (target - a) * (1 - Math.pow(1 - t, 3)));
-        from.current = val;
-        setValue(val);
-        if (t < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }, a === 0 ? 480 : 0);
-    return () => {
-      window.clearTimeout(timer);
-      cancelAnimationFrame(raf);
-    };
-  }, [target, active, reduce]);
-
-  return active && !reduce ? value : target;
-}
 
 /** Slide-in cart. Opens from the navbar bag icon or any "Add to Cart" button. */
 export const CartDrawer: React.FC = () => {
-  const { open, lines, count, subtotal, lastAdded, bump } = useCart();
+  const { open, lines, count, lastAdded, bump } = useCart();
 
   useEffect(() => {
     if (!open) return;
@@ -53,10 +17,6 @@ export const CartDrawer: React.FC = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
-
-  const shownSubtotal = useCountUp(subtotal, open);
-  const left = Math.max(0, FREE_SHIPPING_AT - subtotal);
-  const pct = Math.min(100, (subtotal / FREE_SHIPPING_AT) * 100);
 
   return (
     <div
@@ -101,23 +61,6 @@ export const CartDrawer: React.FC = () => {
             <X className="h-5 w-5" />
           </button>
         </header>
-
-        {lines.length > 0 && (
-          <div className="cart-reveal border-b border-[#C8154B]/10 px-6 py-4" style={{ "--i": 1 } as React.CSSProperties}>
-            <p className="flex items-center gap-2 text-sm font-semibold text-[#C8154B]">
-              <Truck className="h-4 w-4" />
-              {left === 0
-                ? "You've unlocked free delivery!"
-                : `Add ₹${left} more for free delivery`}
-            </p>
-            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-[#C8154B]/12">
-              <div
-                className="cart-bar h-full rounded-full bg-gradient-to-r from-[#d9893a] to-[#C8154B] transition-[width] duration-700 ease-out"
-                style={{ width: `${pct}%`, "--pct": `${pct}%` } as React.CSSProperties}
-              />
-            </div>
-          </div>
-        )}
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {lines.length === 0 ? (
@@ -186,7 +129,7 @@ export const CartDrawer: React.FC = () => {
                         <X className="h-4 w-4" />
                       </button>
                     </div>
-                    <div className="mt-auto flex items-center justify-between pt-2">
+                    <div className="mt-auto flex items-center justify-start pt-2">
                       <div className="flex items-center rounded-full border border-[#C8154B]/25 bg-white/60">
                         <button
                           type="button"
@@ -208,9 +151,6 @@ export const CartDrawer: React.FC = () => {
                           <Plus className="h-3.5 w-3.5" />
                         </button>
                       </div>
-                      <p className="text-lg font-semibold tabular-nums text-[#C8154B]">
-                        ₹{qty * flavour.price}
-                      </p>
                     </div>
                   </div>
                 </li>
@@ -221,16 +161,9 @@ export const CartDrawer: React.FC = () => {
 
         {lines.length > 0 && (
           <footer className="cart-reveal border-t border-[#C8154B]/12 bg-[#F7F4D4]/80 px-6 pb-6 pt-4" style={{ "--i": lines.length + 2 } as React.CSSProperties}>
-            <div className="flex items-baseline justify-between">
-              <span className="font-semibold text-[#C8154B]">Subtotal</span>
-              <span className="text-2xl font-semibold tabular-nums text-[#C8154B]">₹{shownSubtotal}</span>
-            </div>
-            <p className="mt-1 text-sm font-medium text-[#8a6a5a]">
-              Taxes included. {left === 0 ? "Delivery is free." : "Delivery calculated at checkout."}
-            </p>
             <button
               type="button"
-              className="cart-checkout relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-3.5 text-[1.05rem] font-semibold text-cream shadow-[0_10px_24px_-10px_rgba(90,14,28,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-10px_rgba(90,14,28,0.9)]"
+              className="cart-checkout relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] px-6 py-3.5 text-[1.05rem] font-semibold text-cream shadow-[0_10px_24px_-10px_rgba(90,14,28,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-10px_rgba(90,14,28,0.9)]"
             >
               Checkout
               <ArrowRight className="h-4 w-4" />

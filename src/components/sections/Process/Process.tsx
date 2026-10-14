@@ -174,7 +174,7 @@ export const Process: React.FC = () => {
             Your Crunch.
           </h2>
           <p className="mt-6 max-w-[26rem] text-[clamp(1.05rem,1.3vw,1.25rem)] font-medium leading-[1.55] text-[#082567]">
-            Single millet. Five careful steps.
+            Single millet, single processing step - roasted
           </p>
         </div>
 

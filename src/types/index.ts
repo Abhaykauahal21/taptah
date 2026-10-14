@@ -13,8 +13,6 @@ export interface FlavourItem {
   accentColor: string;
   /** Photo of the pack under /public. */
   image: string;
-  /** Price in rupees. */
-  price: number;
   /** Card backdrop gradient (top, bottom). */
   theme: { from: string; to: string };
   /** Small flag in the corner of the card, e.g. "Best Seller". */

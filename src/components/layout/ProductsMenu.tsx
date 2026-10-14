@@ -3,9 +3,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Plus, Truck } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 import { FLAVOURS_DATA } from "@/constants/flavours";
-import { FREE_SHIPPING_AT, cart } from "@/lib/cart";
+import { cart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 
 /** More rows than this and the list scrolls (with a fade) instead of growing. */
@@ -13,7 +13,7 @@ const VISIBLE_ROWS = 4;
 
 /**
  * The "Products" dropdown. A compact list that hangs under the Products link:
- * one row per flavour (thumbnail, name, tagline, price, quick add). It scales
+ * one row per flavour (thumbnail, name, tagline, quick add). It scales
  * to any number of products, because the list scrolls past a few rows.
  * Hover-safe: an invisible bridge joins it to the bar.
  */
@@ -120,10 +120,6 @@ export const ProductsMenu: React.FC<{
                 <p className="mt-0.5 truncate text-sm text-cream/75">{f.tagline}</p>
               </div>
 
-              <p className="relative z-[1] pointer-events-none text-[1.05rem] font-semibold tabular-nums text-cream">
-                ₹{f.price}
-              </p>
-
               <button
                 type="button"
                 aria-label={`Add ${f.name} to cart`}
@@ -137,10 +133,6 @@ export const ProductsMenu: React.FC<{
           ))}
         </ul>
 
-        <p className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-cream/[0.06] px-3 py-2 text-[13px] font-medium text-cream/80">
-          <Truck className="h-3.5 w-3.5 text-[#f6c46c]" />
-          Free delivery on orders over ₹{FREE_SHIPPING_AT}
-        </p>
       </div>
     </div>
   );

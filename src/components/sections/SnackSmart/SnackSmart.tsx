@@ -19,9 +19,9 @@ const POINTS = [
 ];
 
 const PACKS = [
-  { src: "/images/flavours/PeriPeriPack.webp", alt: "Peri Peri Pop Jowar pack", x: -27, y: 7, rot: -11, depth: 0.5, z: 1, delay: 0.5 },
-  { src: "/images/flavours/TangyPudinaPack.webp", alt: "Tangy Pudina Pop Jowar pack", x: 27, y: 9, rot: 10, depth: 0.7, z: 2, delay: 0.7 },
-  { src: "/images/flavours/ButterSaltpack.webp", alt: "Butter Salt Pop Jowar pack", x: 0, y: -4, rot: 0, depth: 1, z: 3, delay: 0.3 },
+  { src: "/images/flavours/PeriPeriJowarPouch-new.png", alt: "Peri Peri Pop Jowar pouch", x: -27, y: 7, rot: -11, depth: 0.5, z: 1, delay: 0.5 },
+  { src: "/images/flavours/PudinaPopJowarPouch-new.png", alt: "Tangy Pudina Pop Jowar pouch", x: 27, y: 9, rot: 10, depth: 0.7, z: 2, delay: 0.7 },
+  { src: "/images/flavours/ButterSaltPopJowar-new.png", alt: "Butter Salt Pop Jowar pouch", x: 0, y: -4, rot: 0, depth: 1, z: 3, delay: 0.3 },
 ] as const;
 
 const POPS = [

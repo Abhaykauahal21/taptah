@@ -320,7 +320,7 @@ function ClosingRight({ cur }: { cur: boolean }) {
   return (
     <div className="bk-closing flex h-full flex-col" data-cur={cur}>
       <p className="bk-kicker">Taptah Pop Jowar</p>
-      <p className={script + " bk-note bk-note-lg"}>straight from Nani&rsquo;s kitchen to yours</p>
+      <p className={script + " bk-note bk-note-lg"}>straight from Nani & Dadi&rsquo;s kitchen to yours</p>
       <Link
         href="/products"
         transitionTypes={["nav-forward"]}

@@ -164,7 +164,7 @@ export const ProcessMobile: React.FC = () => {
           From Single Millet to Your Crunch.
         </h2>
         <p className="relative mt-5 max-w-[22rem] text-[1.05rem] font-medium leading-[1.5] text-[#082567] sm:max-w-[28rem] sm:text-[1.2rem]">
-          Single millet. Five careful steps.
+          Single millet, single processing step - roasted
         </p>
       </div>
 

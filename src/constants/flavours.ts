@@ -8,7 +8,6 @@ export const FLAVOURS_DATA: FlavourItem[] = [
     description: "Creamy butter and a pinch of salt on light, crunchy pop jowar.",
     spiceLevel: 1,
     accentColor: "#C28A1C",
-    price: 99,
     theme: { from: "#b8821c", to: "#8a5a10" },
     tone: "#f4e4c4",
     ingredients: [
@@ -18,7 +17,7 @@ export const FLAVOURS_DATA: FlavourItem[] = [
       { name: "Milk Solids", note: "Adds a rich and creamy taste" },
       { name: "Sugar", note: "A touch of sweetness" },
     ],
-    image: "/images/flavours/ButterSaltpack.webp",
+    image: "/images/flavours/ButterSaltPopJowar-new.png",
   },
   {
     id: "peri-peri",
@@ -27,7 +26,6 @@ export const FLAVOURS_DATA: FlavourItem[] = [
     description: "Chilli, garlic and lemon heat tossed through every crunchy bite.",
     spiceLevel: 3,
     accentColor: "#B3261E",
-    price: 99,
     theme: { from: "#a3211a", to: "#7d1710" },
     tone: "#f7e4d1",
     ingredients: [
@@ -43,7 +41,7 @@ export const FLAVOURS_DATA: FlavourItem[] = [
       { name: "Tomato Powder", note: "Adds a rich umami taste" },
       { name: "Sugar", note: "A hint of sweetness" },
     ],
-    image: "/images/flavours/PeriPeriPack.webp",
+    image: "/images/flavours/PeriPeriJowarPouch-new.png",
   },
   {
     id: "tangy-pudina",
@@ -52,7 +50,6 @@ export const FLAVOURS_DATA: FlavourItem[] = [
     description: "Cool mint and lemon with a gentle spice for a fresh, zesty crunch.",
     spiceLevel: 2,
     accentColor: "#4F7A2B",
-    price: 99,
     theme: { from: "#2f5d34", to: "#1d4426" },
     tone: "#ebedcc",
     ingredients: [
@@ -64,7 +61,7 @@ export const FLAVOURS_DATA: FlavourItem[] = [
       { name: "Sugar", note: "A touch of sweetness" },
       { name: "Mixed Spices", note: "Chilli, Turmeric, Pepper, Kachiri, Ginger, Black Salt, Mangi Powder, Hing" },
     ],
-    image: "/images/flavours/TangyPudinaPack.webp",
+    image: "/images/flavours/PudinaPopJowarPouch-new.png",
   },
 ];
 
@@ -73,11 +70,11 @@ export const FLAVOUR_BADGES = [
   { id: "clean", label: "No Preservatives", icon: "shield" },
 ] as const;
 
-/** The glass jars. Prices are placeholders until the admin sets the real ones. */
+/** The glass jars. */
 export const JAR_PRODUCTS: FlavourItem[] = [
-  { id: "jar-butter-salt", name: "Butter Salt Jar", tagline: "Creamy, golden and classic.", price: 249, accentColor: "#C28A1C", theme: { from: "#f8e38e", to: "#e2ac2e" }, tone: "#f4e4c4", description: "Butter Salt pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-butter-salt.webp" },
-  { id: "jar-peri-peri", name: "Peri Peri Jar", tagline: "Hot, tangy and bold.", price: 249, accentColor: "#B3261E", theme: { from: "#d9453a", to: "#7d1512" }, tone: "#f7e4d1", description: "Peri Peri pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-peri-peri.webp" },
-  { id: "jar-tangy-pudina", name: "Tangy Pudina Jar", tagline: "Cool mint, zesty kick.", price: 249, accentColor: "#4F7A2B", theme: { from: "#a9cf5a", to: "#4f7a2b" }, tone: "#ebedcc", description: "Tangy Pudina pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-tangy-pudina.webp" },
+  { id: "jar-butter-salt", name: "Butter Salt Jar", tagline: "Creamy, golden and classic.", accentColor: "#C28A1C", theme: { from: "#f8e38e", to: "#e2ac2e" }, tone: "#f4e4c4", description: "Butter Salt pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-butter-salt.webp" },
+  { id: "jar-peri-peri", name: "Peri Peri Jar", tagline: "Hot, tangy and bold.", accentColor: "#B3261E", theme: { from: "#d9453a", to: "#7d1512" }, tone: "#f7e4d1", description: "Peri Peri pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-peri-peri.webp" },
+  { id: "jar-tangy-pudina", name: "Tangy Pudina Jar", tagline: "Cool mint, zesty kick.", accentColor: "#4F7A2B", theme: { from: "#a9cf5a", to: "#4f7a2b" }, tone: "#ebedcc", description: "Tangy Pudina pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-tangy-pudina.webp" },
 ];
 
 export const ALL_PRODUCTS: FlavourItem[] = [...FLAVOURS_DATA, ...JAR_PRODUCTS];

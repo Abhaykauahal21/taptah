@@ -13,8 +13,8 @@ const STORES = [
 ] as const;
 
 const PACKS = [
-  { src: "/images/flavours/PeriPeriPack.webp", alt: "Peri Peri Pop Jowar pack", side: "left", rot: -9 },
-  { src: "/images/flavours/TangyPudinaPack.webp", alt: "Tangy Pudina Pop Jowar pack", side: "right", rot: 8 },
+  { src: "/images/flavours/PeriPeriPopJowarPackaging-without-bg.png", alt: "Peri Peri Pop Jowar pouch", side: "left", rot: -9 },
+  { src: "/images/flavours/ButterSaltPopJowar-without-bg.png", alt: "Butter Salt Pop Jowar pouch", side: "right", rot: 8 },
 ] as const;
 
 const rv = (i: number): React.CSSProperties => ({ "--i": i }) as React.CSSProperties;

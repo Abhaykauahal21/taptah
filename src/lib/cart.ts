@@ -23,7 +23,6 @@ export interface CartState {
 }
 
 const KEY = "taptah-cart-v1";
-export const FREE_SHIPPING_AT = 299;
 
 const EMPTY: CartState = { items: [], open: false, bump: 0, lastAdded: null };
 let state: CartState = EMPTY;
@@ -103,6 +102,5 @@ export function useCart() {
     return flavour ? [{ ...i, flavour }] : [];
   });
   const count = lines.reduce((n, l) => n + l.qty, 0);
-  const subtotal = lines.reduce((n, l) => n + l.qty * l.flavour.price, 0);
-  return { ...s, lines, count, subtotal };
+  return { ...s, lines, count };
 }

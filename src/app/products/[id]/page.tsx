@@ -102,7 +102,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 </p>
 
                 <div className="pd-rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-3" style={rise(5)}>
-                  <span className="text-[2rem] font-semibold leading-none">&#8377;{flavour.price}</span>
                   {flavour.spiceLevel && (
                     <span
                       className="flex items-center gap-2 text-[0.85rem] font-semibold uppercase tracking-[0.2em] text-[#082567]"

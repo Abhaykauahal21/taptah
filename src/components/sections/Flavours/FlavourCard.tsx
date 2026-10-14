@@ -269,12 +269,9 @@ export function FlavourCard({
             )}
           </p>
           <p className="mt-0.5 text-[0.92rem] leading-snug text-cream/75">{flavour.tagline}</p>
-          {/* Phones: price and spice on one row, a full-width Add to Cart under them. md+: side by side. */}
+          {/* Keep the spice level visible and the Add to Cart button easy to reach. */}
           <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
-            <div className="flex items-center justify-between gap-3 lg:shrink-0 lg:flex-col lg:items-start lg:justify-start lg:gap-1.5">
-              <span className="text-xl font-semibold leading-none">&#8377;{flavour.price}</span>
-              {flavour.spiceLevel && <SpiceMeter level={flavour.spiceLevel} />}
-            </div>
+            {flavour.spiceLevel && <SpiceMeter level={flavour.spiceLevel} />}
             <AddToCartButton
               id={flavour.id}
               image={flavour.image}

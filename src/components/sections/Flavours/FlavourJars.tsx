@@ -168,7 +168,6 @@ export function JarCard({ jar, index, shop = false }: { jar: Jar; index: number;
         <p className="mt-1 text-sm font-medium opacity-80">{jar.line}</p>
         {shop && product && (
           <div className="mt-4 flex w-full flex-col items-center gap-2 px-3 xl:flex-row xl:gap-3" onPointerDown={(e) => e.stopPropagation()}>
-            <span className="text-lg font-semibold">₹{product.price}</span>
             <AddToCartButton id={product.id} image={product.image} className="!w-full !py-2 !text-sm xl:!w-auto" />
           </div>
         )}
@@ -211,9 +210,9 @@ export const FlavourJars: React.FC = () => {
             Pick your jar
           </p>
           <h3 className="jars-title relative mt-4 text-[clamp(2.2rem,4.8vw,4.2rem)] font-semibold leading-[1.12] text-[#C8154B]">
-            Three Jars.
+            Gift your loved ones
             <br />
-            One Endless Crunch.
+            their favourite crunch.
           </h3>
           <p className="relative mx-auto mt-7 max-w-[32rem] text-[clamp(1.05rem,1.3vw,1.2rem)] font-medium leading-[1.6] text-[#082567]">
             Single millet, roasted never fried, with no palm oil and no MSG. Give a jar a spin and find the one that sounds like you.

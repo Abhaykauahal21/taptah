@@ -198,7 +198,6 @@ export const IngredientsSheet: React.FC<{
             className="flex w-full items-center justify-between rounded-full bg-[linear-gradient(180deg,#8a1830,#5a0e1c)] py-3.5 pl-6 pr-6 text-[1.05rem] font-semibold text-cream shadow-[0_12px_24px_-12px_rgba(90,14,28,0.9)] active:scale-[0.98]"
           >
             <span>Add to Cart</span>
-            <span className="tabular-nums">&#8377;{flavour.price}</span>
           </button>
         </div>
       </div>
