@@ -33,7 +33,6 @@ const BOWL = { x: 68, y: 52 };
 const P1 = { src: "/images/why/pop-jwaar-1.webp", width: 1397, height: 1126 };
 const P2 = { src: "/images/why/pop-jwaar-2.webp", width: 1293, height: 1217 };
 const CHILLI = { src: "/images/hero/chilli.webp", width: 700, height: 333 };
-const MINT = { src: "/images/hero/mint-leaf.webp", width: 560, height: 452 };
 
 const FLOATERS: Floater[] = [
   // pop jowar puffs, tossed up around the bowl
@@ -46,12 +45,9 @@ const FLOATERS: Floater[] = [
   { ...P1, left: 82, top: 6, size: 2.5, rotate: -8, depth: 0.25, delay: 0.8, drift: 12, sway: { x: -6, y: -18, r: -14 } },
   { ...P2, left: 96, top: 74, size: 2.4, rotate: 50, depth: 0.2, delay: 0.9, drift: 13, sway: { x: 6, y: -16, r: 16 } },
   { ...P1, left: 66, top: 26, size: 2.2, rotate: -60, depth: 0.3, delay: 1, drift: 10, sway: { x: 8, y: -18, r: -18 } },
-  // Peri Peri chillies and Pudina leaves, thrown out of the bowl with the puffs
+  // Peri Peri chillies, thrown out of the bowl with the puffs
   { ...CHILLI, left: 83, top: 17, size: 8, rotate: -32, depth: 0.85, delay: 0.3, drift: 9, sway: { x: 10, y: -20, r: 10 } },
   { ...CHILLI, left: 55, top: 72, size: 6, rotate: 158, depth: 0.55, delay: 0.65, drift: 11, sway: { x: -12, y: -16, r: -12 } },
-  { ...MINT, left: 91, top: 42, size: 5, rotate: 22, depth: 0.8, delay: 0.5, drift: 10, sway: { x: -8, y: -22, r: 22 } },
-  { ...MINT, left: 56, top: 9, size: 4.2, rotate: -52, depth: 0.45, delay: 0.75, drift: 12, sway: { x: 10, y: -18, r: -20 } },
-  { ...MINT, left: 45, top: 49, size: 3.2, rotate: 104, depth: 0.3, delay: 0.95, drift: 13, sway: { x: -6, y: -14, r: 18 } },
 ];
 
 export const HeroEffects: React.FC = () => {
