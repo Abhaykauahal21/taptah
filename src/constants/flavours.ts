@@ -77,7 +77,6 @@ export const FLAVOUR_BADGES = [
 export const JAR_PRODUCTS: FlavourItem[] = [
   { id: "jar-butter-salt", name: "Butter Salt Jar", tagline: "Creamy, golden and classic.", price: 249, accentColor: "#C28A1C", theme: { from: "#f8e38e", to: "#e2ac2e" }, tone: "#f4e4c4", description: "Butter Salt pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-butter-salt.webp" },
   { id: "jar-peri-peri", name: "Peri Peri Jar", tagline: "Hot, tangy and bold.", price: 249, accentColor: "#B3261E", theme: { from: "#d9453a", to: "#7d1512" }, tone: "#f7e4d1", description: "Peri Peri pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-peri-peri.webp" },
-  { id: "jar-italian-herbs", name: "Italian Herbs Jar", tagline: "Oregano, basil and calm.", price: 249, accentColor: "#3F8A50", theme: { from: "#3f8a50", to: "#174022" }, tone: "#e3efd8", description: "Italian Herbs pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-italian-herbs.webp" },
   { id: "jar-tangy-pudina", name: "Tangy Pudina Jar", tagline: "Cool mint, zesty kick.", price: 249, accentColor: "#4F7A2B", theme: { from: "#a9cf5a", to: "#4f7a2b" }, tone: "#ebedcc", description: "Tangy Pudina pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-tangy-pudina.webp" },
 ];
 

@@ -32,7 +32,6 @@ interface Jar {
 const JARS: Jar[] = [
   { id: "butter-salt", name: "Butter Salt", word: "Butter", line: "Creamy, golden and classic.", tag: "The Classic", from: "#f8e38e", to: "#e2ac2e", on: "#6b1a1a", paper: "#e8d58a" },
   { id: "peri-peri", name: "Peri Peri", word: "Peri", line: "Hot, tangy and bold.", tag: "The Fiery One", from: "#d9453a", to: "#7d1512", on: "#fde6c8", paper: "#7d1a17" },
-  { id: "italian-herbs", name: "Italian Herbs", word: "Herbs", line: "Oregano, basil and calm.", tag: "The Herby One", from: "#3f8a50", to: "#174022", on: "#e9f3c9", paper: "#1b4426" },
   { id: "tangy-pudina", name: "Tangy Pudina", word: "Pudina", line: "Cool mint, zesty kick.", tag: "The Fresh One", from: "#a9cf5a", to: "#4f7a2b", on: "#f6fbd8", paper: "#709a35" },
 ];
 
@@ -180,7 +179,7 @@ export function JarCard({ jar, index, shop = false }: { jar: Jar; index: number;
 
 /** The four jars in a row (a zig-zag from md up). */
 export const JarGrid: React.FC<{ shop?: boolean }> = ({ shop = false }) => (
-  <div className="grid grid-cols-2 items-start gap-3 sm:gap-4 md:grid-cols-4 lg:gap-6">
+  <div className="grid grid-cols-2 items-start gap-3 sm:gap-4 md:grid-cols-3 lg:gap-6">
     {JARS.map((jar, i) => (
       <JarCard key={jar.id} jar={jar} index={i} shop={shop} />
     ))}
@@ -212,7 +211,7 @@ export const FlavourJars: React.FC = () => {
             Pick your jar
           </p>
           <h3 className="jars-title relative mt-4 text-[clamp(2.2rem,4.8vw,4.2rem)] font-semibold leading-[1.12] text-[#C8154B]">
-            Four Jars.
+            Three Jars.
             <br />
             One Endless Crunch.
           </h3>
