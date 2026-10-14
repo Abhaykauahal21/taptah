@@ -25,7 +25,7 @@ const CHAPTERS = [
     title: "Why popped?",
     paras: [
       "Popping is a traditional heat processing technique that makes the millet lighter, crispier and easier to digest while retaining many of the grain’s naturally occurring nutrients, including fibre and minerals such as iron, magnesium and phosphorus.",
-      "It also makes the millet starch more accessible, creating a naturally light and enjoyable way to eat whole grains.",
+      "It also makes the millet starch more  digestible, creating a naturally light and enjoyable way to eat whole grains.",
     ],
   },
   {
