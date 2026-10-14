@@ -181,7 +181,7 @@ function ProcessVisual() {
     {
       Icon: Droplets,
       title: "Soaked",
-      note: "Can help reduce some of these compounds",
+      note: "Helps in reduction of these compounds",
       chips: [],
       tone: "mid",
     },
