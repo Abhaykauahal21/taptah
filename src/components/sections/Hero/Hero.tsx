@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
           <h1 className="text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl lg:text-[clamp(3rem,4.9vw,4.75rem)]">
             <span className="hero-line">
               <span className="hero-line-inner" style={{ "--i": 0 } as React.CSSProperties}>
-                Single Millet.
+                Single Millet,
               </span>
             </span>
             <span className="hero-line">
@@ -75,9 +75,6 @@ export const Hero: React.FC = () => {
             </Link>
           </div>
 
-          <p style={{ "--i": 5 } as React.CSSProperties} className="hero-fade mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-cream/75 sm:text-[13px]">
-            Single Millet · Millet Flavours
-          </p>
         </div>
       </div>
 
