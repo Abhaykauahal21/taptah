@@ -1,0 +1,83 @@
+import { FlavourItem } from "@/types";
+
+export const FLAVOURS_DATA: FlavourItem[] = [
+  {
+    id: "butter-salt",
+    name: "Butter Salt",
+    tagline: "Simple Ingredients. Irresistible Crunch.",
+    description: "Creamy butter and a pinch of salt on light, crunchy pop jowar.",
+    spiceLevel: 1,
+    accentColor: "#C28A1C",
+    price: 99,
+    theme: { from: "#b8821c", to: "#8a5a10" },
+    tone: "#f4e4c4",
+    ingredients: [
+      { name: "Jowar", note: "Wholesome ancient grain" },
+      { name: "Olive Oil", note: "A healthier goodness" },
+      { name: "Salt", note: "Enhances the natural taste" },
+      { name: "Milk Solids", note: "Adds a rich and creamy taste" },
+      { name: "Sugar", note: "A touch of sweetness" },
+    ],
+    image: "/images/flavours/ButterSaltpack.webp",
+  },
+  {
+    id: "peri-peri",
+    name: "Peri Peri",
+    tagline: "Bold Spices. Irresistible Crunch.",
+    description: "Chilli, garlic and lemon heat tossed through every crunchy bite.",
+    spiceLevel: 3,
+    accentColor: "#B3261E",
+    price: 99,
+    theme: { from: "#a3211a", to: "#7d1710" },
+    tone: "#f7e4d1",
+    ingredients: [
+      { name: "Jowar", note: "Wholesome ancient grain" },
+      { name: "Olive Oil", note: "A healthier goodness" },
+      { name: "Salt", note: "Enhances the natural taste" },
+      { name: "Chilli", note: "Adds the perfect heat" },
+      { name: "Pepper", note: "Adds a spicy kick" },
+      { name: "Garlic Powder", note: "Rich and savory flavour" },
+      { name: "Onion Powder", note: "Savory depth" },
+      { name: "Oregano", note: "Aromatic herb blend" },
+      { name: "Lemon Powder", note: "Tangy and zesty flavour" },
+      { name: "Tomato Powder", note: "Adds a rich umami taste" },
+      { name: "Sugar", note: "A hint of sweetness" },
+    ],
+    image: "/images/flavours/PeriPeriPack.webp",
+  },
+  {
+    id: "tangy-pudina",
+    name: "Tangy Pudina",
+    tagline: "A Refreshing Twist. Naturally Delicious.",
+    description: "Cool mint and lemon with a gentle spice for a fresh, zesty crunch.",
+    spiceLevel: 2,
+    accentColor: "#4F7A2B",
+    price: 99,
+    theme: { from: "#2f5d34", to: "#1d4426" },
+    tone: "#ebedcc",
+    ingredients: [
+      { name: "Jowar", note: "Wholesome ancient grain" },
+      { name: "Olive Oil", note: "A healthier goodness" },
+      { name: "Salt", note: "Enhances the natural taste" },
+      { name: "Dehydrated Mint", note: "A refreshing boost" },
+      { name: "Lemon Powder & Nimbu Satand", note: "Tangy, zesty flavour" },
+      { name: "Sugar", note: "A touch of sweetness" },
+      { name: "Mixed Spices", note: "Chilli, Turmeric, Pepper, Kachiri, Ginger, Black Salt, Mangi Powder, Hing" },
+    ],
+    image: "/images/flavours/TangyPudinaPack.webp",
+  },
+];
+
+export const FLAVOUR_BADGES = [
+  { id: "fibre", label: "High Fibre", icon: "leaf" },
+  { id: "clean", label: "No Preservatives", icon: "shield" },
+] as const;
+
+/** The glass jars. Prices are placeholders until the admin sets the real ones. */
+export const JAR_PRODUCTS: FlavourItem[] = [
+  { id: "jar-butter-salt", name: "Butter Salt Jar", tagline: "Creamy, golden and classic.", price: 249, accentColor: "#C28A1C", theme: { from: "#f8e38e", to: "#e2ac2e" }, tone: "#f4e4c4", description: "Butter Salt pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-butter-salt.webp" },
+  { id: "jar-peri-peri", name: "Peri Peri Jar", tagline: "Hot, tangy and bold.", price: 249, accentColor: "#B3261E", theme: { from: "#d9453a", to: "#7d1512" }, tone: "#f7e4d1", description: "Peri Peri pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-peri-peri.webp" },
+  { id: "jar-tangy-pudina", name: "Tangy Pudina Jar", tagline: "Cool mint, zesty kick.", price: 249, accentColor: "#4F7A2B", theme: { from: "#a9cf5a", to: "#4f7a2b" }, tone: "#ebedcc", description: "Tangy Pudina pop jowar in a reusable glass-clear jar.", ingredients: [], image: "/images/flavours/jar-thumb-tangy-pudina.webp" },
+];
+
+export const ALL_PRODUCTS: FlavourItem[] = [...FLAVOURS_DATA, ...JAR_PRODUCTS];

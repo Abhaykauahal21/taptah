@@ -1,0 +1,3810 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette (Taptah Brand Guidelines): Vivid Raspberry #C8154B, Sapphire Blue #082567,
+     Almond Oil #F2EEBF. The page background stays the warm cream the artwork was drawn on. */
+  --background: #F2EEBF; /* Almond Oil (brand) */
+  --foreground: #082567; /* Sapphire Blue */
+
+  --primary: #C8154B;    /* Vivid Raspberry */
+  --primary-foreground: #F2EEBF;
+
+  --secondary: #082567;  /* Sapphire Blue */
+  --secondary-foreground: #F2EEBF;
+
+  --accent: #C8154B;     /* Vivid Raspberry */
+  --accent-foreground: #F2EEBF;
+
+  --muted: #EAE3D2;      /* Soft beige / natural paper */
+  --muted-foreground: #4a5a85;
+
+  --cream: #F2EEBF;      /* Almond Oil */
+  --maroon: #C8154B;     /* Vivid Raspberry */
+  --brown: #082567;      /* Sapphire Blue */
+  --gold: #F2B760;       /* Cheese */
+  --sand: #EFE9DC;       /* Natural paper tone */
+
+  --border: #E5DCCF;
+  --ring: #082567;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-cream: var(--cream);
+  --color-maroon: var(--maroon);
+  --color-brown: var(--brown);
+  --color-gold: var(--gold);
+  --color-sand: var(--sand);
+  --color-border: var(--border);
+
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-serif), Georgia, serif;
+  /* Khaviax (secondary) and Baginda (logo) are used once their files are in /public/fonts. */
+  --font-script: "Khaviax", var(--font-allura), cursive;
+  --font-logo: "Baginda", var(--font-cormorant), Georgia, serif;
+}
+
+@font-face {
+  font-family: "Khaviax";
+  src: url("/fonts/Khaviax-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baginda";
+  src: url("/fonts/Baginda-Thin.woff2") format("woff2");
+  font-weight: 100 400;
+  font-display: swap;
+}
+
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  /* Decorative layers (foliage, slides) may poke out: never scroll sideways. `clip` keeps sticky working. */
+  overflow-x: clip;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-serif);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Editorial selection highlight */
+::selection {
+  background-color: var(--maroon);
+  color: var(--cream);
+}
+
+/* Organic curved section dividers */
+.organic-curve-top {
+  clip-path: ellipse(120% 100% at 50% 100%);
+}
+
+.organic-curve-bottom {
+  clip-path: ellipse(120% 100% at 50% 0%);
+}
+
+.organic-shape-pill {
+  border-radius: 9999px 9999px 9999px 9999px;
+}
+
+.organic-shape-arch {
+  border-radius: 200px 200px 0 0;
+}
+
+.organic-shape-leaf {
+  border-radius: 60% 40% 70% 30% / 40% 60% 40% 60%;
+}
+
+/* Why artwork: window opens, jowar rises and sways, decorations settle in */
+.why-window {
+  clip-path: url(#why-window-clip);
+  -webkit-clip-path: url(#why-window-clip);
+}
+
+.why-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--background);
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: 50% 0%;
+}
+
+.why-art[data-revealed="true"] .why-window::before {
+  transform: scaleY(0);
+}
+
+.why-field {
+  transform: scale(1.05);
+}
+
+.why-art[data-revealed="true"] .why-field {
+  animation: why-field-drift 18s ease-in-out 1.5s infinite alternate;
+}
+
+@keyframes why-field-drift {
+  from {
+    transform: scale(1.05) translateX(0);
+  }
+  to {
+    transform: scale(1.13) translateX(-2%);
+  }
+}
+
+.why-jowar {
+  opacity: 0;
+  transform: translateY(14%) scale(0.82);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.9s ease-out 0.5s,
+    transform 1.7s cubic-bezier(0.34, 1.4, 0.5, 1) 0.5s;
+}
+
+.why-art[data-revealed="true"] .why-jowar {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.why-jowar-sway {
+  transform-origin: 50% 96%;
+}
+
+.why-art[data-revealed="true"] .why-jowar-sway {
+  animation: why-sway 6s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes why-sway {
+  from {
+    transform: rotate(-1.1deg);
+  }
+  to {
+    transform: rotate(1.3deg);
+  }
+}
+
+.why-deco {
+  opacity: 0;
+  transition:
+    opacity 1.2s ease-out 1s,
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 1s;
+}
+
+.why-deco-leaves {
+  transform: translate(-6%, -4%) rotate(-4deg);
+  transform-origin: 80% 90%;
+}
+
+.why-deco-branch {
+  transform: translate(-6%, 4%) rotate(3deg);
+  transform-origin: 90% 95%;
+}
+
+.why-art[data-revealed="true"] .why-deco {
+  opacity: 1;
+  transform: none;
+}
+
+/* Process: grain flow glides in, copy and steps follow */
+.process-flow {
+  opacity: 0;
+  transform: translate(-5%, -6%);
+  transition:
+    opacity 1.1s ease-out,
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-copy,
+.process-step {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s ease-out 0.4s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.process-step {
+  transition-delay: var(--step-delay, 0.9s);
+}
+
+.process-art[data-in-view="true"] .process-flow,
+.process-art[data-in-view="true"] .process-copy,
+.process-art[data-in-view="true"] .process-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Pop jowar drifting about the process scene on small screens */
+.proc-float {
+  transform: rotate(var(--r, 0deg));
+  animation: proc-float var(--d, 5s) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+@keyframes proc-float {
+  from {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  to {
+    transform: translateY(-9px) rotate(calc(var(--r, 0deg) + 10deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proc-float {
+    animation: none;
+  }
+}
+
+/* Phones: the drifting pop jowar is decoration. Each one is a looping animation that has
+   to be restyled whenever its section scrolls into view, so they hold still (in their
+   resting pose) on small screens to keep scrolling smooth. */
+@media (max-width: 767px) {
+  .proc-float {
+    animation: none;
+  }
+}
+
+/* Process ground: glow fades up, the stream flows in, vessels cast real shadows */
+.process-contact {
+  opacity: 0;
+  transition: opacity 1.4s ease-out 0.4s;
+}
+
+.process-stream-reveal {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 2.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-art[data-in-view="true"] .process-contact {
+  opacity: 1;
+}
+
+.process-art[data-in-view="true"] .process-stream-reveal {
+  stroke-dashoffset: 0;
+}
+
+/* A black copy of the vessel, softened and placed where its shadow would fall */
+.process-cast {
+  filter: brightness(0) blur(6px);
+  opacity: 0.3;
+}
+
+/* Vessels standing on the surface: shadow squashed flat and thrown to one side */
+.process-cast-floor {
+  transform-origin: 50% 95%;
+  transform: translate(7%, 2%) skewX(-38deg) scaleY(0.2);
+  opacity: 0.38;
+}
+
+/* The scoop is held higher up: a larger, fainter shadow falls further away */
+.process-cast-air {
+  transform: translate(11%, 15%) scale(1.02);
+  filter: brightness(0) blur(12px);
+  opacity: 0.2;
+}
+
+/* Leaves around the bowl sway gently from their base */
+.bowl-leaf {
+  transform: rotate(var(--r));
+}
+
+.process-art[data-in-view="true"] .bowl-leaf {
+  animation: bowl-leaf-sway 5.5s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes bowl-leaf-sway {
+  from {
+    transform: rotate(calc(var(--r) - 3deg));
+  }
+  to {
+    transform: rotate(calc(var(--r) + 3.5deg));
+  }
+}
+
+/* ---------- Hero ---------- */
+/* Hero is pinned and recedes as the page slides up over it */
+.hero-content {
+  transform: translateY(calc(var(--hs, 0) * -70px)) scale(calc(1 - var(--hs, 0) * 0.07));
+  opacity: calc(1 - var(--hs, 0) * 1.25);
+  will-change: transform, opacity;
+}
+
+.hero-cover {
+  opacity: calc(var(--hs, 0) * 0.8);
+}
+
+
+.nav-enter {
+  animation: nav-drop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+/* Background: settles in, then breathes; follows the pointer and scroll */
+.hero-bg {
+  transform: translate3d(
+      calc(var(--hx, 0) * -16px),
+      calc(var(--hy, 0) * -10px + var(--hs, 0) * 70px),
+      0
+    )
+    scale(1.07);
+  will-change: transform;
+}
+
+.hero-kenburns {
+  animation:
+    hero-settle 2.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    hero-breathe 22s ease-in-out 2.8s infinite alternate;
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.08);
+    filter: brightness(0.55) blur(5px);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1) blur(0);
+  }
+}
+
+@keyframes hero-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.025);
+  }
+}
+
+.hero-glow {
+  right: -6%;
+  bottom: -12%;
+  width: 72%;
+  height: 92%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 170, 70, 0.34),
+    rgba(255, 120, 30, 0.12) 55%,
+    transparent
+  );
+  animation: hero-glow-pulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes hero-glow-pulse {
+  from {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* Headline lines rise out of a mask */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.hero-line-inner {
+  display: inline-block;
+  transform: translateY(115%);
+  animation: hero-line-up 1.1s cubic-bezier(0.22, 1, 0.36, 1)
+    calc(0.45s + var(--i, 0) * 0.16s) forwards;
+}
+
+@keyframes hero-line-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Everything else fades up in sequence */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: hero-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1)
+    calc(0.5s + var(--i, 0) * 0.14s) forwards;
+}
+
+@keyframes hero-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-star {
+  opacity: 0;
+  transform: scale(0.3) rotate(-40deg);
+  animation: hero-star-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)
+    calc(1.3s + var(--s, 0) * 0.1s) forwards;
+}
+
+@keyframes hero-star-pop {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* A glint sweeps across the primary button now and then */
+.hero-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+  transform: translateX(-120%);
+  animation: hero-shine 4.5s ease-in-out 2.6s infinite;
+}
+
+@keyframes hero-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* The script tagline is written on, then floats */
+.hero-script {
+  clip-path: inset(0 100% 0 0);
+  translate: calc(var(--hx, 0) * 12px) calc(var(--hy, 0) * 9px);
+  animation:
+    hero-script-write 1.8s cubic-bezier(0.6, 0, 0.2, 1) 2s forwards,
+    hero-script-float 6s ease-in-out 3.8s infinite alternate;
+}
+
+@keyframes hero-script-write {
+  to {
+    clip-path: inset(-20% -20% -20% -20%);
+  }
+}
+
+@keyframes hero-script-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+
+/* Pop jowar bursts out of the bowl, then drifts at its own depth */
+.hero-float {
+  translate: calc(var(--hx, 0) * var(--d, 0.5) * -34px)
+    calc(var(--hy, 0) * var(--d, 0.5) * -24px + var(--hs, 0) * var(--d, 0.5) * -90px);
+}
+
+.hero-float-img {
+  opacity: 0;
+  transform: translate(var(--bx), var(--by)) scale(0.15) rotate(-120deg);
+  animation:
+    hero-burst 1.5s cubic-bezier(0.2, 0.9, 0.25, 1.15) var(--delay, 1s) forwards,
+    hero-drift var(--drift, 8s) ease-in-out calc(var(--delay, 1s) + 1.5s) infinite
+      alternate;
+}
+
+@keyframes hero-burst {
+  0% {
+    opacity: 0;
+    transform: translate(var(--bx), var(--by)) scale(0.15) rotate(-120deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(var(--rot, 0deg));
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) rotate(var(--rot, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translate(var(--dx, 6px), var(--dy, -18px)) rotate(calc(var(--rot, 0deg) + var(--dr, 9deg)));
+  }
+}
+
+/* Masala shaker tilts over the bowl and shakes */
+.masala-shaker {
+  transform: rotate(125deg);
+  transform-origin: 50% 50%;
+}
+
+.masala-shaker-right {
+  transform: rotate(-125deg);
+}
+
+.process-art[data-in-view="true"] .masala-shaker {
+  animation: masala-shake 0.5s ease-in-out 3s infinite alternate;
+}
+
+.process-art[data-in-view="true"] .masala-shaker-right {
+  animation-name: masala-shake-right;
+}
+
+@keyframes masala-shake-right {
+  from {
+    transform: rotate(-121deg) translate(2px, -2px);
+  }
+  to {
+    transform: rotate(-129deg) translate(-2px, 3px);
+  }
+}
+
+@keyframes masala-shake {
+  from {
+    transform: rotate(121deg) translate(-2px, -2px);
+  }
+  to {
+    transform: rotate(129deg) translate(2px, 3px);
+  }
+}
+
+/* Out-of-focus foliage at the left edge sways ever so slightly */
+.blurred-foliage {
+  transform-origin: 8% 100%;
+  animation: foliage-sway 9s ease-in-out infinite alternate;
+}
+
+@keyframes foliage-sway {
+  from {
+    transform: rotate(-1.6deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+/* Flavours: heading and cards rise in, one after another */
+.flavours-head,
+.flavour-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s ease-out calc(var(--i, 0) * 0.14s + 0.1s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.14s + 0.1s),
+    box-shadow 0.5s ease;
+}
+
+.flavours-art[data-in-view="true"] .flavours-head,
+.flavours-art[data-in-view="true"] .flavour-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Flavours backdrop: everything fades out towards its edges */
+.flavour-wash {
+  position: absolute;
+  top: 34%;
+  width: 34vw;
+  height: 62%;
+  border-radius: 9999px;
+  opacity: 0.16;
+  filter: blur(70px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  animation: flavour-breathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes flavour-breathe {
+  from {
+    opacity: 0.1;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 0.22;
+    transform: scale(1.06);
+  }
+}
+
+.flavour-watermark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 16%;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(9rem, 24vw, 26rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(200, 21, 75, 0.16);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.5) 40%, transparent 78%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.5) 40%, transparent 78%);
+}
+
+.flavour-leaf {
+  opacity: 0.5;
+  filter: saturate(0.7);
+  -webkit-mask-image: linear-gradient(135deg, #000 20%, transparent 85%);
+  mask-image: linear-gradient(135deg, #000 20%, transparent 85%);
+}
+
+/* Flavours on desktop: cards sit on a soft natural shadow, a band of light sweeps the artwork,
+   and while one card is hovered its neighbours step back */
+.flavour-card {
+  box-shadow:
+    0 2px 4px rgba(60, 28, 12, 0.1),
+    0 12px 24px -10px rgba(60, 28, 12, 0.28);
+}
+
+.flavour-tilt {
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.5s ease,
+    opacity 0.5s ease;
+}
+
+.flavour-sheen {
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 244, 220, 0.38) 50%, transparent 62%);
+  transform: translateX(-120%);
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  .flavour-card:hover .flavour-sheen {
+    transform: translateX(120%);
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .flavour-track:has(.flavour-card:hover) .flavour-tilt:not(:hover) {
+    opacity: 0.82;
+    filter: saturate(0.8) brightness(0.96);
+  }
+
+  .flavour-card:hover .flavour-puff {
+    animation: flavour-pop 1.9s cubic-bezier(0.2, 0.7, 0.3, 1) var(--d, 0s) infinite;
+  }
+
+  .flavour-card:hover {
+    box-shadow:
+      0 4px 8px rgba(60, 28, 12, 0.12),
+      0 22px 36px -14px rgba(60, 28, 12, 0.38);
+  }
+}
+
+.flavour-puff {
+  opacity: 0;
+}
+
+@keyframes flavour-pop {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(0.3);
+  }
+  14% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), -150px) rotate(var(--r)) scale(1);
+  }
+}
+
+/* "What's inside": a circle of colour grows from the button, then the chips pop in one by one */
+.flavour-ing {
+  clip-path: circle(0% at var(--ox, 85%) var(--oy, 8%));
+  visibility: hidden;
+  transition:
+    clip-path 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.75s;
+}
+
+.flavour-ing[data-open="true"] {
+  clip-path: circle(150% at var(--ox, 85%) var(--oy, 8%));
+  visibility: visible;
+  transition:
+    clip-path 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s;
+}
+
+.flavour-ing-head,
+.flavour-ing-row {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.flavour-sheet[data-open="true"] .flavour-ing-head,
+.flavour-ing[data-open="true"] .flavour-ing-head {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s ease-out 0.3s,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+
+/* Each line is written in, then its hairline draws underneath */
+.flavour-ing-row::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: rgba(200, 21, 75, 0.14);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.flavour-sheet[data-open="true"] .flavour-ing-row,
+.flavour-ing[data-open="true"] .flavour-ing-row {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s ease-out calc(var(--k, 0) * 0.06s + 0.45s),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--k, 0) * 0.06s + 0.45s);
+}
+
+.flavour-sheet[data-open="true"] .flavour-ing-row::after,
+.flavour-ing[data-open="true"] .flavour-ing-row::after {
+  transform: none;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--k, 0) * 0.06s + 0.6s);
+}
+
+.flavour-ing-squiggle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.flavour-sheet[data-open="true"] .flavour-ing-squiggle,
+.flavour-ing[data-open="true"] .flavour-ing-squiggle {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s ease-out 0.55s;
+}
+
+/* Flavours on phones: the centred card is in focus, its neighbours step back */
+@media (max-width: 767px) {
+  .flavour-slide {
+    transform: scale(0.93);
+    opacity: 0.7;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.5s ease-out;
+  }
+
+  .flavour-track[data-active="0"] > .flavour-slide:nth-child(1),
+  .flavour-track[data-active="1"] > .flavour-slide:nth-child(2),
+  .flavour-track[data-active="2"] > .flavour-slide:nth-child(3) {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Reviews: heading rises in, cards slide in one after another (and on every arrow click) */
+.reviews-head {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s ease-out 0.1s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.reviews-art[data-in-view="true"] .reviews-head {
+  opacity: 1;
+  transform: none;
+}
+
+.review-slide {
+  opacity: 0;
+  animation: review-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.12s + var(--d0, 0.15s))
+    forwards;
+  animation-play-state: paused;
+}
+
+.reviews-art[data-in-view="true"] .review-slide {
+  animation-play-state: running;
+}
+
+@keyframes review-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(26px * var(--dir, 1)));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Leaving: the current cards slide away (staggered) before the next ones come in */
+.reviews-art .review-slide[data-out="true"] {
+  animation: review-out 0.4s cubic-bezier(0.55, 0, 0.9, 0.4) calc(var(--i, 0) * 0.06s) forwards;
+  animation-play-state: running;
+  pointer-events: none;
+}
+
+@keyframes review-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(calc(-70px * var(--dir, 1))) scale(0.95);
+    filter: blur(4px);
+  }
+}
+
+/* Desktop: cards swing in from the side the user is heading towards */
+@media (min-width: 1024px) {
+  .review-slide {
+    animation-name: review-in-lg;
+    animation-duration: 0.9s;
+  }
+}
+
+@keyframes review-in-lg {
+  from {
+    opacity: 0;
+    transform: translateX(calc(90px * var(--dir, 1))) rotate(calc(3deg * var(--dir, 1))) scale(0.94);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* Heading: each line rises out of a mask, the rule beside the eyebrow draws itself */
+.rv-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.rv-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--l, 0) * 0.14s + 0.3s);
+}
+
+.reviews-art[data-in-view="true"] .rv-line > span,
+.flavours-art[data-in-view="true"] .rv-line > span {
+  transform: none;
+}
+
+.rv-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+}
+
+.reviews-art[data-in-view="true"] .rv-rule,
+.flavours-art[data-in-view="true"] .rv-rule {
+  transform: none;
+}
+
+/* Rating stars pop in one by one, then the stat fades up */
+.rv-star {
+  opacity: 0;
+  transform: scale(0) rotate(-50deg);
+}
+
+.reviews-art[data-in-view="true"] .rv-star {
+  animation: rv-star-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i, 0) * 0.09s + 0.9s)
+    forwards;
+}
+
+@keyframes rv-star-pop {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Autoplay: the bar fills, and its end advances the cards. Pauses while hovered. */
+.rv-progress {
+  width: 0;
+  animation: rv-progress 7s linear forwards;
+  animation-play-state: paused;
+}
+
+.reviews-art[data-in-view="true"] .rv-progress {
+  animation-play-state: running;
+}
+
+.reviews-art[data-paused="true"] .rv-progress {
+  animation-play-state: paused;
+}
+
+@keyframes rv-progress {
+  to {
+    width: 100%;
+  }
+}
+
+.rv-glare {
+  background: radial-gradient(
+    380px circle at var(--gx, 50%) var(--gy, 0%),
+    rgba(255, 255, 255, 0.55),
+    transparent 60%
+  );
+}
+
+/* ---------- Why Taptah: scroll-linked depth and staged text reveals ---------- */
+/* Parallax layers are moved by ParallaxManager through the `translate` property */
+[data-parallax] {
+  will-change: translate;
+}
+
+/* Heading lines rise out of a mask, one after the other */
+.why-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.why-line-inner {
+  display: inline-block;
+  transform: translateY(112%);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) calc(0.2s + var(--i, 0) * 0.15s);
+}
+
+.why-section[data-in-view="true"] .why-line-inner {
+  transform: none;
+}
+
+/* The leaf icon unfurls beside the heading */
+.why-leaf-icon {
+  opacity: 0;
+  transform: scale(0.2) rotate(-70deg);
+  transform-origin: 20% 90%;
+  transition:
+    opacity 0.6s ease-out 0.7s,
+    transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s;
+}
+
+.why-section[data-in-view="true"] .why-leaf-icon {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+/* Button and quote follow once the paragraph is under way */
+.why-cta,
+.why-quote {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.9s ease-out 0.9s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.9s,
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.why-quote {
+  transition-delay: 1.1s;
+}
+
+.why-section[data-in-view="true"] .why-cta,
+.why-section[data-in-view="true"] .why-quote {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Loader (light) ---------- */
+/* Hero entrance animations wait behind the loader */
+html[data-loading="true"] {
+  overflow: hidden;
+}
+
+html[data-loading="true"] .nav-enter,
+html[data-loading="true"] .hero-kenburns,
+html[data-loading="true"] .hero-fade,
+html[data-loading="true"] .hero-line-inner,
+html[data-loading="true"] .hero-star,
+html[data-loading="true"] .hero-script,
+html[data-loading="true"] .hero-float-img,
+html[data-loading="true"] .hero-shine::after {
+  animation-play-state: paused;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: all;
+  color: #F2EEBF;
+}
+
+.loader-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #F2EEBF;
+  color: #6b1022;
+  transition: transform 1.15s cubic-bezier(0.76, 0, 0.18, 1);
+}
+
+.loader-lifting .loader-panel {
+  transform: translateY(calc(-100% - 90px));
+}
+
+.loader-wave {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 90px;
+  color: #F2EEBF;
+  margin-top: -1px;
+}
+
+/* Deep maroon layer behind the cream curtain: a second wave follows the first up */
+.loader-back {
+  position: absolute;
+  inset: 0;
+  background: #6b1022;
+  color: #6b1022;
+  transition: transform 1.15s cubic-bezier(0.76, 0, 0.18, 1) 0.14s;
+}
+
+.loader-lifting .loader-back {
+  transform: translateY(calc(-100% - 90px));
+}
+
+.loader-wave-back {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 90px;
+  margin-top: -1px;
+}
+
+.loader-lifting .loader-stage,
+.loader-lifting .loader-word,
+.loader-lifting .loader-tag,
+.loader-lifting .loader-meter,
+.loader-lifting .loader-fountain {
+  opacity: 0;
+  transition: opacity 0.45s ease-out;
+}
+
+.loader-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 42%, transparent 35%, rgba(180, 110, 60, 0.16) 100%);
+  pointer-events: none;
+}
+
+.loader-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 166, 58, 0.75), rgba(240, 166, 58, 0));
+  opacity: 0;
+  animation: loader-mote 6s ease-in-out infinite;
+}
+
+@keyframes loader-mote {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, -150px);
+  }
+}
+
+.loader-stage {
+  position: relative;
+  width: 260px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-ringsvg {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 260px;
+  height: 260px;
+  margin: -130px 0 0 -130px;
+  overflow: visible;
+  opacity: 0;
+  animation: loader-fade 0.6s ease-out 0.2s forwards;
+}
+
+.loader-ringsvg circle:last-child {
+  transition: stroke-dashoffset 0.25s linear;
+  filter: drop-shadow(0 0 5px rgba(240, 166, 58, 0.55));
+}
+
+.loader-glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 170, 70, 0.55),
+    rgba(255, 140, 50, 0.18) 60%,
+    transparent
+  );
+  opacity: 0;
+  animation: loader-glow 3.2s ease-in-out forwards;
+}
+
+@keyframes loader-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  55% {
+    opacity: 0.9;
+    transform: scale(0.9);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+/* Heat rings pulse outward, faster and faster until the pop */
+.loader-ring {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196, 80, 30, 0.55);
+  opacity: 0;
+  animation: loader-ring 1.5s ease-out infinite;
+}
+
+.loader-ring-2 {
+  animation-delay: 0.5s;
+}
+
+.loader-ring-3 {
+  animation-delay: 1s;
+}
+
+@keyframes loader-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.45);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+.loader-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  width: 92px;
+  height: 14px;
+  margin-left: -46px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(60, 30, 10, 0.4), transparent);
+  animation: loader-shadow 3.2s ease-in-out forwards;
+}
+
+@keyframes loader-shadow {
+  0%,
+  46% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  56% {
+    transform: scale(0.55);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.55;
+  }
+}
+
+/* The kernel: a gentle wobble that grows into violent shaking, then it pops */
+.loader-kernel {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 62px;
+  height: auto;
+  margin: -29px 0 0 -31px;
+  filter: drop-shadow(0 8px 6px rgba(60, 30, 10, 0.3));
+  animation: loader-kernel 1.6s ease-in forwards;
+}
+
+@keyframes loader-kernel {
+  0% {
+    transform: translateY(14px) rotate(0) scale(0.6);
+    opacity: 0;
+  }
+  14% {
+    transform: translateY(0) rotate(0) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-1.5px, 0) rotate(-4deg) scale(1);
+  }
+  40% {
+    transform: translate(2px, -1px) rotate(5deg) scale(1.02);
+  }
+  50% {
+    transform: translate(-2.5px, 1px) rotate(-8deg) scale(1.06);
+  }
+  60% {
+    transform: translate(3px, -2px) rotate(10deg) scale(1.1);
+    filter: drop-shadow(0 8px 6px rgba(60, 30, 10, 0.3)) saturate(1.6) brightness(1.08);
+  }
+  72% {
+    transform: translate(-4px, 1px) rotate(-12deg) scale(1.16);
+  }
+  84% {
+    transform: translate(4px, -2px) rotate(12deg) scale(1.22);
+  }
+  94% {
+    transform: translate(0, -6px) rotate(0) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -14px) rotate(0) scale(1.7);
+    opacity: 0;
+  }
+}
+
+/* The pop: puffs out of nothing with a squash-and-stretch overshoot, then bobs */
+.loader-pop-wrap {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 80px;
+  margin: -37px 0 0 -40px;
+  opacity: 0;
+  transform: scale(0.1);
+  animation: loader-pop 0.9s cubic-bezier(0.2, 1.1, 0.3, 1) 1.5s forwards;
+}
+
+.loader-pop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 10px rgba(60, 30, 10, 0.28));
+  animation: loader-bob 2.4s ease-in-out 2.4s infinite alternate;
+}
+
+@keyframes loader-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(-40deg);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.32, 0.86) rotate(6deg);
+  }
+  60% {
+    transform: scale(0.92, 1.1) rotate(-3deg);
+  }
+  80% {
+    transform: scale(1.05, 0.97) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes loader-bob {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-8px) rotate(2.5deg);
+  }
+}
+
+/* Golden sparks fly out of the pop */
+.loader-spark {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff3c4, #f0a63a 60%, #d4691a);
+  opacity: 0;
+  animation: loader-spark 0.9s cubic-bezier(0.16, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes loader-spark {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), calc(var(--y) + 26px)) scale(1);
+  }
+}
+
+/* Popped jowar fountain: flies out in an arc (x linear, y up then down), spinning */
+.loader-fountain {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -92px;
+  pointer-events: none;
+}
+
+.loader-piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  margin: -12px 0 0 -12px;
+  opacity: 0;
+  animation: loader-piece-x 1.55s linear forwards;
+}
+
+.loader-piece img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 4px rgba(60, 30, 10, 0.28));
+  animation: loader-piece-y 1.55s linear forwards;
+}
+
+@keyframes loader-piece-x {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  4% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--dx));
+  }
+}
+
+@keyframes loader-piece-y {
+  0% {
+    transform: translateY(0) rotate(0) scale(0.3);
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+  }
+  38% {
+    transform: translateY(calc(var(--up) * -1)) rotate(calc(var(--rot) * 0.4)) scale(1);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.5);
+  }
+  100% {
+    transform: translateY(calc(var(--fall) * 0.4)) rotate(var(--rot)) scale(1);
+  }
+}
+
+/* Wordmark (the real logo): first only the outline fades in, then the solid colour fills it
+   from the bottom up, tracking the progress count */
+.loader-word {
+  position: relative;
+  margin-top: 6px;
+  width: clamp(11rem, 24vw, 17rem);
+}
+
+.loader-word-outline {
+  color: #C8154B;
+}
+
+.loader-word-outline > span {
+  opacity: 0;
+  transform: translateY(12%);
+  animation: loader-letter 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+
+@keyframes loader-letter {
+  to {
+    opacity: 0.2;
+    transform: none;
+  }
+}
+
+.loader-word-fill {
+  position: absolute;
+  inset: 0;
+  color: #C8154B;
+  transition: clip-path 0.25s linear;
+}
+
+.loader-tag {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(200, 21, 75, 0.7);
+  opacity: 0;
+  animation: loader-fade 0.8s ease-out 2.3s forwards;
+}
+
+@keyframes loader-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+.loader-meter {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  display: flex;
+  min-width: 240px;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.loader-stage-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(200, 21, 75, 0.72);
+  animation: loader-label 0.5s ease-out both;
+}
+
+@keyframes loader-label {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.loader-count {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: #6b1022;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-kernel,
+  .loader-ring,
+  .loader-spark,
+  .loader-piece {
+    display: none;
+  }
+
+  .loader-pop-wrap {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Lenis: recommended base styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Footer jowar: grows up out of the valley, then sways in the wind */
+.footer-jowar {
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transform: translateY(18%) scale(0.86);
+  transition:
+    opacity 1s ease-out 0.15s,
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.footer-jowar-right {
+  transition-delay: 0.45s;
+}
+
+.footer-jowar-layer[data-in-view="true"] .footer-jowar {
+  opacity: 1;
+  transform: none;
+}
+
+.footer-jowar-layer[data-in-view="true"] .footer-jowar img {
+  transform-origin: 40% 100%;
+  animation: footer-sway 6.5s ease-in-out 1.8s infinite alternate;
+}
+
+.footer-jowar-layer[data-in-view="true"] .footer-jowar-right img {
+  animation-duration: 7.4s;
+  animation-delay: 2.2s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes footer-sway {
+  from {
+    rotate: -1.6deg;
+    transform: skewX(-1.2deg);
+  }
+  to {
+    rotate: 1.8deg;
+    transform: skewX(1.4deg);
+  }
+}
+
+/* Footer wordmark: letters in a cream-to-gold gradient that deepens towards the baseline,
+   kept razor sharp (no glow, blur or per-letter transforms over the text). They stand up one by one. */
+.footer-word-layer {
+  isolation: isolate;
+}
+
+.footer-word {
+  width: clamp(16rem, 52vw, 52rem);
+  color: #F2EEBF;
+  /* a hard edge under the logo keeps it crisp on the bright mountains, a deep soft shadow
+     seats it in the field */
+  filter: drop-shadow(0 2px 0 rgba(84, 36, 8, 0.85)) drop-shadow(0 4px 6px rgba(50, 18, 4, 0.45))
+    drop-shadow(0 16px 26px rgba(40, 12, 3, 0.55));
+}
+
+.footer-word > span {
+  opacity: 0;
+}
+
+.footer-word-layer[data-in-view="true"] .footer-word > span {
+  animation: footer-letter-in 1.5s cubic-bezier(0.22, 1.18, 0.36, 1) 0.25s both;
+}
+
+@keyframes footer-letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(24%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.footer-script {
+  position: relative;
+  margin-top: 1.4vw;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 1.6vw;
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 3.4vw, 3.4rem);
+  line-height: 1;
+  color: #fff1d2;
+  text-shadow:
+    0 1px 0 rgba(70, 20, 6, 0.55),
+    0 3px 14px rgba(50, 14, 4, 0.7);
+  opacity: 0;
+  clip-path: inset(-20% 100% -20% 0);
+  transition:
+    opacity 0.6s ease-out 1.5s,
+    clip-path 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.5s;
+}
+
+.footer-script::before,
+.footer-script::after {
+  content: "";
+  width: 7vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 236, 200, 0.85));
+}
+
+.footer-script::after {
+  transform: scaleX(-1);
+}
+
+.footer-word-layer[data-in-view="true"] .footer-script {
+  opacity: 1;
+  clip-path: inset(-20% -10% -20% -10%);
+}
+
+/* Sky content rises in, piece by piece */
+.footer-rise,
+.footer-pop,
+.footer-line {
+  opacity: 0;
+}
+
+.footer-rise {
+  transform: translateY(22px);
+}
+
+.footer-pop {
+  transform: scale(0.4) translateY(10px);
+}
+
+.footer-line {
+  transform: scaleX(0);
+}
+
+.footer-rise,
+.footer-pop,
+.footer-line {
+  transition:
+    opacity 0.8s ease-out calc(0.1s + var(--i, 0) * 0.1s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.1s);
+}
+
+.footer-sky[data-in-view="true"] .footer-rise,
+.footer-sky[data-in-view="true"] .footer-pop,
+.footer-sky[data-in-view="true"] .footer-line {
+  opacity: 1;
+  transform: none;
+}
+
+.footer-pop {
+  transition-timing-function: ease-out, cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-link {
+  position: relative;
+  padding-bottom: 6px;
+  transition: opacity 0.3s;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+}
+
+.footer-social {
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s;
+}
+
+.footer-social:hover {
+  transform: translateY(-4px) scale(1.18);
+}
+
+.footer-legal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 1s ease-out 1s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 1s;
+}
+
+.footer-legal[data-in-view="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ambient life: breathing sun, drifting valley, floating pollen */
+.footer-sun {
+  animation: footer-sun 7s ease-in-out infinite alternate;
+}
+
+@keyframes footer-sun {
+  from {
+    opacity: 0.65;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.footer-valley {
+  transform-origin: 50% 100%;
+  animation: footer-valley 26s ease-in-out infinite alternate;
+}
+
+@keyframes footer-valley {
+  from {
+    transform: scale(1) translateX(0);
+  }
+  to {
+    transform: scale(1.035) translateX(-0.6%);
+  }
+}
+
+.footer-pollen {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 226, 150, 0.95), rgba(255, 200, 100, 0));
+  opacity: 0;
+  animation: footer-pollen 9s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.footer-pollen-layer[data-in-view="true"] .footer-pollen {
+  animation-play-state: running;
+}
+
+@keyframes footer-pollen {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(40px, -190px);
+  }
+}
+
+/* ---------- Footer: next-level layer ---------- */
+/* #footer gets --fp (0..1 scroll-in) and --mx (pointer) from FooterMotion */
+
+/* Dawn wash: the sky warms as the footer arrives */
+.footer-dawn {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 72%,
+    rgba(255, 186, 96, 0.55),
+    rgba(255, 150, 70, 0.18) 55%,
+    transparent 75%
+  );
+  opacity: calc(0.25 + var(--fp, 0) * 0.75);
+}
+
+/* The sun climbs out from behind the ridge */
+.footer-sundisc {
+  left: 50%;
+  bottom: 8vw;
+  width: 9vw;
+  height: 9vw;
+  margin-left: -4.5vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, #fffdf2 0%, #ffe9a8 38%, #ffc765 70%, #ffae45 100%);
+  box-shadow:
+    0 0 4vw 1.6vw rgba(255, 214, 130, 0.65),
+    0 0 14vw 6vw rgba(255, 176, 80, 0.35);
+  translate: 0 calc(var(--fp, 0) * -7vw);
+  opacity: calc(0.35 + var(--fp, 0) * 0.65);
+}
+
+.footer-rays {
+  left: 50%;
+  bottom: 8vw;
+  width: 90vw;
+  height: 90vw;
+  margin-left: -45vw;
+  margin-bottom: -40.5vw;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 224, 150, 0.42) 0deg 2.5deg,
+    transparent 2.5deg 11deg
+  );
+  -webkit-mask-image: radial-gradient(circle, #000 4%, transparent 52%);
+  mask-image: radial-gradient(circle, #000 4%, transparent 52%);
+  translate: 0 calc(var(--fp, 0) * -7vw);
+  opacity: calc(var(--fp, 0) * 0.55);
+  animation: footer-rays-turn 120s linear infinite;
+}
+
+@keyframes footer-rays-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Dolly: moving into the valley as you scroll. The valley eases in while the
+   jowar in the foreground grows faster, which is what sells the depth. */
+.footer-valley {
+  scale: calc(1 + var(--fp, 0) * 0.07);
+}
+
+.footer-jowar {
+  scale: calc(1 + var(--fp, 0) * 0.12);
+  translate: calc((var(--mx, 0.5) - 0.5) * -26px) 0;
+}
+
+.footer-jowar-right {
+  translate: calc((var(--mx, 0.5) - 0.5) * -34px) 0;
+}
+
+/* Clouds drift on their own, a different pace per layer. Negative delays
+   scatter them along the path from the first frame. */
+.footer-cloud {
+  animation: footer-cloud-drift var(--dur, 100s) linear infinite;
+  animation-delay: calc(var(--dur, 100s) * var(--start, 0) * -1);
+}
+
+@keyframes footer-cloud-drift {
+  from {
+    transform: translateX(-45vw);
+  }
+  to {
+    transform: translateX(105vw);
+  }
+}
+
+/* Birds */
+.footer-bird {
+  color: #6b1022;
+  opacity: 0;
+  translate: -12vw 0;
+  animation: footer-bird-fly 40s linear infinite;
+}
+
+.footer-wing {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transform-origin: 20px 12px;
+  animation: footer-flap 0.62s ease-in-out infinite alternate;
+}
+
+.footer-wing-r {
+  animation-direction: alternate-reverse;
+  animation-name: footer-flap-r;
+}
+
+@keyframes footer-flap {
+  from {
+    transform: rotate(-18deg);
+  }
+  to {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes footer-flap-r {
+  from {
+    transform: rotate(18deg);
+  }
+  to {
+    transform: rotate(-22deg);
+  }
+}
+
+@keyframes footer-bird-fly {
+  0% {
+    opacity: 0;
+    translate: -12vw 0;
+  }
+  6% {
+    opacity: 0.7;
+  }
+  50% {
+    translate: 55vw -2vw;
+  }
+  94% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    translate: 112vw 1vw;
+  }
+}
+
+/* Navbar: the cart badge pops whenever the count changes */
+.nav-badge {
+  animation: nav-badge-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes nav-badge-pop {
+  0% {
+    transform: scale(0.2);
+  }
+  60% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* A glint sweeps across the Shop Now pill */
+.nav-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.75) 50%, transparent 62%);
+  transform: translateX(-130%);
+  animation: nav-cta-glint 5.5s ease-in-out 3.5s infinite;
+}
+
+@keyframes nav-cta-glint {
+  0%,
+  60% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Footer on phones: a taller valley with the sun on its horizon, drifting leaves */
+.footer-leaf {
+  transform: rotate(var(--r, 0deg));
+  animation: footer-leaf-drift 10s ease-in-out infinite alternate;
+}
+
+@keyframes footer-leaf-drift {
+  from {
+    transform: translate(0, 0) rotate(var(--r, 0deg));
+  }
+  to {
+    transform: translate(3vw, 5vw) rotate(calc(var(--r, 0deg) + 14deg));
+  }
+}
+
+@media (max-width: 639px) {
+  .footer-sundisc {
+    bottom: 20%;
+    width: 15vw;
+    height: 15vw;
+    margin-left: -7.5vw;
+    translate: 0 calc(var(--fp, 0) * -3vw);
+  }
+
+  .footer-rays {
+    bottom: 20%;
+    width: 130vw;
+    height: 130vw;
+    margin-left: -65vw;
+    margin-bottom: -58vw;
+    translate: 0 calc(var(--fp, 0) * -3vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-leaf {
+    animation: none;
+  }
+}
+
+/* Footer performance: nothing animates while the footer is off screen... */
+#footer:not([data-live="true"]) *,
+#footer:not([data-live="true"]) *::before,
+#footer:not([data-live="true"]) *::after {
+  animation-play-state: paused !important;
+}
+
+/* ...and phones get a calmer scene: no spinning rays, no breathing valley */
+@media (max-width: 639px) {
+  .footer-rays,
+  .footer-valley {
+    animation: none !important;
+  }
+}
+
+/* Looping animations stop while their section is off screen */
+[data-offscreen],
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+
+/* Phones and tablets: skip rendering the sections that are far off screen */
+@media (max-width: 1023px) {
+  #flavours,
+  #testimonials,
+  #footer {
+    content-visibility: auto;
+  }
+
+  #flavours {
+    contain-intrinsic-size: auto 800px;
+  }
+
+  #testimonials {
+    contain-intrinsic-size: auto 1420px;
+  }
+
+  #footer {
+    contain-intrinsic-size: auto 820px;
+  }
+}
+
+/* Flavours heading art: a pencil sketch that draws itself in, then sways and drifts */
+.fl-art g,
+.fl-art circle {
+  transform-box: fill-box;
+}
+
+.fl-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.flavours-art[data-in-view="true"] .fl-draw {
+  stroke-dashoffset: 0;
+}
+
+.fl-sway {
+  transform-origin: 50% 100%;
+  animation: fl-sway 4.8s ease-in-out infinite alternate;
+}
+
+.fl-s2 {
+  animation-duration: 5.6s;
+  animation-delay: -1.2s;
+}
+
+.fl-s3 {
+  animation-duration: 6.4s;
+  animation-delay: -2.4s;
+}
+
+.fl-bob {
+  transform-origin: 50% 50%;
+  animation: fl-bob 4.6s ease-in-out infinite alternate;
+}
+
+.fl-b2 {
+  animation-duration: 5.8s;
+  animation-delay: -1.4s;
+}
+
+.fl-b3 {
+  animation-duration: 6.6s;
+  animation-delay: -2.6s;
+}
+
+.fl-ring {
+  transform-origin: 50% 50%;
+  animation: fl-turn 40s linear infinite;
+}
+
+@keyframes fl-sway {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes fl-bob {
+  from {
+    transform: translateY(0) rotate(-6deg);
+  }
+  to {
+    transform: translateY(-4px) rotate(8deg);
+  }
+}
+
+@keyframes fl-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-sway,
+  .fl-bob,
+  .fl-ring {
+    animation: none;
+  }
+
+  .fl-draw {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* Footer credit: Angaar Labs. A gold wordmark that glints on hover, a flickering ember. */
+.angaar-name {
+  background-image:
+    linear-gradient(105deg, transparent 40%, rgba(255, 252, 240, 0.95) 50%, transparent 60%),
+    linear-gradient(180deg, #fff1c9 0%, #f6c46c 60%, #e8a24a 100%);
+  background-size:
+    260% 100%,
+    100% 100%;
+  background-position:
+    120% 0,
+    0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.angaar-credit:hover .angaar-name {
+  background-position:
+    -20% 0,
+    0 0;
+}
+
+.angaar-flame {
+  transform-origin: 50% 100%;
+  animation: angaar-flicker 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes angaar-flicker {
+  0% {
+    transform: scale(1, 1) rotate(-1.5deg);
+  }
+  50% {
+    transform: scale(0.96, 1.07) rotate(1deg);
+  }
+  100% {
+    transform: scale(1.03, 0.97) rotate(-0.5deg);
+  }
+}
+
+/* Cart: the bag bumps when a pack lands, the drawer's contents rise in one by one,
+   the newly added pack flashes and quantities pop. */
+.nav-bag-bump {
+  animation: nav-bag-bump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes nav-bag-bump {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.5) rotate(-14deg);
+  }
+  55% {
+    transform: scale(0.9) rotate(9deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Only the opening plays; on close the content just rides out with the panel. */
+.cart-drawer[data-open="true"] .cart-reveal {
+  animation: cart-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.07s + 0.22s) both;
+}
+
+@keyframes cart-rise {
+  from {
+    opacity: 0;
+    transform: translateX(34px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.cart-flash {
+  background: linear-gradient(100deg, transparent 20%, rgba(246, 196, 108, 0.55) 50%, transparent 80%);
+  animation: cart-flash 1.2s ease-out 0.5s both;
+}
+
+@keyframes cart-flash {
+  from {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.cart-pop {
+  display: inline-block;
+  animation: cart-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cart-pop {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Opening the cart: the free-delivery bar fills from empty, the empty-cart pop jowar
+   drops in and bobs, and a glint crosses the checkout button. */
+.cart-drawer[data-open="true"] .cart-bar {
+  animation: cart-bar 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+@keyframes cart-bar {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--pct, 0%);
+  }
+}
+
+.cart-drawer[data-open="true"] .cart-empty-art {
+  animation:
+    cart-drop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
+    cart-bob 3.2s ease-in-out 1.3s infinite alternate;
+}
+
+@keyframes cart-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-40deg) scale(0.5);
+  }
+  to {
+    opacity: 0.95;
+    transform: none;
+  }
+}
+
+@keyframes cart-bob {
+  from {
+    transform: translateY(0) rotate(-3deg);
+  }
+  to {
+    transform: translateY(-8px) rotate(4deg);
+  }
+}
+
+.cart-checkout::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 240, 215, 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.cart-drawer[data-open="true"] .cart-checkout::after {
+  animation: cart-glint 1.2s ease-in-out 1.1s 1 both;
+}
+
+@keyframes cart-glint {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Where to Find Us: everything rises in once, packs slide in and bob, store chips float on the shelf */
+.wtf-rise {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.09s),
+    translate 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.09s);
+}
+
+.wtf-art[data-in-view="true"] .wtf-rise {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.wtf-dot {
+  animation: wtf-pulse 1.8s ease-out infinite;
+}
+
+@keyframes wtf-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 21, 75, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(200, 21, 75, 0);
+  }
+}
+
+.wtf-pack {
+  rotate: var(--r, 0deg);
+  opacity: 0;
+  translate: var(--from, 0) 40px;
+  transition:
+    opacity 0.9s ease 0.5s,
+    translate 1.1s cubic-bezier(0.22, 1.2, 0.36, 1) 0.5s;
+}
+
+.wtf-art[data-in-view="true"] .wtf-pack {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.wtf-pack-img {
+  animation: wtf-bob 6s ease-in-out infinite alternate;
+}
+
+.wtf-pack + .wtf-pack .wtf-pack-img {
+  animation-delay: -3s;
+}
+
+@keyframes wtf-bob {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(-14px) rotate(2.5deg);
+  }
+}
+
+.wtf-chip {
+  animation: wtf-chip-bob 4.5s ease-in-out var(--b, 0s) infinite alternate;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wtf-chip:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 18px 28px -14px rgba(8, 37, 103, 0.55);
+}
+
+@keyframes wtf-chip-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -5px;
+  }
+}
+
+.wtf-glow {
+  animation: wtf-glow 9s ease-in-out infinite alternate;
+}
+
+@keyframes wtf-glow {
+  from {
+    opacity: 0.7;
+    scale: 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1.08;
+  }
+}
+
+.wtf-shelf {
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.9s;
+}
+
+.wtf-art[data-in-view="true"] .wtf-shelf {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wtf-rise,
+  .wtf-pack,
+  .wtf-shelf {
+    transition: none;
+  }
+  .wtf-dot,
+  .wtf-pack-img,
+  .wtf-chip,
+  .wtf-glow {
+    animation: none;
+  }
+}
+
+/* ===== Beliefs: a three-chapter story (pinned on desktop, stacked below lg) ===== */
+.bel-in {
+  opacity: 0;
+  translate: 0 26px;
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.12s),
+    translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.12s);
+}
+
+[data-in-view="true"] .bel-in,
+[data-in-view="true"].bel-in {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* chapter text (desktop stage): the old one lifts away, the new one rises in */
+.bel-text {
+  opacity: 0;
+  translate: 0 36px;
+  filter: blur(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.7s ease,
+    translate 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s ease;
+}
+
+.bel-text[data-on="true"] {
+  opacity: 1;
+  translate: 0 0;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.bel-vis {
+  transition:
+    opacity 0.7s ease,
+    scale 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bel-vis[data-on="false"] {
+  opacity: 0;
+  scale: 0.9;
+  pointer-events: none;
+}
+
+/* shared glow behind each visual */
+.bel-halo {
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.85), rgba(242, 183, 96, 0.22) 62%, transparent);
+  opacity: 0;
+  scale: 0.6;
+}
+
+/* ---- chapter 1: one grain among many ---- */
+.bel-other {
+  opacity: 0;
+  scale: 0.4;
+}
+
+.bel-grain {
+  opacity: 0;
+  scale: 0.5;
+}
+
+.bel-ring {
+  opacity: 0;
+  scale: 0.5;
+}
+
+.bel-tag {
+  opacity: 0;
+  translate: 0 14px;
+}
+
+/* ---- chapter 2: heat, pop, burst ---- */
+.bel-seed,
+.bel-bigpop,
+.bel-sat,
+.bel-chip,
+.bel-wave {
+  opacity: 0;
+}
+
+.bel-sat {
+  translate: -50% -50%;
+}
+
+.bel-chip {
+  scale: 0.5;
+}
+
+/* ---- chapter 3: soak, roast, pop ---- */
+.bel-step {
+  opacity: 0;
+  translate: -24px 0;
+}
+
+.bel-line {
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+:is(.bel-vis[data-on="true"], [data-in-view="true"] .bel-vis) {
+  & .bel-halo {
+    animation: bel-halo 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards, bel-halo-breathe 6s ease-in-out 1.5s infinite alternate;
+  }
+  & .bel-ring {
+    animation: bel-ring 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+  }
+  & .bel-other {
+    animation:
+      bel-other-in 0.9s cubic-bezier(0.22, 1.3, 0.36, 1) var(--dl, 0s) forwards,
+      bel-other-dim 1s ease 1.6s forwards,
+      bel-other-float 7s ease-in-out 2.6s infinite alternate;
+  }
+  & .bel-grain {
+    animation:
+      bel-grain-in 1.3s cubic-bezier(0.22, 1.4, 0.36, 1) 0.9s forwards,
+      bel-grain-float 4.5s ease-in-out 2.2s infinite alternate;
+  }
+  & .bel-tag {
+    animation: bel-rise 0.9s ease 2s forwards;
+  }
+  & .bel-seed {
+    animation: bel-seed 1s ease-in 0.1s forwards;
+  }
+  & .bel-bigpop {
+    animation:
+      bel-pop 1.2s cubic-bezier(0.2, 1.6, 0.3, 1) 0.9s forwards,
+      bel-grain-float 4s ease-in-out 2.2s infinite alternate;
+  }
+  & .bel-wave {
+    animation: bel-wave 2.2s ease-out var(--dl, 0.7s) infinite;
+  }
+  & .bel-sat {
+    animation:
+      bel-fly 1.5s cubic-bezier(0.2, 0.9, 0.25, 1.1) var(--dl, 0.8s) forwards,
+      bel-sat-float 5s ease-in-out calc(var(--dl, 0.8s) + 1.5s) infinite alternate;
+  }
+  & .bel-chip {
+    animation: bel-chip 0.7s cubic-bezier(0.2, 1.5, 0.3, 1) var(--dl, 1.3s) forwards;
+  }
+  & .bel-step {
+    animation: bel-step-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--dl, 0.2s) forwards;
+  }
+  & .bel-line {
+    animation: bel-line 1.8s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+  }
+}
+
+@keyframes bel-halo {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes bel-halo-breathe {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.1;
+  }
+}
+
+@keyframes bel-ring {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes bel-other-in {
+  to {
+    opacity: 0.9;
+    scale: 1;
+  }
+}
+
+@keyframes bel-other-dim {
+  to {
+    opacity: 0.22;
+    filter: blur(1.5px);
+  }
+}
+
+@keyframes bel-other-float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 6px -12px;
+  }
+}
+
+@keyframes bel-grain-in {
+  0% {
+    opacity: 0;
+    scale: 0.5;
+    rotate: -30deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes bel-grain-float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes bel-rise {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes bel-seed {
+  0% {
+    opacity: 1;
+    scale: 1;
+    filter: none;
+  }
+  60% {
+    opacity: 1;
+    scale: 1.25;
+    filter: sepia(1) saturate(4) hue-rotate(-20deg);
+  }
+  100% {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+@keyframes bel-pop {
+  0% {
+    opacity: 0;
+    scale: 0.2;
+    rotate: -40deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes bel-wave {
+  0% {
+    opacity: 0.8;
+    scale: 0.35;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.35;
+  }
+}
+
+@keyframes bel-fly {
+  0% {
+    opacity: 0;
+    translate: calc(-50% + var(--fx)) calc(-50% + var(--fy));
+    scale: 0.2;
+    rotate: -90deg;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    translate: -50% -50%;
+    scale: 1;
+    rotate: var(--r, 0deg);
+  }
+}
+
+@keyframes bel-sat-float {
+  from {
+    translate: -50% -50%;
+  }
+  to {
+    translate: calc(-50% + 6px) calc(-50% - 12px);
+  }
+}
+
+@keyframes bel-chip {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes bel-step-in {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes bel-line {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bel-in,
+  .bel-text,
+  .bel-vis {
+    transition: none;
+  }
+  .bel-halo,
+  .bel-ring,
+  .bel-other,
+  .bel-grain,
+  .bel-tag,
+  .bel-bigpop,
+  .bel-sat,
+  .bel-chip,
+  .bel-step,
+  .bel-line {
+    animation: none !important;
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+    transform: none;
+  }
+  .bel-sat {
+    translate: -50% -50%;
+  }
+  .bel-seed,
+  .bel-wave {
+    display: none;
+  }
+}
+
+/* ===== Page transitions (React <ViewTransition> + <Link transitionTypes>) ===== */
+:root {
+  --vt-exit: 160ms;
+  --vt-enter: 240ms;
+  --vt-move: 450ms;
+}
+
+/* forward: the old page slides away to the left, the new one comes in from the right */
+::view-transition-old(.nav-forward) {
+  --slide-offset: -70px;
+  animation:
+    var(--vt-exit) ease-in both vt-fade reverse,
+    var(--vt-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 70px;
+  animation:
+    var(--vt-enter) ease-out var(--vt-exit) both vt-fade,
+    var(--vt-move) ease-in-out both vt-slide;
+}
+
+/* back: the other way round */
+::view-transition-old(.nav-back) {
+  --slide-offset: 70px;
+  animation:
+    var(--vt-exit) ease-in both vt-fade reverse,
+    var(--vt-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -70px;
+  animation:
+    var(--vt-enter) ease-out var(--vt-exit) both vt-fade,
+    var(--vt-move) ease-in-out both vt-slide;
+}
+
+@keyframes vt-fade {
+  from {
+    filter: blur(4px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+/* the pack photo flies from its card to the product page */
+::view-transition-group(.morph) {
+  animation-duration: 550ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: vt-via-blur;
+}
+@keyframes vt-via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+
+/* the navbar stays put while the page slides under it */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* clicks during a transition reach the live page */
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* product page: things rise in one after another */
+.pd-rise {
+  opacity: 0;
+  translate: 0 26px;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.15s + var(--i, 0) * 0.08s),
+    translate 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.15s + var(--i, 0) * 0.08s);
+}
+
+.pd-art[data-in-view="true"] .pd-rise {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-rise {
+    transition: none;
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ===== Beliefs v2: Nani's diary (a raspberry hardcover with pages that turn) ===== */
+.bk-table {
+  background-color: var(--background);
+}
+
+/* the gingham tablecloth fades in and out, so it never ends on a hard line */
+.bk-table::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.55), transparent 70%),
+    linear-gradient(rgba(200, 21, 75, 0.045) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(200, 21, 75, 0.045) 50%, transparent 50%);
+  background-size:
+    100% 100%,
+    64px 64px,
+    64px 64px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 70%, transparent 100%);
+}
+
+.bk {
+  position: relative;
+  margin-inline: auto;
+}
+
+.bk-hardcover {
+  padding: 14px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #d8195a, #c8154b 45%, #a90f3d);
+  box-shadow:
+    inset 0 0 0 2px rgba(242, 238, 191, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25),
+    0 40px 60px -26px rgba(60, 18, 30, 0.6),
+    0 14px 24px -12px rgba(60, 18, 30, 0.4);
+}
+
+/* a bookmark ribbon hanging out of the top */
+.bk-ribbon {
+  position: absolute;
+  top: -14px;
+  right: 14%;
+  z-index: 60;
+  width: 26px;
+  height: 70px;
+  background: #082567;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3));
+}
+
+.bk-pages {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  perspective: 2600px;
+  container-type: inline-size;
+  border-radius: 6px;
+  background: #f1ebc4;
+  box-shadow:
+    3px 3px 0 #ece4b4,
+    6px 6px 0 #ddd3a0,
+    0 0 0 1px rgba(60, 30, 0, 0.12);
+}
+
+.bk-page-l,
+.bk-page-r {
+  position: relative;
+  padding: 4.4cqw 4.6cqw 4cqw;
+  background-color: #fbf8dc;
+  background-image:
+    repeating-linear-gradient(180deg, transparent 0 calc(2.25cqw - 1px), rgba(8, 37, 103, 0.07) calc(2.25cqw - 1px) 2.25cqw);
+}
+
+.bk-page-l {
+  border-radius: 6px 0 0 6px;
+  background-image:
+    linear-gradient(90deg, transparent 84%, rgba(90, 50, 10, 0.14)),
+    repeating-linear-gradient(180deg, transparent 0 calc(2.25cqw - 1px), rgba(8, 37, 103, 0.07) calc(2.25cqw - 1px) 2.25cqw);
+}
+
+.bk-page-r {
+  border-radius: 0 6px 6px 0;
+  background-image:
+    linear-gradient(270deg, transparent 84%, rgba(90, 50, 10, 0.14)),
+    repeating-linear-gradient(180deg, transparent 0 calc(2.25cqw - 1px), rgba(8, 37, 103, 0.07) calc(2.25cqw - 1px) 2.25cqw);
+}
+
+.bk-base-l,
+.bk-base-r {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+.bk-base-l {
+  left: 0;
+}
+.bk-base-r {
+  left: 50%;
+}
+
+.bk-leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition:
+    transform 1.25s cubic-bezier(0.6, 0, 0.25, 1),
+    z-index 0s linear 0.62s;
+}
+
+.bk-leaf[data-flipped="true"] {
+  transform: rotateY(-180deg);
+}
+
+.bk-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.bk-back {
+  transform: rotateY(180deg);
+}
+
+.bk-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: 50;
+  width: 5cqw;
+  translate: -50% 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(60, 30, 0, 0.2) 50%, transparent);
+}
+
+.bk-pgno {
+  position: absolute;
+  bottom: 2cqw;
+  right: 4.6cqw;
+  font-size: clamp(0.7rem, 1cqw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: rgba(8, 37, 103, 0.55);
+}
+.bk-pgno-l {
+  right: auto;
+  left: 4.6cqw;
+}
+
+/* ---- typography on the pages ---- */
+.bk-kicker {
+  font-size: clamp(0.78rem, 1.15cqw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #c8154b;
+}
+
+.bk-title {
+  margin-top: 0.45em;
+  font-size: clamp(2.2rem, 5cqw, 4.4rem);
+  line-height: 1.02;
+  color: #c8154b;
+}
+
+.bk-hero {
+  margin-top: 0.4em;
+  font-size: clamp(2.6rem, 6.6cqw, 5.6rem);
+  line-height: 0.98;
+  color: #c8154b;
+}
+.bk-hero-m {
+  font-size: clamp(2.6rem, 11vw, 4rem);
+}
+
+.bk-quote {
+  margin-top: 0.5em;
+  font-size: clamp(2.2rem, 5.2cqw, 4.4rem);
+  line-height: 1.02;
+  color: #c8154b;
+}
+
+.bk-squiggle {
+  display: block;
+  width: 36%;
+  max-width: 14rem;
+  margin-top: 0.5rem;
+  color: #c8154b;
+}
+
+.bk-body {
+  display: grid;
+  gap: 0.9em;
+  margin-top: 1.1em;
+  font-size: clamp(1.02rem, 1.68cqw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: #082567;
+}
+
+.bk-note {
+  margin-top: 0.9em;
+  font-size: clamp(1.5rem, 2.6cqw, 2.4rem);
+  color: #c8154b;
+  rotate: -2deg;
+  transform-origin: left center;
+}
+
+.bk-turn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: clamp(1.4rem, 2.4cqw, 2.2rem);
+  color: #082567;
+}
+.bk-turn-arrow {
+  width: 2.6rem;
+  height: 1rem;
+  color: #c8154b;
+  animation: bk-nudge 1.6s ease-in-out infinite;
+}
+@keyframes bk-nudge {
+  50% {
+    translate: 8px 0;
+  }
+}
+
+/* ---- the page that has just turned writes itself in ---- */
+.bk-copy > *,
+.bk-cover-page > *:not(img),
+.bk-closing > * {
+  opacity: 0;
+  translate: 0 16px;
+  transition:
+    opacity 0.7s ease calc(0.1s + var(--k, 0) * 0.14s),
+    translate 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--k, 0) * 0.14s);
+}
+.bk-copy > :nth-child(2),
+.bk-cover-page > :nth-child(2),
+.bk-closing > :nth-child(2) {
+  --k: 1;
+}
+.bk-copy > :nth-child(3),
+.bk-cover-page > :nth-child(3),
+.bk-closing > :nth-child(3) {
+  --k: 2;
+}
+.bk-copy > :nth-child(4),
+.bk-cover-page > :nth-child(4),
+.bk-closing > :nth-child(4) {
+  --k: 3;
+}
+.bk-copy > :nth-child(5),
+.bk-closing > :nth-child(5) {
+  --k: 4;
+}
+
+:is([data-cur="true"], [data-in-view="true"]) :is(.bk-copy > *, .bk-cover-page > *:not(img), .bk-closing > *),
+:is([data-cur="true"], [data-in-view="true"]) > :is(.bk-copy > *, .bk-cover-page > *:not(img), .bk-closing > *) {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.bk-note {
+  /* keep its tilt when it fades in */
+  rotate: -2deg;
+}
+
+/* the ink underline draws itself */
+.bk-ink path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.3s cubic-bezier(0.65, 0, 0.35, 1) 0.7s;
+}
+:is([data-cur="true"], [data-in-view="true"]) .bk-ink path {
+  stroke-dashoffset: 0;
+}
+
+/* the left page: the animated picture sits in a taped-on frame */
+.bk-vis-frame {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the stamp thumps down */
+.bk-stamp {
+  position: absolute;
+  right: 3cqw;
+  bottom: 4.5cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 17cqw;
+  height: 17cqw;
+  border: 0.45cqw double #c8154b;
+  border-radius: 50%;
+  color: #c8154b;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  rotate: -14deg;
+  opacity: 0;
+  scale: 2.4;
+  mix-blend-mode: multiply;
+}
+.bk-stamp span {
+  font-size: clamp(0.6rem, 1.15cqw, 1rem);
+  font-weight: 600;
+}
+.bk-stamp strong {
+  font-size: clamp(0.8rem, 1.7cqw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+[data-cur="true"] .bk-stamp {
+  animation: bk-thump 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) 1.3s forwards;
+}
+@keyframes bk-thump {
+  60% {
+    opacity: 1;
+    scale: 0.92;
+  }
+  100% {
+    opacity: 0.88;
+    scale: 1;
+  }
+}
+.bk-closing > .bk-stamp {
+  opacity: 0;
+  translate: none;
+}
+[data-cur="true"] .bk-closing > .bk-stamp {
+  transition: none;
+}
+
+/* ---- phones and tablets: loose pages ---- */
+.bk-card {
+  position: relative;
+  padding: 2.2rem 1.6rem 1.8rem;
+  border-radius: 6px;
+  container-type: inline-size;
+  background-color: #fbf8dc;
+  background-image: repeating-linear-gradient(180deg, transparent 0 1.9rem, rgba(8, 37, 103, 0.07) 1.9rem calc(1.9rem + 1px));
+  box-shadow:
+    0 22px 34px -18px rgba(60, 28, 12, 0.5),
+    0 0 0 1px rgba(60, 30, 0, 0.08);
+  rotate: -0.8deg;
+  opacity: 0;
+  translate: 0 36px;
+  transition:
+    opacity 0.9s ease,
+    translate 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bk-card[data-odd="true"] {
+  rotate: 0.9deg;
+}
+.bk-card[data-in-view="true"] {
+  opacity: 1;
+  translate: 0 0;
+}
+.bk-card .bk-title {
+  font-size: clamp(2.2rem, 10cqw, 3.2rem);
+}
+.bk-card .bk-body {
+  font-size: 1.05rem;
+}
+.bk-card .bk-note {
+  font-size: 1.6rem;
+}
+.bk-card .bk-kicker {
+  font-size: 0.8rem;
+}
+.bk-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 90px;
+  height: 26px;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgba(242, 183, 96, 0.75);
+  box-shadow: 0 2px 4px rgba(60, 30, 0, 0.2);
+  clip-path: polygon(3% 0, 97% 0, 100% 20%, 96% 40%, 100% 60%, 96% 80%, 100% 100%, 0 100%, 4% 80%, 0 60%, 4% 40%, 0 20%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk-leaf {
+    transition: none;
+  }
+  .bk-copy > *,
+  .bk-cover-page > *,
+  .bk-closing > *,
+  .bk-ink path,
+  .bk-card {
+    transition: none;
+    opacity: 1;
+    translate: 0 0;
+    stroke-dashoffset: 0;
+  }
+  .bk-turn-arrow,
+  [data-cur="true"] .bk-stamp {
+    animation: none;
+  }
+  .bk-stamp {
+    opacity: 0.88;
+    scale: 1;
+  }
+}
+
+.bk-note-lg {
+  margin-top: 0.6em;
+  font-size: clamp(1.8rem, 3.4cqw, 3rem);
+  line-height: 1.1;
+}
+.bk-squiggle-in {
+  width: 12rem;
+}
+
+/* ===== Snack Smart v2: "1 / 0" numerals, fanned packs, spinning badge ===== */
+.ss-dots {
+  background-image: radial-gradient(rgba(242, 238, 191, 0.14) 1.4px, transparent 1.6px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse at 30% 50%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 30% 50%, #000 20%, transparent 75%);
+}
+
+.ss-rise {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.11s),
+    translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.1s + var(--i, 0) * 0.11s);
+}
+.ss-art[data-in-view="true"] .ss-rise {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* the numerals */
+.ss-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 2.4vw, 2rem);
+}
+.ss-row + .ss-row {
+  margin-top: clamp(0.2rem, 1vw, 0.8rem);
+}
+
+.ss-num {
+  display: inline-block;
+  min-width: 0.62em;
+  font-size: clamp(7rem, 15vw, 13.5rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  color: #f2eebf;
+  font-variant-numeric: tabular-nums;
+}
+
+/* the zero is only an outline until it has landed, then it fills in */
+.ss-row-0 .ss-num {
+  color: transparent;
+  -webkit-text-stroke: 3px #f2eebf;
+  transition: color 0.8s ease 0.1s, -webkit-text-stroke-color 0.8s ease;
+}
+.ss-row-0 .ss-num[data-done="true"] {
+  color: #f2b760;
+  -webkit-text-stroke-color: #f2b760;
+}
+
+.ss-word {
+  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #f2eebf;
+}
+
+/* stickers */
+.ss-sticker {
+  rotate: var(--rot, 0deg);
+  transition: rotate 0.35s cubic-bezier(0.3, 1.6, 0.5, 1), translate 0.35s ease;
+}
+.ss-sticker:hover {
+  rotate: 0deg;
+  translate: 0 -4px;
+}
+
+/* the stage */
+.ss-disc {
+  background: radial-gradient(closest-side, rgba(242, 238, 191, 0.95), rgba(242, 183, 96, 0.55) 70%, rgba(242, 183, 96, 0));
+  opacity: 0;
+  scale: 0.5;
+  transition: opacity 1s ease 0.2s, scale 1.2s cubic-bezier(0.22, 1.2, 0.36, 1) 0.2s;
+}
+.ss-art[data-in-view="true"] .ss-disc {
+  opacity: 0.9;
+  scale: 1;
+}
+
+/* three layers per pack: cursor lean (outer), spread (middle), float (inner) */
+.ss-pack-pos {
+  translate: calc(-50% + var(--mx, 0) * var(--d, 0.5) * -14px) calc(-50% + var(--my, 0) * var(--d, 0.5) * -10px);
+  transition: translate 0.4s ease-out;
+}
+.ss-pack-fan {
+  opacity: 0;
+  transform: translate(0, 24%) scale(0.7) rotate(0deg);
+  transition:
+    opacity 0.6s ease var(--dl, 0.3s),
+    transform 1.2s cubic-bezier(0.2, 1.3, 0.36, 1) var(--dl, 0.3s);
+}
+.ss-art[data-in-view="true"] .ss-pack-fan {
+  opacity: 1;
+  transform: translate(var(--x, 0), var(--y, 0)) scale(1) rotate(var(--r, 0deg));
+}
+.ss-pack-bob {
+  animation: ss-bob 5s ease-in-out var(--b, 0s) infinite alternate;
+}
+@keyframes ss-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -12px;
+  }
+}
+
+/* the badge pops in, then spins */
+.ss-badge {
+  position: relative;
+  aspect-ratio: 1;
+  opacity: 0;
+  scale: 0.3;
+  rotate: -40deg;
+  transition:
+    opacity 0.5s ease 1.2s,
+    scale 0.9s cubic-bezier(0.2, 1.6, 0.4, 1) 1.2s,
+    rotate 0.9s ease 1.2s;
+  filter: drop-shadow(0 10px 12px rgba(40, 5, 20, 0.4));
+}
+.ss-art[data-in-view="true"] .ss-badge {
+  opacity: 1;
+  scale: 1;
+  rotate: 0deg;
+}
+.ss-badge-spin {
+  animation: ss-spin 22s linear infinite;
+}
+@keyframes ss-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-rise,
+  .ss-disc,
+  .ss-pack-fan,
+  .ss-badge {
+    transition: none;
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    rotate: 0deg;
+  }
+  .ss-pack-fan {
+    transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0deg));
+  }
+  .ss-pack-bob,
+  .ss-badge-spin {
+    animation: none;
+  }
+}
+
+/* ---------- Flavour jars: 4 cards, each a 3D jar that spins on hover ---------- */
+.jar-card {
+  --d: min(11rem, 60cqw);
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.6rem 0.75rem 1.6rem;
+  outline: none;
+  cursor: grab;
+  isolation: isolate;
+}
+/* The arch the jar stands in. Its head is left open so the jar rises out of it. */
+.jar-arch {
+  position: absolute;
+  inset: 2rem 0 0 0;
+  z-index: -2;
+  overflow: hidden;
+  border-radius: 999px 999px 2rem 2rem;
+  background: linear-gradient(170deg, var(--from), var(--to));
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.18),
+    0 30px 50px -30px color-mix(in srgb, var(--to) 85%, #000);
+}
+.jar-arch::before {
+  /* inner outline, like a window frame */
+  content: "";
+  position: absolute;
+  inset: 0.6rem;
+  border-radius: 999px 999px 1.5rem 1.5rem;
+  border: 1.5px solid var(--on);
+  opacity: 0.28;
+}
+.jar-arch::after {
+  /* soft light behind the jar */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: 120%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.42), transparent);
+  opacity: 0.55;
+  scale: 0.8;
+  transition:
+    opacity 0.8s ease,
+    scale 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.jar-card:hover .jar-arch::after,
+.jar-card:focus-visible .jar-arch::after {
+  opacity: 1;
+  scale: 1.05;
+}
+/* Big flavour word behind the jar */
+.jar-word {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  translate: -50% -50%;
+  font-size: calc(var(--d) * 0.58);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--on);
+  opacity: 0.3;
+  transition:
+    translate 1s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.8s ease;
+}
+.jar-card:hover .jar-word,
+.jar-card:focus-visible .jar-word {
+  translate: -56% -50%;
+  opacity: 0.5;
+}
+/* Pop jowar floating around the jar */
+.jar-puff {
+  position: absolute;
+  z-index: 2;
+  width: calc(var(--d) * 0.22);
+  height: auto;
+  pointer-events: none;
+  transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.jar-card:hover .jar-puff,
+.jar-card:focus-visible .jar-puff {
+  translate: var(--tx) var(--ty);
+}
+/* The little stage the jar stands on */
+.jar-base {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--d) * -0.02);
+  width: calc(var(--d) * 1.25);
+  height: calc(var(--d) * 0.3);
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0.1) 70%, transparent);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Geometry, all as fractions of the jar's diameter (--d). The label is cut
+   into FACETS (36) vertical strips and each strip is stood up on the circle,
+   so the artwork really wraps round the jar. */
+.jar {
+  --w: calc(var(--d) * 0.087156); /* one facet: d * sin(180deg / 36) */
+  --wt: calc(var(--d) * 3.1376); /* the whole unrolled label */
+  --hj: calc(var(--d) * 1.95); /* jar height */
+  --ly: calc(var(--d) * 0.46); /* label top */
+  --lh: calc(var(--d) * 1.27); /* label height */
+  --lid: calc(var(--d) * 0.26); /* lid + head space */
+  position: relative;
+  z-index: 1;
+  width: var(--d);
+  height: var(--hj);
+  margin-top: calc(var(--d) * 0.3);
+  transition: translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Only the jar lifts on hover; the card stays put. */
+.jar-card:hover .jar,
+.jar-card:focus-visible .jar {
+  translate: 0 calc(var(--d) * -0.1);
+}
+.jar-card:hover .jar-base,
+.jar-card:focus-visible .jar-base {
+  transform: translateY(calc(var(--d) * 0.1));
+}
+.jar-stage {
+  position: absolute;
+  inset: 0;
+  perspective: calc(var(--d) * 5);
+  perspective-origin: 50% 40%;
+}
+.jar-tilt,
+.jar-spin {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.jar-tilt {
+  transform: rotateX(-9deg);
+}
+.jar-spin {
+  will-change: transform;
+}
+
+.jar-facet {
+  position: absolute;
+  top: 0;
+  left: calc(50% - (var(--w) + 1px) / 2);
+  width: calc(var(--w) + 1px);
+  height: var(--hj);
+  backface-visibility: hidden;
+  background-repeat: no-repeat;
+  --a: rotateY(calc(var(--i) * 10deg - 175deg));
+}
+/* Outer wall: one baked texture (popcorn, glass, label and lid ridges). */
+.jar-front {
+  transform: var(--a) translateZ(calc(var(--d) * 0.4981));
+  background-size: var(--wt) var(--hj);
+  background-position: calc(var(--i) * var(--w) * -1) 0;
+}
+/* Far wall, seen through the glass: 12 wider strips are plenty. */
+.jar-back {
+  --wb: calc(var(--d) * 0.258819); /* d * sin(180deg / 12) */
+  left: calc(50% - (var(--wb) + 1px) / 2);
+  width: calc(var(--wb) + 1px);
+  transform: rotateY(calc(var(--i) * 30deg - 165deg)) translateZ(calc(var(--d) * 0.482)) rotateY(180deg);
+  background-size: calc(var(--wb) * 12) var(--hj);
+  background-position: calc(var(--i) * var(--wb) * -1) 0;
+}
+.jar-card[data-ready="true"] .jar-front {
+  background-image: var(--jar);
+}
+.jar-card[data-ready="true"] .jar-back {
+  background-image: linear-gradient(rgb(0 0 0 / 0.2), rgb(0 0 0 / 0.2)), var(--jar);
+  background-size:
+    100% 100%,
+    calc(var(--wb) * 12) var(--hj);
+  background-position:
+    0 0,
+    calc(var(--i) * var(--wb) * -1) 0;
+}
+.jar-card:not([data-ready="true"]) .jar-front,
+.jar-card:not([data-ready="true"]) .jar-back {
+  background-color: color-mix(in srgb, var(--paper) 40%, transparent);
+}
+
+/* The popcorn's top surface, seen through the lid (flat, drawn between the two walls). */
+.jar-surface,
+.jar-lid {
+  position: absolute;
+  left: 0;
+  width: var(--d);
+  height: calc(var(--d) * 0.16);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.jar-surface {
+  top: calc(var(--d) * 0.27 - var(--d) * 0.08);
+  background:
+    radial-gradient(circle at 35% 45%, rgb(255 255 255 / 0.55), transparent 45%),
+    radial-gradient(circle at 72% 60%, rgb(255 255 255 / 0.35), transparent 35%),
+    color-mix(in srgb, var(--paper) 30%, #f1dca0);
+}
+/* Lid: a clear disc across the top. */
+.jar-lid {
+  top: calc(var(--d) * -0.08);
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.32));
+  border: 1.5px solid rgb(255 255 255 / 0.75);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+
+/* Fixed lighting over the spinning jar: round edges plus two glass glints. */
+.jar-shade,
+.jar-gloss {
+  position: absolute;
+  pointer-events: none;
+}
+.jar-shade {
+  inset: calc(var(--d) * -0.09) 0 0 0;
+  border-radius: calc(var(--d) * 0.06);
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0.5),
+    rgb(0 0 0 / 0.14) 9%,
+    rgb(0 0 0 / 0) 26%,
+    rgb(0 0 0 / 0) 70%,
+    rgb(0 0 0 / 0.14) 88%,
+    rgb(0 0 0 / 0.46)
+  );
+}
+.jar-gloss {
+  left: 17%;
+  top: 12%;
+  width: 5.5%;
+  height: 78%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.65), rgb(255 255 255 / 0.18) 55%, rgb(255 255 255 / 0.4));
+  opacity: 0.6;
+}
+.jar-gloss::after {
+  content: "";
+  position: absolute;
+  left: 1050%;
+  top: 6%;
+  width: 45%;
+  height: 84%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.1));
+}
+
+/* Heading for the jars: stacked shadows give the letters real thickness */
+.jars-title {
+  letter-spacing: 0.005em;
+  /* a slim, clean edge for depth: easy to read, still raised */
+  text-shadow:
+    1px 1px 0 #a10f3c,
+    2px 2px 0 #a10f3c,
+    3px 4px 6px rgb(120 10 40 / 0.22);
+}
+.jars-mark {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(200 21 75 / 0.08);
+}
+.jar-tag {
+  display: inline-block;
+  padding: 0.28rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--on) 45%, transparent);
+  background: color-mix(in srgb, var(--on) 14%, transparent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.jars-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.55);
+  border: 1px solid rgb(200 21 75 / 0.18);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #082567;
+  box-shadow: 0 8px 18px -14px rgb(200 21 75 / 0.6);
+}

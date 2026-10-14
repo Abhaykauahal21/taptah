@@ -1,0 +1,111 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Leaf } from "lucide-react";
+import { ScrollWords } from "./ScrollWords";
+import { WhyArtwork } from "./WhyArtwork";
+import { WhyMotion } from "./WhyMotion";
+
+export const Why: React.FC = () => {
+  return (
+    <section
+      id="story"
+      aria-label="Why Taptah"
+      className="why-section relative overflow-hidden bg-background pb-16 text-maroon lg:pb-24"
+    >
+      <WhyMotion />
+      {/* Mountain & farmhouse illustration (transparent) */}
+      <div
+        data-parallax="0.14"
+        className="pointer-events-none absolute bottom-0 right-0 hidden w-[44vw] max-w-[800px] md:block"
+      >
+        <Image
+          src="/images/why/mointain.webp"
+          alt=""
+          aria-hidden="true"
+          width={1774}
+          height={887}
+          sizes="(min-width: 768px) 44vw, 0px"
+          className="why-mountain h-auto w-full origin-bottom translate-x-[4vw] -translate-y-[1vw] scale-y-[1.2] opacity-80"
+        />
+      </div>
+
+      <div className="relative mx-auto grid max-w-[1500px] items-start gap-y-10 lg:grid-cols-[38%_minmax(0,1fr)]">
+        {/* Artwork (cream backdrop is baked in and matches the section) */}
+        <div className="mx-auto -mb-[22%] w-full max-w-md px-5 sm:px-8 lg:mx-0 lg:mb-0 lg:max-w-none lg:translate-x-[8vw] lg:px-0">
+          <div className="relative">
+            {/* Mountains and a farmhouse sketched far behind the window, for depth */}
+            <div
+              data-parallax="0.12"
+              aria-hidden="true"
+              className="pointer-events-none absolute right-[-14%] top-[66%] w-[95%] lg:hidden"
+            >
+              <Image
+                src="/images/why/mointain.webp"
+                alt=""
+                width={1774}
+                height={887}
+                sizes="(min-width: 1024px) 40vw, 150vw"
+                className="why-depth-mountain h-auto w-full opacity-70 [mask-image:radial-gradient(ellipse_at_50%_50%,#000_45%,transparent_75%)]"
+              />
+            </div>
+            {/* The artwork moves as ONE piece, so jowar, window and leaves stay in register */}
+            <div data-parallax="0.05" className="relative">
+              <WhyArtwork />
+            </div>
+          </div>
+        </div>
+
+        <div className="px-5 sm:px-8 lg:pl-[11vw] lg:pr-[2vw] lg:pt-[clamp(1rem,4vw,4rem)]">
+          <div className="grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.42fr)] sm:gap-[2.5vw]">
+            {/* Intro */}
+            <div>
+              <div className="flex items-start gap-[1.2vw]">
+                <h2 className="text-[clamp(2.5rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-[#C8154B]">
+                  <span className="why-line">
+                    <span className="why-line-inner" style={{ "--i": 0 } as React.CSSProperties}>
+                      Why are we
+                    </span>
+                  </span>
+                  <span className="why-line">
+                    <span className="why-line-inner" style={{ "--i": 1 } as React.CSSProperties}>
+                      called Taptah<span className="font-light">?</span>
+                    </span>
+                  </span>
+                </h2>
+                <Leaf
+                  aria-hidden="true"
+                  strokeWidth={0.9}
+                  className="why-leaf-icon mt-[1.6vw] h-[clamp(2rem,3.6vw,3.5rem)] w-[clamp(2rem,3.6vw,3.5rem)] shrink-0 -rotate-[8deg] text-[#C8154B]/80"
+                />
+              </div>
+
+              <h3 className="mt-[clamp(1rem,2vw,1.75rem)] text-[clamp(1.35rem,1.9vw,1.8rem)] font-semibold tracking-tight text-[#C8154B]">
+                Taptah means Roasted.
+              </h3>
+
+              <ScrollWords
+                className="mt-[clamp(0.6rem,1vw,0.9rem)] max-w-[30rem] text-[clamp(1.05rem,1.35vw,1.3rem)] font-medium leading-[1.55] text-[#082567]"
+                text="The name Taptah comes from Sanskrit, meaning ‘heat’ or ‘roasted’. It’s more than a name, it’s our promise to roast just enough – never more, so the millet’s natural goodness stays exactly as nature intended."
+              />
+
+              <Link
+                href="#process"
+                className="why-cta mt-[clamp(1.5rem,3vw,2.5rem)] inline-flex items-center gap-3 rounded-full border border-[#C8154B]/70 px-[clamp(1.5rem,2.6vw,2.5rem)] py-[clamp(0.6rem,1vw,0.85rem)] text-[clamp(1rem,1.2vw,1.15rem)] font-semibold text-[#C8154B] transition-colors duration-300 hover:bg-[#C8154B] hover:text-cream"
+              >
+                Meet the Millet
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            {/* Pull quote */}
+            <blockquote className="why-quote text-[clamp(1.4rem,2.05vw,2rem)] font-medium italic leading-[1.3] text-[#C8154B] sm:pt-[0.5vw]">
+              <span aria-hidden="true">&ldquo;</span>One millet. Roasted right.
+              Crunch for life.&rdquo;
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
